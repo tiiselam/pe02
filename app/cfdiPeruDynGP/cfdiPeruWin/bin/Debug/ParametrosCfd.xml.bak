@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<listaParametros>
+  <servidor>GILABASRDB03</servidor>
+  <seguridadIntegrada>1</seguridadIntegrada>
+  <usuariosql>na</usuariosql>
+  <passwordsql>na</passwordsql>
+  <compannia bd="GMOPE">
+    <URLArchivoXSD>\\gilabasrdb03\GettyMX_FacturaElectronicaXml\fePlantillas\cfdv32.xsd</URLArchivoXSD>
+    <URLArchivoXSLT>\\gilabasrdb03\GettyMX_FacturaElectronicaXml\fePlantillas\cadenaoriginal_3_2.xslt</URLArchivoXSLT>
+    <PAC>
+      <urlWebService>https://qa2.interfactura.com/TimbreServicios/TimbreServicios.asmx</urlWebService>
+    </PAC>
+    <reporteador>CRYSTAL</reporteador>
+    <rutaReporteCrystal tipo="default">
+      <Ruta>W:\Factura Mexico\GMOPE_FACTURA_ELECT.rpt</Ruta>
+      <Margenes>
+        <bottomMargin>0</bottomMargin>
+        <topMargin>0</topMargin>
+        <leftMargin>0</leftMargin>
+        <rightMargin>0</rightMargin>
+      </Margenes>
+      <Parametro>
+        <Nombre>Desde Numero</Nombre>
+        <Tipo>string</Tipo>
+      </Parametro>
+      <Parametro>
+        <Nombre>Hasta Numero</Nombre>
+        <Tipo>string</Tipo>
+      </Parametro>
+      <Parametro>
+        <Nombre>sTabla</Nombre>
+        <Tipo>string</Tipo>
+      </Parametro>
+      <Parametro>
+        <Nombre>Comprobante</Nombre>
+        <Tipo>int</Tipo>
+      </Parametro>
+    </rutaReporteCrystal>
+    <ReporteSSRS tipo="default">
+      <Ruta>na</Ruta>
+      <SSRSServer>na</SSRSServer>
+      <Parametro>
+        <Nombre>na</Nombre>
+        <Tipo>na</Tipo>
+      </Parametro>
+    </ReporteSSRS>
+    <emite>1</emite>
+    <anula>1</anula>
+    <imprime>1</imprime>
+    <publica>0</publica>
+    <envia>1</envia>
+    <zip>1</zip>
+    <emailSetup>
+                <smtp>smtp.gmail.com</smtp>
+                <puerto>587</puerto>
+                <cuenta>billing@gettyimageslatam.com</cuenta>
+		<usuario>billing@gettyimageslatam.com</usuario>
+		<clave>327L43</clave>
+	        <ssl>true</ssl>
+		<replyto>billing@gettyimageslatam.com</replyto>
+                <carta>FACTURA_ELECTRONICA</carta>
+                <adjuntoEmite>zip</adjuntoEmite>
+                <adjuntoImprime>pdf</adjuntoImprime>
+    </emailSetup>
+  </compannia>
+</listaParametros>
+
