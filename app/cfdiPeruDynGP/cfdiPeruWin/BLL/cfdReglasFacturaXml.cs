@@ -25,6 +25,9 @@ namespace cfd.FacturaElectronica
         CodigoDeBarras codigobb;
         Documento reporte;
         vwCfdTransaccionesDeVenta cfdiTransacciones;
+        vwCfdiDatosDelXml_wrapper cfdiDatosXml;
+        private string x_uuid;
+        private string x_sello;
 
         public vwCfdTransaccionesDeVenta CfdiTransacciones
         {
@@ -263,7 +266,7 @@ namespace cfd.FacturaElectronica
         /// <param name="mEstados">Nuevo set de estados</param>
         /// <param name="uuid">uuid generado por el PAC</param>
         /// <returns>False cuando hay al menos un error</returns>
-        public bool AlmacenaEnRepositorio(vwCfdTransaccionesDeVenta trxVenta, XmlDocument comprobante, ReglasME mEstados, String uuid, String sello)
+        public bool AlmacenaEnRepositorio(vwCfdTransaccionesDeVenta trxVenta, String comprobante, ReglasME mEstados, String uuid, String sello)
         {   
             ultimoMensaje = "";
             numMensajeError = 0;
@@ -273,26 +276,27 @@ namespace cfd.FacturaElectronica
                 string rutaYNomArchivo = trxVenta.RutaXml.Trim() + nomArchivo;
 
                 //Guarda el archivo xml
-                comprobante.Save(new XmlTextWriter(rutaYNomArchivo + ".xml", Encoding.UTF8));
+                //comprobante.Save(new XmlTextWriter(rutaYNomArchivo + ".xml", Encoding.UTF8));
 
                 //Registra log de la emisión del xml antes de imprimir el pdf, sino habrá error al imprimir
-                RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, "Almacenado en " + rutaYNomArchivo, "0", _Conexion.Usuario, comprobante.InnerXml,
+                RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, "Almacenado en " + rutaYNomArchivo, "0", _Conexion.Usuario, comprobante,
                                         "emitido", mEstados.eBinarioNuevo, mEstados.EnLetras(mEstados.eBinarioNuevo));
                 
                 if (numMensajeError == 0)
                 {
-                    RegistraLogDePagosSimultaneos(trxVenta.Soptype, trxVenta.Sopnumbe, mEstados.eBinarioNuevo, mEstados.EnLetras(mEstados.eBinarioNuevo), mEstados.eBinActualConError, mEstados.EnLetras(mEstados.eBinActualConError));
+                    //RegistraLogDePagosSimultaneos(trxVenta.Soptype, trxVenta.Sopnumbe, mEstados.eBinarioNuevo, mEstados.EnLetras(mEstados.eBinarioNuevo), mEstados.eBinActualConError, mEstados.EnLetras(mEstados.eBinActualConError));
 
                     //Genera y guarda código de barras bidimensional
-                    codigobb.GenerarQRBidimensional(_Param.URLConsulta + "?&id=" + uuid.Trim() + "&re=" + trxVenta.Rfc + "&rr=" + trxVenta.IdImpuestoCliente + "&tt=" + trxVenta.Total.ToString() + "&fe=" + Utiles.Derecha(sello, 8)
-                                                        , trxVenta.RutaXml.Trim() + "cbb\\" + nomArchivo + ".jpg");
+                    //codigobb.GenerarQRBidimensional(_Param.URLConsulta + "?&id=" + uuid.Trim() + "&re=" + trxVenta.Rfc + "&rr=" + trxVenta.IdImpuestoCliente + "&tt=" + trxVenta.Total.ToString() + "&fe=" + Utiles.Derecha(sello, 8)
+                    //                                    , trxVenta.RutaXml.Trim() + "cbb\\" + nomArchivo + ".jpg");
+
                     //Genera pdf
-                        if (codigobb.iErr == 0)
-                            reporte.generaEnFormatoPDF(rutaYNomArchivo, trxVenta.Soptype, trxVenta.Sopnumbe, trxVenta.EstadoContabilizado);
+                        //if (codigobb.iErr == 0)
+                        //    reporte.generaEnFormatoPDF(rutaYNomArchivo, trxVenta.Soptype, trxVenta.Sopnumbe, trxVenta.EstadoContabilizado);
 
                     //Comprime el archivo xml
-                        if (_Param.zip)
-                            Utiles.Zip(rutaYNomArchivo, ".xml");
+                        //if (_Param.zip)
+                        //    Utiles.Zip(rutaYNomArchivo, ".xml");
 
                     numMensajeError = codigobb.iErr + reporte.numErr + Utiles.numErr;
                     ultimoMensaje = codigobb.strMensajeErr + " " + reporte.mensajeErr + " " + Utiles.msgErr;
@@ -327,6 +331,35 @@ namespace cfd.FacturaElectronica
             }
         }
 
+
+        private void getDatosDelXml(short soptype, string sopnumbe)
+        {
+            try
+            {
+                x_uuid = string.Empty;
+                x_sello = string.Empty;
+                cfdiDatosXml.Where.Sopnumbe.Value = sopnumbe;
+                cfdiDatosXml.Where.Sopnumbe.Operator = WhereParameter.Operand.Equal;
+                cfdiDatosXml.Where.Soptype.Conjuction = WhereParameter.Conj.And;
+                cfdiDatosXml.Where.Soptype.Value = soptype;
+                cfdiDatosXml.Where.Soptype.Operator = WhereParameter.Operand.Equal;
+                cfdiDatosXml.Where.Estado.Conjuction = WhereParameter.Conj.And;
+                cfdiDatosXml.Where.Estado.Value = "emitido";
+                cfdiDatosXml.Where.Estado.Operator = WhereParameter.Operand.Equal;
+
+                if (cfdiDatosXml.Query.Load())
+                {
+                    x_uuid = cfdiDatosXml.UUID;
+                    x_sello = cfdiDatosXml.Sello;
+                }
+
+            }
+            catch (Exception eIddoc)
+            {
+                ultimoMensaje = "Contacte al administrador. No se puede acceder a la base de datos." + eIddoc.Message;
+            }
+        }
+
         /// <summary>
         /// Genera el código de barras bidimensional y guarda el archivo pdf. 
         /// Luego anota en la bitácora la factura impresa y el nuevo estado binario
@@ -349,7 +382,7 @@ namespace cfd.FacturaElectronica
 
                 //Genera y guarda código de barras bidimensional
                 if(_Param.emite)
-                    codigobb.GenerarQRBidimensional(_Param.URLConsulta + "?&id=" + trxVenta.UUID + "&re=" + trxVenta.Rfc + "&rr=" + trxVenta.IdImpuestoCliente + "&tt=" + trxVenta.Total.ToString() + "&fe=" + Utiles.Derecha(trxVenta.Sello, 8)
+                    codigobb.GenerarQRBidimensional(_Param.URLConsulta + "?&id=" + x_uuid + "&re=" + trxVenta.Rfc + "&rr=" + trxVenta.IdImpuestoCliente + "&tt=" + trxVenta.Total.ToString() + "&fe=" + Utiles.Derecha(x_sello, 8)
                                                 , trxVenta.RutaXml.Trim() + "cbb\\" + nomArchivo + ".jpg");
 
                 //Genera pdf

@@ -46,6 +46,18 @@ namespace cfdiPeru
             InitializeComponent();
         }
 
+        void reportaProgreso(int i, string s)
+        {
+            progressBar1.Increment(i);
+            progressBar1.Refresh();
+
+            if (progressBar1.Value == progressBar1.Maximum)
+                progressBar1.Value = 0;
+
+            txtbxMensajes.AppendText(s + Environment.NewLine);
+            txtbxMensajes.Refresh();
+        }
+
         private void ObtieneGrid(string nombreTab)
         {
             switch (nombreTab)
@@ -304,7 +316,7 @@ namespace cfdiPeru
         /// Genera XMLs masivamente
         /// </summary>
         /// <param name="e"></param>
-        private void toolStripButton2_Click(object sender, EventArgs e)
+        private async void toolStripButton2_Click(object sender, EventArgs e)
         {
             int errores = 0;
             txtbxMensajes.Text = "";
@@ -327,13 +339,21 @@ namespace cfdiPeru
             }
             if (errores == 0)
             {
-                cfdFacturaXmlWorker _bw = new cfdFacturaXmlWorker(DatosConexionDB.Elemento, Param); 
-                pBarProcesoActivo.Visible = true;
                 HabilitarVentana(false, false, false, false, false, false);
-                _bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_Completed);
-                _bw.ProgressChanged += new ProgressChangedEventHandler(bw_Progress);
-                object[] arguments = { regla.CfdiTransacciones }; 
-                _bw.RunWorkerAsync(arguments);
+                ProcesaCfdi proc = new ProcesaCfdi(DatosConexionDB.Elemento, Param);
+                proc.TrxVenta = regla.CfdiTransacciones;
+
+                proc.Progreso += new ProcesaCfdi.LogHandler(reportaProgreso);
+
+                pBarProcesoActivo.Visible = true;
+                await proc.GeneraXmlAsync();
+
+                //Actualiza la pantalla
+                Parametros Cia = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
+                HabilitarVentana(Cia.emite, Cia.anula, Cia.imprime, Cia.publica, Cia.envia, true);
+                AplicaFiltroYActualizaPantalla(this.tabCfdi.SelectedTab.Name);
+                progressBar1.Value = 0;
+                pBarProcesoActivo.Visible = false;
             }
         }
 

@@ -12,13 +12,16 @@
     <AssemblyName>cfdiPeruWin</AssemblyName>
     <TargetZone>LocalIntranet</TargetZone>
     <GenerateManifests>false</GenerateManifests>
-    <StartupObject>cfdiPeru.Program</StartupObject>
+    <StartupObject>
+    </StartupObject>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publicar\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -31,10 +34,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -73,13 +74,22 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>D4AF225F9B6CFED19BA87670431D0B54F757C575</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>cfdiPeruWin_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MyGeneration.dOOdads_2005, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\_DevTools\MyGeneration.dOOdads\bin\Release\MyGeneration.dOOdads_2005.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="QRCodeLib, Version=1.0.6513.27482, Culture=neutral, processorArchitecture=MSIL">
@@ -122,12 +132,15 @@
     <Compile Include="BLL\cfdFacturaXmlWorker.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="BLL\ProcesaCfdi.cs" />
     <Compile Include="BLL\cfdLogFacturaXML.cs" />
     <Compile Include="BLL\cfdReglasEmail.cs" />
     <Compile Include="BLL\cfdReglasFacturaXml.cs" />
     <Compile Include="BLL\ServicioOpenInvoice.cs" />
     <Compile Include="BLL\vwCfdClienteDireccionesCorreo.cs" />
     <Compile Include="BLL\vwCfdCompannias.cs" />
+    <Compile Include="BLL\vwCfdiDatosDelXml.cs" />
+    <Compile Include="BLL\vwCfdiDatosDelXml_wrapper.cs" />
     <Compile Include="BLL\vwCfdIdDocumentos.cs" />
     <Compile Include="BLL\vwCfdInformeMensualVentas.cs" />
     <Compile Include="BLL\vwCfdiPagosSimultaneos.cs" />
@@ -161,8 +174,8 @@
     <BaseApplicationManifest Include="Properties\app.manifest" />
     <None Include="app.config" />
     <Compile Include="BLL\vwCfdiPagosSimultaneos_wrapper.cs" />
+    <None Include="cfdiPeruWin_TemporaryKey.pfx" />
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\vwCfdiTrxCobros.datasource" />
     <None Include="Properties\DataSources\vwCfdTransaccionesDeVenta.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -175,6 +188,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\cfdiEntidadesGP\cfdiEntidadesGP.csproj">
+      <Project>{4954c962-f4d6-4c0c-91dd-18a690e326cd}</Project>
+      <Name>cfdiEntidadesGP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\OpenInvoicePeru.Comun.Dto\OpenInvoicePeru.Comun.Dto.csproj">
       <Project>{a265a65a-c2a9-4f9e-b272-bed5ed04df98}</Project>
       <Name>OpenInvoicePeru.Comun.Dto</Name>
@@ -204,6 +221,9 @@
     <None Include="Recursos\generapdf.jpg" />
     <None Include="Recursos\emailGreen.jpg" />
     <None Include="Recursos\emailG.jpg" />
+    <None Include="Recursos - Copy\emailG.jpg" />
+    <None Include="Recursos - Copy\process.jpg" />
+    <None Include="Recursos - Copy\generapdf.jpg" />
     <Content Include="Recursos\process.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +238,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

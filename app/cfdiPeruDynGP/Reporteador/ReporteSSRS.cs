@@ -37,10 +37,10 @@ namespace Reporteador
             _listaDefParamReporte = Param.ListaParametrosRepSSRS;
             _param = Param;
 
-            _rsExec = new ReportExecutionService();                          // Create a new proxy to the web service
-            _rsExec.Credentials = CredentialCache.DefaultCredentials;        // Authenticate to the Web service using Windows credentials
             try
             {
+                _rsExec = new ReportExecutionService();                          // Create a new proxy to the web service
+                _rsExec.Credentials = CredentialCache.DefaultCredentials;        // Authenticate to the Web service using Windows credentials
                 if (Param.reporteador.Equals("SSRS"))
                 {
                     _rsExec.Url = Param.SSRSServer + "/ReportExecution2005.asmx";    // Assign the URL of the Web service

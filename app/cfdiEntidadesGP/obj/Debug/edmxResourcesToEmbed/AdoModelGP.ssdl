@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PERUModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PER10.dbo.vwCfdiConceptos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwCfdiConceptos">
+    <Key>
+      <PropertyRef Name="soptype" />
+      <PropertyRef Name="sopnumbe" />
+      <PropertyRef Name="LNITMSEQ" />
+      <PropertyRef Name="ITEMNMBR" />
+      <PropertyRef Name="ITEMDESC" />
+      <PropertyRef Name="CMPNTSEQ" />
+      <PropertyRef Name="valorUni" />
+      <PropertyRef Name="cantidad" />
+      <PropertyRef Name="orslstax" />
+      <PropertyRef Name="tipoPrecio" />
+    </Key>
+    <Property Name="id" Type="bigint" />
+    <Property Name="soptype" Type="smallint" Nullable="false" />
+    <Property Name="sopnumbe" Type="char" MaxLength="21" Nullable="false" />
+    <Property Name="LNITMSEQ" Type="int" Nullable="false" />
+    <Property Name="ITEMNMBR" Type="char" MaxLength="31" Nullable="false" />
+    <Property Name="SERLTNUM" Type="char" MaxLength="21" />
+    <Property Name="ITEMDESC" Type="char" MaxLength="101" Nullable="false" />
+    <Property Name="CMPNTSEQ" Type="int" Nullable="false" />
+    <Property Name="udemSunat" Type="varchar" MaxLength="11" />
+    <Property Name="NoIdentificacion" Type="nvarchar(max)" />
+    <Property Name="Descripcion" Type="nvarchar(max)" />
+    <Property Name="precioUniConIva" Type="numeric" Precision="38" Scale="8" />
+    <Property Name="valorUni" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="cantidad" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="descuento" Type="numeric" Precision="38" Scale="9" />
+    <Property Name="importe" Type="numeric" Precision="38" Scale="9" />
+    <Property Name="orslstax" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="tipoPrecio" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="tipoImpuesto" Type="varchar" MaxLength="31" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraDocumentoDeVenta' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="vwCfdiGeneraDocumentoDeVenta">
+    <Key>
+      <PropertyRef Name="soptype" />
+      <PropertyRef Name="ORTDISAM" />
+      <PropertyRef Name="ivaImponible" />
+      <PropertyRef Name="iva" />
+      <PropertyRef Name="inafecta" />
+      <PropertyRef Name="exonerado" />
+      <PropertyRef Name="xchgrate" />
+    </Key>
+    <Property Name="soptype" Type="smallint" Nullable="false" />
+    <Property Name="sopnumbe" Type="varchar" MaxLength="21" />
+    <Property Name="tipoDocumento" Type="varchar" MaxLength="8000" />
+    <Property Name="emisorNroDoc" Type="varchar" MaxLength="8000" />
+    <Property Name="emisorNombre" Type="nvarchar(max)" />
+    <Property Name="emisorUbigeo" Type="nvarchar(max)" />
+    <Property Name="emisorDireccion" Type="nvarchar(max)" />
+    <Property Name="emisorUrbanizacion" Type="nvarchar(max)" />
+    <Property Name="emisorDepartamento" Type="nvarchar(max)" />
+    <Property Name="emisorProvincia" Type="nvarchar(max)" />
+    <Property Name="emisorDistrito" Type="nvarchar(max)" />
+    <Property Name="receptorTipoDoc" Type="varchar" MaxLength="3" />
+    <Property Name="receptorNroDoc" Type="nvarchar(max)" />
+    <Property Name="receptorNombre" Type="nvarchar(max)" />
+    <Property Name="idDocumento" Type="varchar" MaxLength="21" />
+    <Property Name="fechaEmision" Type="datetime" />
+    <Property Name="moneda" Type="varchar" MaxLength="15" />
+    <Property Name="tipoOperacion" Type="varchar" MaxLength="8000" />
+    <Property Name="descuento" Type="numeric" Precision="20" Scale="5" />
+    <Property Name="ORTDISAM" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="ivaTasa" Type="numeric" Precision="23" Scale="9" />
+    <Property Name="ivaImponible" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="iva" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="inafecta" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="exonerado" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="xchgrate" Type="numeric" Precision="19" Scale="7" Nullable="false" />
+    <Property Name="total" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="PERUModelStoreContainer">
+    <EntitySet Name="vwCfdiConceptos" EntityType="Self.vwCfdiConceptos" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vwCfdiConceptos].[id] AS [id], 
+    [vwCfdiConceptos].[soptype] AS [soptype], 
+    [vwCfdiConceptos].[sopnumbe] AS [sopnumbe], 
+    [vwCfdiConceptos].[LNITMSEQ] AS [LNITMSEQ], 
+    [vwCfdiConceptos].[ITEMNMBR] AS [ITEMNMBR], 
+    [vwCfdiConceptos].[SERLTNUM] AS [SERLTNUM], 
+    [vwCfdiConceptos].[ITEMDESC] AS [ITEMDESC], 
+    [vwCfdiConceptos].[CMPNTSEQ] AS [CMPNTSEQ], 
+    [vwCfdiConceptos].[udemSunat] AS [udemSunat], 
+    [vwCfdiConceptos].[NoIdentificacion] AS [NoIdentificacion], 
+    [vwCfdiConceptos].[Descripcion] AS [Descripcion], 
+    [vwCfdiConceptos].[precioUniConIva] AS [precioUniConIva], 
+    [vwCfdiConceptos].[valorUni] AS [valorUni], 
+    [vwCfdiConceptos].[cantidad] AS [cantidad], 
+    [vwCfdiConceptos].[descuento] AS [descuento], 
+    [vwCfdiConceptos].[importe] AS [importe], 
+    [vwCfdiConceptos].[orslstax] AS [orslstax], 
+    [vwCfdiConceptos].[tipoPrecio] AS [tipoPrecio], 
+    [vwCfdiConceptos].[tipoImpuesto] AS [tipoImpuesto]
+    FROM [dbo].[vwCfdiConceptos] AS [vwCfdiConceptos]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vwCfdiGeneraDocumentoDeVenta" EntityType="Self.vwCfdiGeneraDocumentoDeVenta" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vwCfdiGeneraDocumentoDeVenta].[soptype] AS [soptype], 
+    [vwCfdiGeneraDocumentoDeVenta].[sopnumbe] AS [sopnumbe], 
+    [vwCfdiGeneraDocumentoDeVenta].[tipoDocumento] AS [tipoDocumento], 
+    [vwCfdiGeneraDocumentoDeVenta].[emisorNroDoc] AS [emisorNroDoc], 
+    [vwCfdiGeneraDocumentoDeVenta].[emisorNombre] AS [emisorNombre], 
+    [vwCfdiGeneraDocumentoDeVenta].[emisorUbigeo] AS [emisorUbigeo], 
+    [vwCfdiGeneraDocumentoDeVenta].[emisorDireccion] AS [emisorDireccion], 
+    [vwCfdiGeneraDocumentoDeVenta].[emisorUrbanizacion] AS [emisorUrbanizacion], 
+    [vwCfdiGeneraDocumentoDeVenta].[emisorDepartamento] AS [emisorDepartamento], 
+    [vwCfdiGeneraDocumentoDeVenta].[emisorProvincia] AS [emisorProvincia], 
+    [vwCfdiGeneraDocumentoDeVenta].[emisorDistrito] AS [emisorDistrito], 
+    [vwCfdiGeneraDocumentoDeVenta].[receptorTipoDoc] AS [receptorTipoDoc], 
+    [vwCfdiGeneraDocumentoDeVenta].[receptorNroDoc] AS [receptorNroDoc], 
+    [vwCfdiGeneraDocumentoDeVenta].[receptorNombre] AS [receptorNombre], 
+    [vwCfdiGeneraDocumentoDeVenta].[idDocumento] AS [idDocumento], 
+    [vwCfdiGeneraDocumentoDeVenta].[fechaEmision] AS [fechaEmision], 
+    [vwCfdiGeneraDocumentoDeVenta].[moneda] AS [moneda], 
+    [vwCfdiGeneraDocumentoDeVenta].[tipoOperacion] AS [tipoOperacion], 
+    [vwCfdiGeneraDocumentoDeVenta].[descuento] AS [descuento], 
+    [vwCfdiGeneraDocumentoDeVenta].[ORTDISAM] AS [ORTDISAM], 
+    [vwCfdiGeneraDocumentoDeVenta].[ivaTasa] AS [ivaTasa], 
+    [vwCfdiGeneraDocumentoDeVenta].[ivaImponible] AS [ivaImponible], 
+    [vwCfdiGeneraDocumentoDeVenta].[iva] AS [iva], 
+    [vwCfdiGeneraDocumentoDeVenta].[inafecta] AS [inafecta], 
+    [vwCfdiGeneraDocumentoDeVenta].[exonerado] AS [exonerado], 
+    [vwCfdiGeneraDocumentoDeVenta].[xchgrate] AS [xchgrate], 
+    [vwCfdiGeneraDocumentoDeVenta].[total] AS [total]
+    FROM [dbo].[vwCfdiGeneraDocumentoDeVenta] AS [vwCfdiGeneraDocumentoDeVenta]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

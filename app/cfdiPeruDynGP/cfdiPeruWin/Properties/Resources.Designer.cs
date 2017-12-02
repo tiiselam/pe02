@@ -73,16 +73,6 @@ namespace cfdiPeru.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap emailGreen {
-            get {
-                object obj = ResourceManager.GetObject("emailGreen", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap generapdf {
             get {
                 object obj = ResourceManager.GetObject("generapdf", resourceCulture);

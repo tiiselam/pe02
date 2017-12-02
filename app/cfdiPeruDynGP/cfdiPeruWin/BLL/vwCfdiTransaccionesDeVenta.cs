@@ -160,86 +160,6 @@ namespace cfdiPeru
 				}
 			}
 			
-			public static SqlParameter SelloCFD
-			{
-				get
-				{
-					return new SqlParameter("@SelloCFD", SqlDbType.VarChar, 8000);
-				}
-			}
-			
-			public static SqlParameter FechaTimbrado
-			{
-				get
-				{
-					return new SqlParameter("@FechaTimbrado", SqlDbType.VarChar, 20);
-				}
-			}
-			
-			public static SqlParameter UUID
-			{
-				get
-				{
-					return new SqlParameter("@UUID", SqlDbType.VarChar, 50);
-				}
-			}
-			
-			public static SqlParameter NoCertificadoSAT
-			{
-				get
-				{
-					return new SqlParameter("@NoCertificadoSAT", SqlDbType.VarChar, 20);
-				}
-			}
-			
-			public static SqlParameter Version
-			{
-				get
-				{
-					return new SqlParameter("@Version", SqlDbType.VarChar, 5);
-				}
-			}
-			
-			public static SqlParameter SelloSAT
-			{
-				get
-				{
-					return new SqlParameter("@SelloSAT", SqlDbType.VarChar, 8000);
-				}
-			}
-			
-			public static SqlParameter FormaDePago
-			{
-				get
-				{
-					return new SqlParameter("@FormaDePago", SqlDbType.VarChar, 50);
-				}
-			}
-			
-			public static SqlParameter Sello
-			{
-				get
-				{
-					return new SqlParameter("@Sello", SqlDbType.VarChar, 8000);
-				}
-			}
-			
-			public static SqlParameter NoCertificado
-			{
-				get
-				{
-					return new SqlParameter("@NoCertificado", SqlDbType.VarChar, 20);
-				}
-			}
-			
-			public static SqlParameter CadenaOriginalSAT
-			{
-				get
-				{
-					return new SqlParameter("@CadenaOriginalSAT", SqlDbType.VarChar, 8000);
-				}
-			}
-			
 			public static SqlParameter ID_Certificado
 			{
 				get
@@ -320,6 +240,14 @@ namespace cfdiPeru
 				}
 			}
 			
+			public static SqlParameter CodigoPostal
+			{
+				get
+				{
+					return new SqlParameter("@CodigoPostal", SqlDbType.NVarChar, 1073741823);
+				}
+			}
+			
 			public static SqlParameter EstadoActual
 			{
 				get
@@ -333,14 +261,6 @@ namespace cfdiPeru
 				get
 				{
 					return new SqlParameter("@MensajeEA", SqlDbType.VarChar, 255);
-				}
-			}
-			
-			public static SqlParameter MetodoDePago
-			{
-				get
-				{
-					return new SqlParameter("@MetodoDePago", SqlDbType.VarChar, 21);
 				}
 			}
 			
@@ -380,16 +300,6 @@ namespace cfdiPeru
             public const string Estado = "estado";
             public const string Mensaje = "mensaje";
             public const string ComprobanteXml = "comprobanteXml";
-            public const string SelloCFD = "selloCFD";
-            public const string FechaTimbrado = "FechaTimbrado";
-            public const string UUID = "UUID";
-            public const string NoCertificadoSAT = "noCertificadoSAT";
-            public const string Version = "version";
-            public const string SelloSAT = "selloSAT";
-            public const string FormaDePago = "formaDePago";
-            public const string Sello = "sello";
-            public const string NoCertificado = "noCertificado";
-            public const string CadenaOriginalSAT = "cadenaOriginalSAT";
             public const string ID_Certificado = "ID_Certificado";
             public const string Ruta_certificado = "ruta_certificado";
             public const string Ruta_clave = "ruta_clave";
@@ -400,9 +310,9 @@ namespace cfdiPeru
             public const string Rfc = "rfc";
             public const string Regimen = "regimen";
             public const string RutaXml = "rutaXml";
+            public const string CodigoPostal = "codigoPostal";
             public const string EstadoActual = "estadoActual";
             public const string MensajeEA = "mensajeEA";
-            public const string MetodoDePago = "metodoDePago";
             public const string Isocurrc = "isocurrc";
             public const string Addenda = "addenda";
 
@@ -426,16 +336,6 @@ namespace cfdiPeru
 					ht[Estado] = vwCfdiTransaccionesDeVenta.PropertyNames.Estado;
 					ht[Mensaje] = vwCfdiTransaccionesDeVenta.PropertyNames.Mensaje;
 					ht[ComprobanteXml] = vwCfdiTransaccionesDeVenta.PropertyNames.ComprobanteXml;
-					ht[SelloCFD] = vwCfdiTransaccionesDeVenta.PropertyNames.SelloCFD;
-					ht[FechaTimbrado] = vwCfdiTransaccionesDeVenta.PropertyNames.FechaTimbrado;
-					ht[UUID] = vwCfdiTransaccionesDeVenta.PropertyNames.UUID;
-					ht[NoCertificadoSAT] = vwCfdiTransaccionesDeVenta.PropertyNames.NoCertificadoSAT;
-					ht[Version] = vwCfdiTransaccionesDeVenta.PropertyNames.Version;
-					ht[SelloSAT] = vwCfdiTransaccionesDeVenta.PropertyNames.SelloSAT;
-					ht[FormaDePago] = vwCfdiTransaccionesDeVenta.PropertyNames.FormaDePago;
-					ht[Sello] = vwCfdiTransaccionesDeVenta.PropertyNames.Sello;
-					ht[NoCertificado] = vwCfdiTransaccionesDeVenta.PropertyNames.NoCertificado;
-					ht[CadenaOriginalSAT] = vwCfdiTransaccionesDeVenta.PropertyNames.CadenaOriginalSAT;
 					ht[ID_Certificado] = vwCfdiTransaccionesDeVenta.PropertyNames.ID_Certificado;
 					ht[Ruta_certificado] = vwCfdiTransaccionesDeVenta.PropertyNames.Ruta_certificado;
 					ht[Ruta_clave] = vwCfdiTransaccionesDeVenta.PropertyNames.Ruta_clave;
@@ -446,9 +346,9 @@ namespace cfdiPeru
 					ht[Rfc] = vwCfdiTransaccionesDeVenta.PropertyNames.Rfc;
 					ht[Regimen] = vwCfdiTransaccionesDeVenta.PropertyNames.Regimen;
 					ht[RutaXml] = vwCfdiTransaccionesDeVenta.PropertyNames.RutaXml;
+					ht[CodigoPostal] = vwCfdiTransaccionesDeVenta.PropertyNames.CodigoPostal;
 					ht[EstadoActual] = vwCfdiTransaccionesDeVenta.PropertyNames.EstadoActual;
 					ht[MensajeEA] = vwCfdiTransaccionesDeVenta.PropertyNames.MensajeEA;
-					ht[MetodoDePago] = vwCfdiTransaccionesDeVenta.PropertyNames.MetodoDePago;
 					ht[Isocurrc] = vwCfdiTransaccionesDeVenta.PropertyNames.Isocurrc;
 					ht[Addenda] = vwCfdiTransaccionesDeVenta.PropertyNames.Addenda;
 
@@ -477,16 +377,6 @@ namespace cfdiPeru
             public const string Estado = "Estado";
             public const string Mensaje = "Mensaje";
             public const string ComprobanteXml = "ComprobanteXml";
-            public const string SelloCFD = "SelloCFD";
-            public const string FechaTimbrado = "FechaTimbrado";
-            public const string UUID = "UUID";
-            public const string NoCertificadoSAT = "NoCertificadoSAT";
-            public const string Version = "Version";
-            public const string SelloSAT = "SelloSAT";
-            public const string FormaDePago = "FormaDePago";
-            public const string Sello = "Sello";
-            public const string NoCertificado = "NoCertificado";
-            public const string CadenaOriginalSAT = "CadenaOriginalSAT";
             public const string ID_Certificado = "ID_Certificado";
             public const string Ruta_certificado = "Ruta_certificado";
             public const string Ruta_clave = "Ruta_clave";
@@ -497,9 +387,9 @@ namespace cfdiPeru
             public const string Rfc = "Rfc";
             public const string Regimen = "Regimen";
             public const string RutaXml = "RutaXml";
+            public const string CodigoPostal = "CodigoPostal";
             public const string EstadoActual = "EstadoActual";
             public const string MensajeEA = "MensajeEA";
-            public const string MetodoDePago = "MetodoDePago";
             public const string Isocurrc = "Isocurrc";
             public const string Addenda = "Addenda";
 
@@ -523,16 +413,6 @@ namespace cfdiPeru
 					ht[Estado] = vwCfdiTransaccionesDeVenta.ColumnNames.Estado;
 					ht[Mensaje] = vwCfdiTransaccionesDeVenta.ColumnNames.Mensaje;
 					ht[ComprobanteXml] = vwCfdiTransaccionesDeVenta.ColumnNames.ComprobanteXml;
-					ht[SelloCFD] = vwCfdiTransaccionesDeVenta.ColumnNames.SelloCFD;
-					ht[FechaTimbrado] = vwCfdiTransaccionesDeVenta.ColumnNames.FechaTimbrado;
-					ht[UUID] = vwCfdiTransaccionesDeVenta.ColumnNames.UUID;
-					ht[NoCertificadoSAT] = vwCfdiTransaccionesDeVenta.ColumnNames.NoCertificadoSAT;
-					ht[Version] = vwCfdiTransaccionesDeVenta.ColumnNames.Version;
-					ht[SelloSAT] = vwCfdiTransaccionesDeVenta.ColumnNames.SelloSAT;
-					ht[FormaDePago] = vwCfdiTransaccionesDeVenta.ColumnNames.FormaDePago;
-					ht[Sello] = vwCfdiTransaccionesDeVenta.ColumnNames.Sello;
-					ht[NoCertificado] = vwCfdiTransaccionesDeVenta.ColumnNames.NoCertificado;
-					ht[CadenaOriginalSAT] = vwCfdiTransaccionesDeVenta.ColumnNames.CadenaOriginalSAT;
 					ht[ID_Certificado] = vwCfdiTransaccionesDeVenta.ColumnNames.ID_Certificado;
 					ht[Ruta_certificado] = vwCfdiTransaccionesDeVenta.ColumnNames.Ruta_certificado;
 					ht[Ruta_clave] = vwCfdiTransaccionesDeVenta.ColumnNames.Ruta_clave;
@@ -543,9 +423,9 @@ namespace cfdiPeru
 					ht[Rfc] = vwCfdiTransaccionesDeVenta.ColumnNames.Rfc;
 					ht[Regimen] = vwCfdiTransaccionesDeVenta.ColumnNames.Regimen;
 					ht[RutaXml] = vwCfdiTransaccionesDeVenta.ColumnNames.RutaXml;
+					ht[CodigoPostal] = vwCfdiTransaccionesDeVenta.ColumnNames.CodigoPostal;
 					ht[EstadoActual] = vwCfdiTransaccionesDeVenta.ColumnNames.EstadoActual;
 					ht[MensajeEA] = vwCfdiTransaccionesDeVenta.ColumnNames.MensajeEA;
-					ht[MetodoDePago] = vwCfdiTransaccionesDeVenta.ColumnNames.MetodoDePago;
 					ht[Isocurrc] = vwCfdiTransaccionesDeVenta.ColumnNames.Isocurrc;
 					ht[Addenda] = vwCfdiTransaccionesDeVenta.ColumnNames.Addenda;
 
@@ -574,16 +454,6 @@ namespace cfdiPeru
             public const string Estado = "s_Estado";
             public const string Mensaje = "s_Mensaje";
             public const string ComprobanteXml = "s_ComprobanteXml";
-            public const string SelloCFD = "s_SelloCFD";
-            public const string FechaTimbrado = "s_FechaTimbrado";
-            public const string UUID = "s_UUID";
-            public const string NoCertificadoSAT = "s_NoCertificadoSAT";
-            public const string Version = "s_Version";
-            public const string SelloSAT = "s_SelloSAT";
-            public const string FormaDePago = "s_FormaDePago";
-            public const string Sello = "s_Sello";
-            public const string NoCertificado = "s_NoCertificado";
-            public const string CadenaOriginalSAT = "s_CadenaOriginalSAT";
             public const string ID_Certificado = "s_ID_Certificado";
             public const string Ruta_certificado = "s_Ruta_certificado";
             public const string Ruta_clave = "s_Ruta_clave";
@@ -594,9 +464,9 @@ namespace cfdiPeru
             public const string Rfc = "s_Rfc";
             public const string Regimen = "s_Regimen";
             public const string RutaXml = "s_RutaXml";
+            public const string CodigoPostal = "s_CodigoPostal";
             public const string EstadoActual = "s_EstadoActual";
             public const string MensajeEA = "s_MensajeEA";
-            public const string MetodoDePago = "s_MetodoDePago";
             public const string Isocurrc = "s_Isocurrc";
             public const string Addenda = "s_Addenda";
 
@@ -772,126 +642,6 @@ namespace cfdiPeru
 			}
 		}
 
-		public virtual string SelloCFD
-	    {
-			get
-	        {
-				return base.Getstring(ColumnNames.SelloCFD);
-			}
-			set
-	        {
-				base.Setstring(ColumnNames.SelloCFD, value);
-			}
-		}
-
-		public virtual string FechaTimbrado
-	    {
-			get
-	        {
-				return base.Getstring(ColumnNames.FechaTimbrado);
-			}
-			set
-	        {
-				base.Setstring(ColumnNames.FechaTimbrado, value);
-			}
-		}
-
-		public virtual string UUID
-	    {
-			get
-	        {
-				return base.Getstring(ColumnNames.UUID);
-			}
-			set
-	        {
-				base.Setstring(ColumnNames.UUID, value);
-			}
-		}
-
-		public virtual string NoCertificadoSAT
-	    {
-			get
-	        {
-				return base.Getstring(ColumnNames.NoCertificadoSAT);
-			}
-			set
-	        {
-				base.Setstring(ColumnNames.NoCertificadoSAT, value);
-			}
-		}
-
-		public virtual string Version
-	    {
-			get
-	        {
-				return base.Getstring(ColumnNames.Version);
-			}
-			set
-	        {
-				base.Setstring(ColumnNames.Version, value);
-			}
-		}
-
-		public virtual string SelloSAT
-	    {
-			get
-	        {
-				return base.Getstring(ColumnNames.SelloSAT);
-			}
-			set
-	        {
-				base.Setstring(ColumnNames.SelloSAT, value);
-			}
-		}
-
-		public virtual string FormaDePago
-	    {
-			get
-	        {
-				return base.Getstring(ColumnNames.FormaDePago);
-			}
-			set
-	        {
-				base.Setstring(ColumnNames.FormaDePago, value);
-			}
-		}
-
-		public virtual string Sello
-	    {
-			get
-	        {
-				return base.Getstring(ColumnNames.Sello);
-			}
-			set
-	        {
-				base.Setstring(ColumnNames.Sello, value);
-			}
-		}
-
-		public virtual string NoCertificado
-	    {
-			get
-	        {
-				return base.Getstring(ColumnNames.NoCertificado);
-			}
-			set
-	        {
-				base.Setstring(ColumnNames.NoCertificado, value);
-			}
-		}
-
-		public virtual string CadenaOriginalSAT
-	    {
-			get
-	        {
-				return base.Getstring(ColumnNames.CadenaOriginalSAT);
-			}
-			set
-	        {
-				base.Setstring(ColumnNames.CadenaOriginalSAT, value);
-			}
-		}
-
 		public virtual string ID_Certificado
 	    {
 			get
@@ -1012,6 +762,18 @@ namespace cfdiPeru
 			}
 		}
 
+		public virtual string CodigoPostal
+	    {
+			get
+	        {
+				return base.Getstring(ColumnNames.CodigoPostal);
+			}
+			set
+	        {
+				base.Setstring(ColumnNames.CodigoPostal, value);
+			}
+		}
+
 		public virtual string EstadoActual
 	    {
 			get
@@ -1033,18 +795,6 @@ namespace cfdiPeru
 			set
 	        {
 				base.Setstring(ColumnNames.MensajeEA, value);
-			}
-		}
-
-		public virtual string MetodoDePago
-	    {
-			get
-	        {
-				return base.Getstring(ColumnNames.MetodoDePago);
-			}
-			set
-	        {
-				base.Setstring(ColumnNames.MetodoDePago, value);
 			}
 		}
 
@@ -1287,156 +1037,6 @@ namespace cfdiPeru
 			}
 		}
 
-		public virtual string s_SelloCFD
-	    {
-			get
-	        {
-				return this.IsColumnNull(ColumnNames.SelloCFD) ? string.Empty : base.GetstringAsString(ColumnNames.SelloCFD);
-			}
-			set
-	        {
-				if(string.Empty == value)
-					this.SetColumnNull(ColumnNames.SelloCFD);
-				else
-					this.SelloCFD = base.SetstringAsString(ColumnNames.SelloCFD, value);
-			}
-		}
-
-		public virtual string s_FechaTimbrado
-	    {
-			get
-	        {
-				return this.IsColumnNull(ColumnNames.FechaTimbrado) ? string.Empty : base.GetstringAsString(ColumnNames.FechaTimbrado);
-			}
-			set
-	        {
-				if(string.Empty == value)
-					this.SetColumnNull(ColumnNames.FechaTimbrado);
-				else
-					this.FechaTimbrado = base.SetstringAsString(ColumnNames.FechaTimbrado, value);
-			}
-		}
-
-		public virtual string s_UUID
-	    {
-			get
-	        {
-				return this.IsColumnNull(ColumnNames.UUID) ? string.Empty : base.GetstringAsString(ColumnNames.UUID);
-			}
-			set
-	        {
-				if(string.Empty == value)
-					this.SetColumnNull(ColumnNames.UUID);
-				else
-					this.UUID = base.SetstringAsString(ColumnNames.UUID, value);
-			}
-		}
-
-		public virtual string s_NoCertificadoSAT
-	    {
-			get
-	        {
-				return this.IsColumnNull(ColumnNames.NoCertificadoSAT) ? string.Empty : base.GetstringAsString(ColumnNames.NoCertificadoSAT);
-			}
-			set
-	        {
-				if(string.Empty == value)
-					this.SetColumnNull(ColumnNames.NoCertificadoSAT);
-				else
-					this.NoCertificadoSAT = base.SetstringAsString(ColumnNames.NoCertificadoSAT, value);
-			}
-		}
-
-		public virtual string s_Version
-	    {
-			get
-	        {
-				return this.IsColumnNull(ColumnNames.Version) ? string.Empty : base.GetstringAsString(ColumnNames.Version);
-			}
-			set
-	        {
-				if(string.Empty == value)
-					this.SetColumnNull(ColumnNames.Version);
-				else
-					this.Version = base.SetstringAsString(ColumnNames.Version, value);
-			}
-		}
-
-		public virtual string s_SelloSAT
-	    {
-			get
-	        {
-				return this.IsColumnNull(ColumnNames.SelloSAT) ? string.Empty : base.GetstringAsString(ColumnNames.SelloSAT);
-			}
-			set
-	        {
-				if(string.Empty == value)
-					this.SetColumnNull(ColumnNames.SelloSAT);
-				else
-					this.SelloSAT = base.SetstringAsString(ColumnNames.SelloSAT, value);
-			}
-		}
-
-		public virtual string s_FormaDePago
-	    {
-			get
-	        {
-				return this.IsColumnNull(ColumnNames.FormaDePago) ? string.Empty : base.GetstringAsString(ColumnNames.FormaDePago);
-			}
-			set
-	        {
-				if(string.Empty == value)
-					this.SetColumnNull(ColumnNames.FormaDePago);
-				else
-					this.FormaDePago = base.SetstringAsString(ColumnNames.FormaDePago, value);
-			}
-		}
-
-		public virtual string s_Sello
-	    {
-			get
-	        {
-				return this.IsColumnNull(ColumnNames.Sello) ? string.Empty : base.GetstringAsString(ColumnNames.Sello);
-			}
-			set
-	        {
-				if(string.Empty == value)
-					this.SetColumnNull(ColumnNames.Sello);
-				else
-					this.Sello = base.SetstringAsString(ColumnNames.Sello, value);
-			}
-		}
-
-		public virtual string s_NoCertificado
-	    {
-			get
-	        {
-				return this.IsColumnNull(ColumnNames.NoCertificado) ? string.Empty : base.GetstringAsString(ColumnNames.NoCertificado);
-			}
-			set
-	        {
-				if(string.Empty == value)
-					this.SetColumnNull(ColumnNames.NoCertificado);
-				else
-					this.NoCertificado = base.SetstringAsString(ColumnNames.NoCertificado, value);
-			}
-		}
-
-		public virtual string s_CadenaOriginalSAT
-	    {
-			get
-	        {
-				return this.IsColumnNull(ColumnNames.CadenaOriginalSAT) ? string.Empty : base.GetstringAsString(ColumnNames.CadenaOriginalSAT);
-			}
-			set
-	        {
-				if(string.Empty == value)
-					this.SetColumnNull(ColumnNames.CadenaOriginalSAT);
-				else
-					this.CadenaOriginalSAT = base.SetstringAsString(ColumnNames.CadenaOriginalSAT, value);
-			}
-		}
-
 		public virtual string s_ID_Certificado
 	    {
 			get
@@ -1587,6 +1187,21 @@ namespace cfdiPeru
 			}
 		}
 
+		public virtual string s_CodigoPostal
+	    {
+			get
+	        {
+				return this.IsColumnNull(ColumnNames.CodigoPostal) ? string.Empty : base.GetstringAsString(ColumnNames.CodigoPostal);
+			}
+			set
+	        {
+				if(string.Empty == value)
+					this.SetColumnNull(ColumnNames.CodigoPostal);
+				else
+					this.CodigoPostal = base.SetstringAsString(ColumnNames.CodigoPostal, value);
+			}
+		}
+
 		public virtual string s_EstadoActual
 	    {
 			get
@@ -1614,21 +1229,6 @@ namespace cfdiPeru
 					this.SetColumnNull(ColumnNames.MensajeEA);
 				else
 					this.MensajeEA = base.SetstringAsString(ColumnNames.MensajeEA, value);
-			}
-		}
-
-		public virtual string s_MetodoDePago
-	    {
-			get
-	        {
-				return this.IsColumnNull(ColumnNames.MetodoDePago) ? string.Empty : base.GetstringAsString(ColumnNames.MetodoDePago);
-			}
-			set
-	        {
-				if(string.Empty == value)
-					this.SetColumnNull(ColumnNames.MetodoDePago);
-				else
-					this.MetodoDePago = base.SetstringAsString(ColumnNames.MetodoDePago, value);
 			}
 		}
 
@@ -1835,106 +1435,6 @@ namespace cfdiPeru
 					}
 				}
 
-				public WhereParameter SelloCFD
-				{
-					get
-					{
-							WhereParameter where = new WhereParameter(ColumnNames.SelloCFD, Parameters.SelloCFD);
-							this._clause._entity.Query.AddWhereParameter(where);
-							return where;
-					}
-				}
-
-				public WhereParameter FechaTimbrado
-				{
-					get
-					{
-							WhereParameter where = new WhereParameter(ColumnNames.FechaTimbrado, Parameters.FechaTimbrado);
-							this._clause._entity.Query.AddWhereParameter(where);
-							return where;
-					}
-				}
-
-				public WhereParameter UUID
-				{
-					get
-					{
-							WhereParameter where = new WhereParameter(ColumnNames.UUID, Parameters.UUID);
-							this._clause._entity.Query.AddWhereParameter(where);
-							return where;
-					}
-				}
-
-				public WhereParameter NoCertificadoSAT
-				{
-					get
-					{
-							WhereParameter where = new WhereParameter(ColumnNames.NoCertificadoSAT, Parameters.NoCertificadoSAT);
-							this._clause._entity.Query.AddWhereParameter(where);
-							return where;
-					}
-				}
-
-				public WhereParameter Version
-				{
-					get
-					{
-							WhereParameter where = new WhereParameter(ColumnNames.Version, Parameters.Version);
-							this._clause._entity.Query.AddWhereParameter(where);
-							return where;
-					}
-				}
-
-				public WhereParameter SelloSAT
-				{
-					get
-					{
-							WhereParameter where = new WhereParameter(ColumnNames.SelloSAT, Parameters.SelloSAT);
-							this._clause._entity.Query.AddWhereParameter(where);
-							return where;
-					}
-				}
-
-				public WhereParameter FormaDePago
-				{
-					get
-					{
-							WhereParameter where = new WhereParameter(ColumnNames.FormaDePago, Parameters.FormaDePago);
-							this._clause._entity.Query.AddWhereParameter(where);
-							return where;
-					}
-				}
-
-				public WhereParameter Sello
-				{
-					get
-					{
-							WhereParameter where = new WhereParameter(ColumnNames.Sello, Parameters.Sello);
-							this._clause._entity.Query.AddWhereParameter(where);
-							return where;
-					}
-				}
-
-				public WhereParameter NoCertificado
-				{
-					get
-					{
-							WhereParameter where = new WhereParameter(ColumnNames.NoCertificado, Parameters.NoCertificado);
-							this._clause._entity.Query.AddWhereParameter(where);
-							return where;
-					}
-				}
-
-				public WhereParameter CadenaOriginalSAT
-				{
-					get
-					{
-							WhereParameter where = new WhereParameter(ColumnNames.CadenaOriginalSAT, Parameters.CadenaOriginalSAT);
-							this._clause._entity.Query.AddWhereParameter(where);
-							return where;
-					}
-				}
-
 				public WhereParameter ID_Certificado
 				{
 					get
@@ -2035,6 +1535,16 @@ namespace cfdiPeru
 					}
 				}
 
+				public WhereParameter CodigoPostal
+				{
+					get
+					{
+							WhereParameter where = new WhereParameter(ColumnNames.CodigoPostal, Parameters.CodigoPostal);
+							this._clause._entity.Query.AddWhereParameter(where);
+							return where;
+					}
+				}
+
 				public WhereParameter EstadoActual
 				{
 					get
@@ -2050,16 +1560,6 @@ namespace cfdiPeru
 					get
 					{
 							WhereParameter where = new WhereParameter(ColumnNames.MensajeEA, Parameters.MensajeEA);
-							this._clause._entity.Query.AddWhereParameter(where);
-							return where;
-					}
-				}
-
-				public WhereParameter MetodoDePago
-				{
-					get
-					{
-							WhereParameter where = new WhereParameter(ColumnNames.MetodoDePago, Parameters.MetodoDePago);
 							this._clause._entity.Query.AddWhereParameter(where);
 							return where;
 					}
@@ -2258,126 +1758,6 @@ namespace cfdiPeru
 				}
 			}
 
-			public WhereParameter SelloCFD
-		    {
-				get
-		        {
-					if(_SelloCFD_W == null)
-	        	    {
-						_SelloCFD_W = TearOff.SelloCFD;
-					}
-					return _SelloCFD_W;
-				}
-			}
-
-			public WhereParameter FechaTimbrado
-		    {
-				get
-		        {
-					if(_FechaTimbrado_W == null)
-	        	    {
-						_FechaTimbrado_W = TearOff.FechaTimbrado;
-					}
-					return _FechaTimbrado_W;
-				}
-			}
-
-			public WhereParameter UUID
-		    {
-				get
-		        {
-					if(_UUID_W == null)
-	        	    {
-						_UUID_W = TearOff.UUID;
-					}
-					return _UUID_W;
-				}
-			}
-
-			public WhereParameter NoCertificadoSAT
-		    {
-				get
-		        {
-					if(_NoCertificadoSAT_W == null)
-	        	    {
-						_NoCertificadoSAT_W = TearOff.NoCertificadoSAT;
-					}
-					return _NoCertificadoSAT_W;
-				}
-			}
-
-			public WhereParameter Version
-		    {
-				get
-		        {
-					if(_Version_W == null)
-	        	    {
-						_Version_W = TearOff.Version;
-					}
-					return _Version_W;
-				}
-			}
-
-			public WhereParameter SelloSAT
-		    {
-				get
-		        {
-					if(_SelloSAT_W == null)
-	        	    {
-						_SelloSAT_W = TearOff.SelloSAT;
-					}
-					return _SelloSAT_W;
-				}
-			}
-
-			public WhereParameter FormaDePago
-		    {
-				get
-		        {
-					if(_FormaDePago_W == null)
-	        	    {
-						_FormaDePago_W = TearOff.FormaDePago;
-					}
-					return _FormaDePago_W;
-				}
-			}
-
-			public WhereParameter Sello
-		    {
-				get
-		        {
-					if(_Sello_W == null)
-	        	    {
-						_Sello_W = TearOff.Sello;
-					}
-					return _Sello_W;
-				}
-			}
-
-			public WhereParameter NoCertificado
-		    {
-				get
-		        {
-					if(_NoCertificado_W == null)
-	        	    {
-						_NoCertificado_W = TearOff.NoCertificado;
-					}
-					return _NoCertificado_W;
-				}
-			}
-
-			public WhereParameter CadenaOriginalSAT
-		    {
-				get
-		        {
-					if(_CadenaOriginalSAT_W == null)
-	        	    {
-						_CadenaOriginalSAT_W = TearOff.CadenaOriginalSAT;
-					}
-					return _CadenaOriginalSAT_W;
-				}
-			}
-
 			public WhereParameter ID_Certificado
 		    {
 				get
@@ -2498,6 +1878,18 @@ namespace cfdiPeru
 				}
 			}
 
+			public WhereParameter CodigoPostal
+		    {
+				get
+		        {
+					if(_CodigoPostal_W == null)
+	        	    {
+						_CodigoPostal_W = TearOff.CodigoPostal;
+					}
+					return _CodigoPostal_W;
+				}
+			}
+
 			public WhereParameter EstadoActual
 		    {
 				get
@@ -2519,18 +1911,6 @@ namespace cfdiPeru
 						_MensajeEA_W = TearOff.MensajeEA;
 					}
 					return _MensajeEA_W;
-				}
-			}
-
-			public WhereParameter MetodoDePago
-		    {
-				get
-		        {
-					if(_MetodoDePago_W == null)
-	        	    {
-						_MetodoDePago_W = TearOff.MetodoDePago;
-					}
-					return _MetodoDePago_W;
 				}
 			}
 
@@ -2572,16 +1952,6 @@ namespace cfdiPeru
 			private WhereParameter _Estado_W = null;
 			private WhereParameter _Mensaje_W = null;
 			private WhereParameter _ComprobanteXml_W = null;
-			private WhereParameter _SelloCFD_W = null;
-			private WhereParameter _FechaTimbrado_W = null;
-			private WhereParameter _UUID_W = null;
-			private WhereParameter _NoCertificadoSAT_W = null;
-			private WhereParameter _Version_W = null;
-			private WhereParameter _SelloSAT_W = null;
-			private WhereParameter _FormaDePago_W = null;
-			private WhereParameter _Sello_W = null;
-			private WhereParameter _NoCertificado_W = null;
-			private WhereParameter _CadenaOriginalSAT_W = null;
 			private WhereParameter _ID_Certificado_W = null;
 			private WhereParameter _Ruta_certificado_W = null;
 			private WhereParameter _Ruta_clave_W = null;
@@ -2592,9 +1962,9 @@ namespace cfdiPeru
 			private WhereParameter _Rfc_W = null;
 			private WhereParameter _Regimen_W = null;
 			private WhereParameter _RutaXml_W = null;
+			private WhereParameter _CodigoPostal_W = null;
 			private WhereParameter _EstadoActual_W = null;
 			private WhereParameter _MensajeEA_W = null;
-			private WhereParameter _MetodoDePago_W = null;
 			private WhereParameter _Isocurrc_W = null;
 			private WhereParameter _Addenda_W = null;
 
@@ -2614,16 +1984,6 @@ namespace cfdiPeru
 				_Estado_W = null;
 				_Mensaje_W = null;
 				_ComprobanteXml_W = null;
-				_SelloCFD_W = null;
-				_FechaTimbrado_W = null;
-				_UUID_W = null;
-				_NoCertificadoSAT_W = null;
-				_Version_W = null;
-				_SelloSAT_W = null;
-				_FormaDePago_W = null;
-				_Sello_W = null;
-				_NoCertificado_W = null;
-				_CadenaOriginalSAT_W = null;
 				_ID_Certificado_W = null;
 				_Ruta_certificado_W = null;
 				_Ruta_clave_W = null;
@@ -2634,9 +1994,9 @@ namespace cfdiPeru
 				_Rfc_W = null;
 				_Regimen_W = null;
 				_RutaXml_W = null;
+				_CodigoPostal_W = null;
 				_EstadoActual_W = null;
 				_MensajeEA_W = null;
-				_MetodoDePago_W = null;
 				_Isocurrc_W = null;
 				_Addenda_W = null;
 
@@ -2835,106 +2195,6 @@ namespace cfdiPeru
 					}
 				}
 
-				public AggregateParameter SelloCFD
-				{
-					get
-					{
-							AggregateParameter aggregate = new AggregateParameter(ColumnNames.SelloCFD, Parameters.SelloCFD);
-							this._clause._entity.Query.AddAggregateParameter(aggregate);
-							return aggregate;
-					}
-				}
-
-				public AggregateParameter FechaTimbrado
-				{
-					get
-					{
-							AggregateParameter aggregate = new AggregateParameter(ColumnNames.FechaTimbrado, Parameters.FechaTimbrado);
-							this._clause._entity.Query.AddAggregateParameter(aggregate);
-							return aggregate;
-					}
-				}
-
-				public AggregateParameter UUID
-				{
-					get
-					{
-							AggregateParameter aggregate = new AggregateParameter(ColumnNames.UUID, Parameters.UUID);
-							this._clause._entity.Query.AddAggregateParameter(aggregate);
-							return aggregate;
-					}
-				}
-
-				public AggregateParameter NoCertificadoSAT
-				{
-					get
-					{
-							AggregateParameter aggregate = new AggregateParameter(ColumnNames.NoCertificadoSAT, Parameters.NoCertificadoSAT);
-							this._clause._entity.Query.AddAggregateParameter(aggregate);
-							return aggregate;
-					}
-				}
-
-				public AggregateParameter Version
-				{
-					get
-					{
-							AggregateParameter aggregate = new AggregateParameter(ColumnNames.Version, Parameters.Version);
-							this._clause._entity.Query.AddAggregateParameter(aggregate);
-							return aggregate;
-					}
-				}
-
-				public AggregateParameter SelloSAT
-				{
-					get
-					{
-							AggregateParameter aggregate = new AggregateParameter(ColumnNames.SelloSAT, Parameters.SelloSAT);
-							this._clause._entity.Query.AddAggregateParameter(aggregate);
-							return aggregate;
-					}
-				}
-
-				public AggregateParameter FormaDePago
-				{
-					get
-					{
-							AggregateParameter aggregate = new AggregateParameter(ColumnNames.FormaDePago, Parameters.FormaDePago);
-							this._clause._entity.Query.AddAggregateParameter(aggregate);
-							return aggregate;
-					}
-				}
-
-				public AggregateParameter Sello
-				{
-					get
-					{
-							AggregateParameter aggregate = new AggregateParameter(ColumnNames.Sello, Parameters.Sello);
-							this._clause._entity.Query.AddAggregateParameter(aggregate);
-							return aggregate;
-					}
-				}
-
-				public AggregateParameter NoCertificado
-				{
-					get
-					{
-							AggregateParameter aggregate = new AggregateParameter(ColumnNames.NoCertificado, Parameters.NoCertificado);
-							this._clause._entity.Query.AddAggregateParameter(aggregate);
-							return aggregate;
-					}
-				}
-
-				public AggregateParameter CadenaOriginalSAT
-				{
-					get
-					{
-							AggregateParameter aggregate = new AggregateParameter(ColumnNames.CadenaOriginalSAT, Parameters.CadenaOriginalSAT);
-							this._clause._entity.Query.AddAggregateParameter(aggregate);
-							return aggregate;
-					}
-				}
-
 				public AggregateParameter ID_Certificado
 				{
 					get
@@ -3035,6 +2295,16 @@ namespace cfdiPeru
 					}
 				}
 
+				public AggregateParameter CodigoPostal
+				{
+					get
+					{
+							AggregateParameter aggregate = new AggregateParameter(ColumnNames.CodigoPostal, Parameters.CodigoPostal);
+							this._clause._entity.Query.AddAggregateParameter(aggregate);
+							return aggregate;
+					}
+				}
+
 				public AggregateParameter EstadoActual
 				{
 					get
@@ -3050,16 +2320,6 @@ namespace cfdiPeru
 					get
 					{
 							AggregateParameter aggregate = new AggregateParameter(ColumnNames.MensajeEA, Parameters.MensajeEA);
-							this._clause._entity.Query.AddAggregateParameter(aggregate);
-							return aggregate;
-					}
-				}
-
-				public AggregateParameter MetodoDePago
-				{
-					get
-					{
-							AggregateParameter aggregate = new AggregateParameter(ColumnNames.MetodoDePago, Parameters.MetodoDePago);
 							this._clause._entity.Query.AddAggregateParameter(aggregate);
 							return aggregate;
 					}
@@ -3258,126 +2518,6 @@ namespace cfdiPeru
 				}
 			}
 
-			public AggregateParameter SelloCFD
-		    {
-				get
-		        {
-					if(_SelloCFD_W == null)
-	        	    {
-						_SelloCFD_W = TearOff.SelloCFD;
-					}
-					return _SelloCFD_W;
-				}
-			}
-
-			public AggregateParameter FechaTimbrado
-		    {
-				get
-		        {
-					if(_FechaTimbrado_W == null)
-	        	    {
-						_FechaTimbrado_W = TearOff.FechaTimbrado;
-					}
-					return _FechaTimbrado_W;
-				}
-			}
-
-			public AggregateParameter UUID
-		    {
-				get
-		        {
-					if(_UUID_W == null)
-	        	    {
-						_UUID_W = TearOff.UUID;
-					}
-					return _UUID_W;
-				}
-			}
-
-			public AggregateParameter NoCertificadoSAT
-		    {
-				get
-		        {
-					if(_NoCertificadoSAT_W == null)
-	        	    {
-						_NoCertificadoSAT_W = TearOff.NoCertificadoSAT;
-					}
-					return _NoCertificadoSAT_W;
-				}
-			}
-
-			public AggregateParameter Version
-		    {
-				get
-		        {
-					if(_Version_W == null)
-	        	    {
-						_Version_W = TearOff.Version;
-					}
-					return _Version_W;
-				}
-			}
-
-			public AggregateParameter SelloSAT
-		    {
-				get
-		        {
-					if(_SelloSAT_W == null)
-	        	    {
-						_SelloSAT_W = TearOff.SelloSAT;
-					}
-					return _SelloSAT_W;
-				}
-			}
-
-			public AggregateParameter FormaDePago
-		    {
-				get
-		        {
-					if(_FormaDePago_W == null)
-	        	    {
-						_FormaDePago_W = TearOff.FormaDePago;
-					}
-					return _FormaDePago_W;
-				}
-			}
-
-			public AggregateParameter Sello
-		    {
-				get
-		        {
-					if(_Sello_W == null)
-	        	    {
-						_Sello_W = TearOff.Sello;
-					}
-					return _Sello_W;
-				}
-			}
-
-			public AggregateParameter NoCertificado
-		    {
-				get
-		        {
-					if(_NoCertificado_W == null)
-	        	    {
-						_NoCertificado_W = TearOff.NoCertificado;
-					}
-					return _NoCertificado_W;
-				}
-			}
-
-			public AggregateParameter CadenaOriginalSAT
-		    {
-				get
-		        {
-					if(_CadenaOriginalSAT_W == null)
-	        	    {
-						_CadenaOriginalSAT_W = TearOff.CadenaOriginalSAT;
-					}
-					return _CadenaOriginalSAT_W;
-				}
-			}
-
 			public AggregateParameter ID_Certificado
 		    {
 				get
@@ -3498,6 +2638,18 @@ namespace cfdiPeru
 				}
 			}
 
+			public AggregateParameter CodigoPostal
+		    {
+				get
+		        {
+					if(_CodigoPostal_W == null)
+	        	    {
+						_CodigoPostal_W = TearOff.CodigoPostal;
+					}
+					return _CodigoPostal_W;
+				}
+			}
+
 			public AggregateParameter EstadoActual
 		    {
 				get
@@ -3519,18 +2671,6 @@ namespace cfdiPeru
 						_MensajeEA_W = TearOff.MensajeEA;
 					}
 					return _MensajeEA_W;
-				}
-			}
-
-			public AggregateParameter MetodoDePago
-		    {
-				get
-		        {
-					if(_MetodoDePago_W == null)
-	        	    {
-						_MetodoDePago_W = TearOff.MetodoDePago;
-					}
-					return _MetodoDePago_W;
 				}
 			}
 
@@ -3572,16 +2712,6 @@ namespace cfdiPeru
 			private AggregateParameter _Estado_W = null;
 			private AggregateParameter _Mensaje_W = null;
 			private AggregateParameter _ComprobanteXml_W = null;
-			private AggregateParameter _SelloCFD_W = null;
-			private AggregateParameter _FechaTimbrado_W = null;
-			private AggregateParameter _UUID_W = null;
-			private AggregateParameter _NoCertificadoSAT_W = null;
-			private AggregateParameter _Version_W = null;
-			private AggregateParameter _SelloSAT_W = null;
-			private AggregateParameter _FormaDePago_W = null;
-			private AggregateParameter _Sello_W = null;
-			private AggregateParameter _NoCertificado_W = null;
-			private AggregateParameter _CadenaOriginalSAT_W = null;
 			private AggregateParameter _ID_Certificado_W = null;
 			private AggregateParameter _Ruta_certificado_W = null;
 			private AggregateParameter _Ruta_clave_W = null;
@@ -3592,9 +2722,9 @@ namespace cfdiPeru
 			private AggregateParameter _Rfc_W = null;
 			private AggregateParameter _Regimen_W = null;
 			private AggregateParameter _RutaXml_W = null;
+			private AggregateParameter _CodigoPostal_W = null;
 			private AggregateParameter _EstadoActual_W = null;
 			private AggregateParameter _MensajeEA_W = null;
-			private AggregateParameter _MetodoDePago_W = null;
 			private AggregateParameter _Isocurrc_W = null;
 			private AggregateParameter _Addenda_W = null;
 
@@ -3614,16 +2744,6 @@ namespace cfdiPeru
 				_Estado_W = null;
 				_Mensaje_W = null;
 				_ComprobanteXml_W = null;
-				_SelloCFD_W = null;
-				_FechaTimbrado_W = null;
-				_UUID_W = null;
-				_NoCertificadoSAT_W = null;
-				_Version_W = null;
-				_SelloSAT_W = null;
-				_FormaDePago_W = null;
-				_Sello_W = null;
-				_NoCertificado_W = null;
-				_CadenaOriginalSAT_W = null;
 				_ID_Certificado_W = null;
 				_Ruta_certificado_W = null;
 				_Ruta_clave_W = null;
@@ -3634,9 +2754,9 @@ namespace cfdiPeru
 				_Rfc_W = null;
 				_Regimen_W = null;
 				_RutaXml_W = null;
+				_CodigoPostal_W = null;
 				_EstadoActual_W = null;
 				_MensajeEA_W = null;
-				_MetodoDePago_W = null;
 				_Isocurrc_W = null;
 				_Addenda_W = null;
 
