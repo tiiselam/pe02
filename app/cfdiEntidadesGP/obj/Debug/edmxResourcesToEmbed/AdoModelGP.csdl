@@ -17,11 +17,11 @@
     <Property Name="sopnumbe" Type="String" MaxLength="21" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="LNITMSEQ" Type="Int32" Nullable="false" />
     <Property Name="ITEMNMBR" Type="String" MaxLength="31" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="SERLTNUM" Type="String" MaxLength="21" FixedLength="true" Unicode="false" />
+    <Property Name="SERLTNUM" Type="String" MaxLength="1" Nullable="false" Unicode="false" FixedLength="false" />
     <Property Name="ITEMDESC" Type="String" MaxLength="101" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="CMPNTSEQ" Type="Int32" Nullable="false" />
-    <Property Name="udemSunat" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-    <Property Name="NoIdentificacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="udemSunat" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+    <Property Name="NoIdentificacion" Type="String" MaxLength="1" Nullable="false" Unicode="false" FixedLength="false" />
     <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="precioUniConIva" Type="Decimal" Precision="38" Scale="8" />
     <Property Name="valorUni" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
@@ -70,9 +70,26 @@
     <Property Name="soptype" Type="Int16" Nullable="false" />
     <Property Name="sopnumbe" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
     <Property Name="ORTDISAM" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+    <Property Name="discrepanciaTipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+    <Property Name="discrepanciaDesc" Type="String" MaxLength="51" FixedLength="true" Unicode="false" />
   </EntityType>
   <EntityContainer Name="PERUEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="vwCfdiConceptos" EntityType="Self.vwCfdiConceptos" />
     <EntitySet Name="vwCfdiGeneraDocumentoDeVenta" EntityType="Self.vwCfdiGeneraDocumentoDeVenta" />
+    <EntitySet Name="vwCfdiRelacionados" EntityType="PERUModel.vwCfdiRelacionados" />
   </EntityContainer>
+  <EntityType Name="vwCfdiRelacionados">
+    <Key>
+      <PropertyRef Name="orden" />
+      <PropertyRef Name="sopnumbeFrom" />
+      <PropertyRef Name="soptypeTo" />
+      <PropertyRef Name="sopnumbeTo" />
+    </Key>
+    <Property Name="orden" Type="Int32" Nullable="false" />
+    <Property Name="tipoDocumento" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+    <Property Name="soptypeFrom" Type="Int16" />
+    <Property Name="sopnumbeFrom" Type="String" Nullable="false" MaxLength="21" FixedLength="true" Unicode="false" />
+    <Property Name="soptypeTo" Type="Int32" Nullable="false" />
+    <Property Name="sopnumbeTo" Type="String" Nullable="false" MaxLength="41" FixedLength="true" Unicode="false" />
+  </EntityType>
 </Schema>

@@ -185,8 +185,6 @@ namespace cfd.FacturaElectronica
         {
             try
             {
-                ultimoMensaje = "";
-                numMensajeError = 0;
                 //log de facturas xml emitido y xml anulado
                 cfdLogFacturaXML logVenta = new cfdLogFacturaXML(_Conexion.ConnStr);
                 
@@ -206,10 +204,8 @@ namespace cfd.FacturaElectronica
                 logVenta.MensajeEA = Utiles.Derecha(mensajeBinActual, 255);
                 logVenta.Save();
            }
-           catch (Exception eLog)
+           catch (Exception)
            {
-                ultimoMensaje = "Excepción. No se puede ingresar el doc. " + sopnumbe+ " en la Bitácora. [RegistraLogDeArchivoXML] " + eLog.Message + " " + eLog.Source;
-                numMensajeError++;
                 throw;
            }
         }
@@ -220,8 +216,6 @@ namespace cfd.FacturaElectronica
         /// <returns></returns>
         public void ActualizaFacturaEmitida(short Soptype, string Sopnumbe, string idusuario, string eBaseAnterior, string eBaseNuevo, string eBinarioActual, string mensajeEA)
         {
-            ultimoMensaje = "";
-            numMensajeError = 0;
             cfdLogFacturaXML xmlEmitido = new cfdLogFacturaXML(_Conexion.ConnStr);
             xmlEmitido.Where.Soptype.Value = Soptype;
             xmlEmitido.Where.Soptype.Operator = WhereParameter.Operand.Equal;
@@ -246,14 +240,12 @@ namespace cfd.FacturaElectronica
                 }
                 else
                 {
-                    ultimoMensaje = "No está en la bitácora con estado 'emitido'.";
-                    numMensajeError++;
+                    throw new ArgumentException(Sopnumbe+" No está en la bitácora en estado 'emitido'.");
                 }
             }
-            catch (Exception eAnula)
+            catch (Exception)
             {
-                ultimoMensaje = "Contacte al administrador. Error al acceder la base de datos. [ActualizaFacturaEmitida] " + eAnula.Message;
-                numMensajeError++;
+                throw;
             }
         }
 
@@ -262,30 +254,26 @@ namespace cfd.FacturaElectronica
         /// Luego genera y guarda el código de barras bidimensional y pdf. En caso de error, anota en la bitácora. 
         /// </summary>
         /// <param name="trxVenta">Lista de facturas cuyo índice apunta a la factura que se va procesar.</param>
-        /// <param name="comprobante">Documento xml</param>
+        /// <param name="comprobante">Documento xml firmado por la sunat</param>
         /// <param name="mEstados">Nuevo set de estados</param>
-        /// <param name="uuid">uuid generado por el PAC</param>
-        /// <returns>False cuando hay al menos un error</returns>
-        public bool AlmacenaEnRepositorio(vwCfdTransaccionesDeVenta trxVenta, String comprobante, ReglasME mEstados, String uuid, String sello)
+        /// <param name="tramaXmlFirmado">trama del xml firmado por la sunat en base 64</param>
+        /// <param name="tramaZipCdr">trama zipeada del cdr enviado por la sunat</param>
+        public void AlmacenaEnRepositorio(vwCfdTransaccionesDeVenta trxVenta, String comprobante, ReglasME mEstados, String tramaXmlFirmado, String tramaZipCdr)
         {   
-            ultimoMensaje = "";
-            numMensajeError = 0;
             try
             {   //arma el nombre del archivo xml
                 string nomArchivo = Utiles.FormatoNombreArchivo(trxVenta.Docid + trxVenta.Sopnumbe + "_" + trxVenta.s_CUSTNMBR, trxVenta.s_NombreCliente, 20);
-                string rutaYNomArchivo = trxVenta.RutaXml.Trim() + nomArchivo;
+                string rutaYNomArchivoCfdi = trxVenta.RutaXml.Trim() + nomArchivo + ".xml";
+                string rutaYNomArchivoCdr = trxVenta.RutaXml.Trim() + @"\\CDR\R-"+nomArchivo+".zip";
 
                 //Guarda el archivo xml
-                //comprobante.Save(new XmlTextWriter(rutaYNomArchivo + ".xml", Encoding.UTF8));
+                File.WriteAllBytes($"{rutaYNomArchivoCfdi}", Convert.FromBase64String(tramaXmlFirmado));
+                File.WriteAllBytes($"{rutaYNomArchivoCdr}", Convert.FromBase64String(tramaZipCdr));
 
                 //Registra log de la emisión del xml antes de imprimir el pdf, sino habrá error al imprimir
-                RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, "Almacenado en " + rutaYNomArchivo, "0", _Conexion.Usuario, comprobante,
+                RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, rutaYNomArchivoCfdi, "0", _Conexion.Usuario, comprobante.Replace("encoding=\"utf-8\"", ""),
                                         "emitido", mEstados.eBinarioNuevo, mEstados.EnLetras(mEstados.eBinarioNuevo));
                 
-                if (numMensajeError == 0)
-                {
-                    //RegistraLogDePagosSimultaneos(trxVenta.Soptype, trxVenta.Sopnumbe, mEstados.eBinarioNuevo, mEstados.EnLetras(mEstados.eBinarioNuevo), mEstados.eBinActualConError, mEstados.EnLetras(mEstados.eBinActualConError));
-
                     //Genera y guarda código de barras bidimensional
                     //codigobb.GenerarQRBidimensional(_Param.URLConsulta + "?&id=" + uuid.Trim() + "&re=" + trxVenta.Rfc + "&rr=" + trxVenta.IdImpuestoCliente + "&tt=" + trxVenta.Total.ToString() + "&fe=" + Utiles.Derecha(sello, 8)
                     //                                    , trxVenta.RutaXml.Trim() + "cbb\\" + nomArchivo + ".jpg");
@@ -298,39 +286,34 @@ namespace cfd.FacturaElectronica
                         //if (_Param.zip)
                         //    Utiles.Zip(rutaYNomArchivo, ".xml");
 
-                    numMensajeError = codigobb.iErr + reporte.numErr + Utiles.numErr;
-                    ultimoMensaje = codigobb.strMensajeErr + " " + reporte.mensajeErr + " " + Utiles.msgErr;
+                    //numMensajeError = codigobb.iErr + reporte.numErr;
+                    //ultimoMensaje = codigobb.strMensajeErr + " " + reporte.mensajeErr + " " + Utiles.msgErr;
 
                     //Si hay error en cbb o pdf o zip anota en la bitácora
-                    if (numMensajeError != 0)
-                        ActualizaFacturaEmitida(trxVenta.Soptype, trxVenta.Sopnumbe, _Conexion.Usuario, "emitido", "emitido", mEstados.eBinActualConError,
-                                                mEstados.EnLetras(mEstados.eBinActualConError) + ultimoMensaje.Trim());
-                }
-                return numMensajeError == 0;
+                    //if (numMensajeError != 0)
+                    //    ActualizaFacturaEmitida(trxVenta.Soptype, trxVenta.Sopnumbe, _Conexion.Usuario, "emitido", "emitido", mEstados.eBinActualConError,
+                    //                            mEstados.EnLetras(mEstados.eBinActualConError) + ultimoMensaje.Trim());
             }
             catch (DirectoryNotFoundException)
             {
-                ultimoMensaje = "Verifique la existencia de la ruta indicada en la configuración de Ruta de archivos Xml. La ruta no pudo ser encontrada: " + trxVenta.RutaXml;
-                numMensajeError++;
-                return false;
+                string smsj = "Verifique en GP la existencia de la carpeta indicada en la configuración de Ruta de archivos Xml. La ruta de la carpeta no pudo ser encontrada: " + trxVenta.RutaXml;
+                throw new DirectoryNotFoundException( smsj);
             }
             catch (IOException)
             {
-                ultimoMensaje = "Verifique permisos de escritura en: " + trxVenta.RutaXml + ". No se pudo guardar el archivo xml ni registrar el documento en la bitácora. ";
-                numMensajeError++;
-                return false;
+                string smsj = "Verifique permisos de escritura en la carpeta: " + trxVenta.RutaXml + ". No se pudo guardar el archivo xml ni registrar el documento en la bitácora. ";
+                throw new IOException(smsj);
             }
             catch (Exception eAFE)
             {
+                string smsj;
                 if (eAFE.Message.Contains("denied"))
-                    ultimoMensaje = "Elimine el archivo xml antes de volver a generar uno nuevo. Luego vuelva a intentar. " + eAFE.Message;
+                    smsj = "Elimine el archivo xml antes de volver a generar uno nuevo. Luego vuelva a intentar. " + eAFE.Message;
                 else
-                    ultimoMensaje = "Contacte a su administrador. No se pudo guardar el archivo XML ni registrar la Bitácora. " + eAFE.Message;
-                numMensajeError++;
-                return false;
+                    smsj = "Contacte a su administrador. No se pudo guardar el archivo XML ni registrar la Bitácora. " + eAFE.Message + Environment.NewLine + eAFE.StackTrace;
+                throw new Exception(smsj);
             }
         }
-
 
         private void getDatosDelXml(short soptype, string sopnumbe)
         {

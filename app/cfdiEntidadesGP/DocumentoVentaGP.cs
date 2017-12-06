@@ -11,11 +11,13 @@ namespace cfdiEntidadesGP
     {
         vwCfdiGeneraDocumentoDeVenta _DocVenta;
         List <vwCfdiConceptos> _LDocVentaConceptos;
+        List<vwCfdiRelacionados> _LDocVentaRelacionados;
 
         public DocumentoVentaGP()
         {
-            LDocVentaConceptos = new List<vwCfdiConceptos>();
-            DocVenta = new vwCfdiGeneraDocumentoDeVenta();
+            _LDocVentaConceptos = new List<vwCfdiConceptos>();
+            _DocVenta = new vwCfdiGeneraDocumentoDeVenta();
+            _LDocVentaRelacionados = new List<vwCfdiRelacionados>();
         }
 
         public vwCfdiGeneraDocumentoDeVenta DocVenta
@@ -44,6 +46,19 @@ namespace cfdiEntidadesGP
             }
         }
 
+        public List<vwCfdiRelacionados> LDocVentaRelacionados
+        {
+            get
+            {
+                return _LDocVentaRelacionados;
+            }
+
+            set
+            {
+                _LDocVentaRelacionados = value;
+            }
+        }
+
         public void GetDatosDocumentoVenta(String Sopnumbe, short Soptype)
         {
             using (PERUEntities dv = new PERUEntities())
@@ -55,14 +70,21 @@ namespace cfdiEntidadesGP
                 var resDoc = dv.vwCfdiGeneraDocumentoDeVenta.Where(v => v.sopnumbe == Sopnumbe && v.soptype == Soptype);
                 foreach (vwCfdiGeneraDocumentoDeVenta doc in resDoc)
                 {
-                    DocVenta = doc;
+                    _DocVenta = doc;
                     break;
                 }
                 var resCon = dv.vwCfdiConceptos.Where(v => v.sopnumbe == Sopnumbe && v.soptype == Soptype);
                 foreach (vwCfdiConceptos c in resCon)
                 {
-                    LDocVentaConceptos.Add(c);
+                    _LDocVentaConceptos.Add(c);
                 }
+
+                var resRelacionados = dv.vwCfdiRelacionados.Where(v => v.sopnumbeFrom == Sopnumbe && v.soptypeFrom == Soptype);
+                foreach (vwCfdiRelacionados c in resRelacionados)
+                {
+                    _LDocVentaRelacionados.Add(c);
+                }
+
             }
 
         }

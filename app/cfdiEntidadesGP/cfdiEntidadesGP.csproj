@@ -76,6 +76,9 @@
     <Compile Include="vwCfdiGeneraDocumentoDeVenta.cs">
       <DependentUpon>AdoModelGP.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwCfdiRelacionados.cs">
+      <DependentUpon>AdoModelGP.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="AdoModelGP.edmx">

@@ -149,7 +149,7 @@ as
 return
 (
 	select imp.soptype, imp.sopnumbe, imp.taxdtlid, imp.staxamnt, imp.orslstax, imp.tdttxsls, imp.ortxsls,
-			tx.NAME, tx.TXDTLPCT
+			tx.NAME, tx.cntcprsn, tx.TXDTLPCT
 	from sop10105 imp
 		inner join tx00201 tx
 		on tx.taxdtlid = imp.taxdtlid
@@ -203,10 +203,10 @@ as
 --27/11/17 jcf Creación cfdi 3.3
 --
 		select ROW_NUMBER() OVER(ORDER BY Concepto.LNITMSEQ DESC) id, 
-			Concepto.soptype, Concepto.sopnumbe, Concepto.LNITMSEQ, Concepto.ITEMNMBR, null SERLTNUM, 
+			Concepto.soptype, Concepto.sopnumbe, Concepto.LNITMSEQ, rtrim(Concepto.ITEMNMBR) ITEMNMBR, '' SERLTNUM, 
 			Concepto.ITEMDESC, Concepto.CMPNTSEQ, 
-			Concepto.UOFMsat udemSunat,
-			null NoIdentificacion,
+			rtrim(Concepto.UOFMsat) udemSunat,
+			'' NoIdentificacion,
 			dbo.fCfdReemplazaSecuenciaDeEspacios(ltrim(rtrim(dbo.fCfdReemplazaCaracteresNI(Concepto.ITEMDESC))), 10) Descripcion, 
 			Concepto.ORUNTPRC * (1 + iva.TXDTLPCT/100)	precioUniConIva,	--precioReferencial
 			Concepto.ORUNTPRC valorUni,							--valor unitario (precioUnitario)
@@ -215,13 +215,23 @@ as
 			Concepto.descuento,
 			Concepto.importe,									--valor de venta (totalVenta)
 			isnull(iva.orslstax, 0.00) orslstax,				--igv
+			--'01' tipoPrecio,	-- 01 incluye igv, 02 no oneroso
 
-			'01' tipoPrecio,	-- 01 incluye igv, 02 no oneroso
+			case when isnull(iva.orslstax, 0) != 0 
+				then rtrim(iva.cntcprsn)
+				else case when isnull(exe.ortxsls, 0) != 0 
+					then rtrim(exe.cntcprsn)
+					else case when isnull(xnr.ortxsls, 0) != 0
+						then rtrim(xnr.cntcprsn)
+						else ''
+						end
+					end
+				end tipoPrecio,
 			case when isnull(iva.orslstax, 0) != 0 
 				then rtrim(iva.name)
 				else case when isnull(exe.ortxsls, 0) != 0 
 					then rtrim(exe.name)
-					else case when isnull(rtrim(xnr.ortxsls), 0) != 0
+					else case when isnull(xnr.ortxsls, 0) != 0
 						then rtrim(xnr.name)
 						else ''
 						end
@@ -316,10 +326,9 @@ go
 
 alter view dbo.vwCfdiGeneraDocumentoDeVenta
 as
---Propósito. Elabora un comprobante xml para factura electrónica cfdi
+--Propósito. Elabora un comprobante xml para factura electrónica cfdi Perú
 --Requisitos. El total de impuestos de la factura debe corresponder a la suma del detalle de impuestos. 
---			Se asume que No incluye retenciones
---27/11/17 jcf Creación cfdi 3.3
+--27/11/17 jcf Creación cfdi Perú
 --
 	select 
 		tv.soptype,
@@ -353,10 +362,10 @@ as
 
 		tv.xchgrate,
 
-		tv.total
-
---		dbo.fCfdiRelacionadosXML(tv.soptype, tv.sopnumbe, tv.docid, tr.TipoRelacion) 'cfdi:CfdiRelacionados',
---		dbo.fCfdiConceptosXML(tv.soptype, tv.sopnumbe, tv.subtotal),
+		tv.total,
+		--Para NC:
+		left(tv.commntid, 2)						discrepanciaTipo,
+		tv.comment_1								discrepanciaDesc
 	from dbo.vwCfdiSopTransaccionesVenta tv
 		cross join dbo.fCfdiEmisor() emi
 --		outer apply dbo.fCfdiDatosDeUnaRelacion(tv.soptype, tv.sopnumbe, tv.docid) tr

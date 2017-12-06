@@ -83,10 +83,34 @@ namespace cfdiPeru
                         , PrecioReferencial = Convert.ToDecimal(d.precioUniConIva)
                         , TipoPrecio = d.tipoPrecio
                         , Impuesto = d.orslstax
+                        ,TipoImpuesto = d.tipoImpuesto
                     });
                 }
                 _docElectronico.Items = new List<DetalleDocumento>();
                 _docElectronico.Items = lDetalleDocumento;
+
+                if (docGP.LDocVentaRelacionados.Count > 0)
+                {
+                    _docElectronico.Relacionados = new List<DocumentoRelacionado>();
+                    _docElectronico.Discrepancias = new List<Discrepancia>();
+                    foreach (vwCfdiRelacionados d in docGP.LDocVentaRelacionados)
+                    {
+                        _docElectronico.Relacionados.Add(new DocumentoRelacionado()
+                        {
+                            NroDocumento = d.sopnumbeTo,
+                            TipoDocumento = d.tipoDocumento
+                        });
+
+                        _docElectronico.Discrepancias.Add(new Discrepancia()
+                        {
+                            Tipo = docGP.DocVenta.discrepanciaTipo,
+                            Descripcion = docGP.DocVenta.discrepanciaDesc,
+                            NroReferencia = d.sopnumbeTo
+                        });
+                    }
+
+                }
+
 
             }
             catch (Exception)

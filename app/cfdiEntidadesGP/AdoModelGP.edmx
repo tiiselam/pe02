@@ -13,8 +13,10 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiConceptos' does not have a primary
             <PropertyRef Name="sopnumbe" />
             <PropertyRef Name="LNITMSEQ" />
             <PropertyRef Name="ITEMNMBR" />
+            
             <PropertyRef Name="ITEMDESC" />
             <PropertyRef Name="CMPNTSEQ" />
+            
             <PropertyRef Name="valorUni" />
             <PropertyRef Name="cantidad" />
             <PropertyRef Name="orslstax" />
@@ -25,11 +27,11 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiConceptos' does not have a primary
           <Property Name="sopnumbe" Type="char" MaxLength="21" Nullable="false" />
           <Property Name="LNITMSEQ" Type="int" Nullable="false" />
           <Property Name="ITEMNMBR" Type="char" MaxLength="31" Nullable="false" />
-          <Property Name="SERLTNUM" Type="char" MaxLength="21" />
+          <Property Name="SERLTNUM" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="ITEMDESC" Type="char" MaxLength="101" Nullable="false" />
           <Property Name="CMPNTSEQ" Type="int" Nullable="false" />
-          <Property Name="udemSunat" Type="varchar" MaxLength="11" />
-          <Property Name="NoIdentificacion" Type="nvarchar(max)" />
+          <Property Name="udemSunat" Type="char" MaxLength="255" />
+          <Property Name="NoIdentificacion" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar(max)" />
           <Property Name="precioUniConIva" Type="numeric" Precision="38" Scale="8" />
           <Property Name="valorUni" Type="numeric" Precision="19" Scale="5" Nullable="false" />
@@ -80,6 +82,24 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraDocumentoDeVenta' does not h
           <Property Name="exonerado" Type="numeric" Precision="19" Scale="5" Nullable="false" />
           <Property Name="xchgrate" Type="numeric" Precision="19" Scale="7" Nullable="false" />
           <Property Name="total" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="discrepanciaTipo" Type="varchar" MaxLength="2" />
+          <Property Name="discrepanciaDesc" Type="char" MaxLength="51" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwCfdiRelacionados">
+          <Key>
+            <PropertyRef Name="orden" />
+            <PropertyRef Name="sopnumbeFrom" />
+            <PropertyRef Name="soptypeTo" />
+            <PropertyRef Name="sopnumbeTo" />
+          </Key>
+          <Property Name="orden" Type="int" Nullable="false" />
+          <Property Name="tipoDocumento" Type="varchar" MaxLength="8000" />
+          <Property Name="soptypeFrom" Type="smallint" />
+          <Property Name="sopnumbeFrom" Type="char" MaxLength="21" Nullable="false" />
+          <Property Name="soptypeTo" Type="int" Nullable="false" />
+          <Property Name="sopnumbeTo" Type="char" MaxLength="41" Nullable="false" />
         </EntityType>
         <EntityContainer Name="PERUModelStoreContainer">
           <EntitySet Name="vwCfdiConceptos" EntityType="Self.vwCfdiConceptos" store:Type="Views" store:Schema="dbo">
@@ -133,8 +153,20 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraDocumentoDeVenta' does not h
     [vwCfdiGeneraDocumentoDeVenta].[inafecta] AS [inafecta], 
     [vwCfdiGeneraDocumentoDeVenta].[exonerado] AS [exonerado], 
     [vwCfdiGeneraDocumentoDeVenta].[xchgrate] AS [xchgrate], 
-    [vwCfdiGeneraDocumentoDeVenta].[total] AS [total]
+    [vwCfdiGeneraDocumentoDeVenta].[total] AS [total], 
+    [vwCfdiGeneraDocumentoDeVenta].[discrepanciaTipo] AS [discrepanciaTipo], 
+    [vwCfdiGeneraDocumentoDeVenta].[discrepanciaDesc] AS [discrepanciaDesc]
     FROM [dbo].[vwCfdiGeneraDocumentoDeVenta] AS [vwCfdiGeneraDocumentoDeVenta]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwCfdiRelacionados" EntityType="Self.vwCfdiRelacionados" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwCfdiRelacionados].[orden] AS [orden], 
+    [vwCfdiRelacionados].[tipoDocumento] AS [tipoDocumento], 
+    [vwCfdiRelacionados].[soptypeFrom] AS [soptypeFrom], 
+    [vwCfdiRelacionados].[sopnumbeFrom] AS [sopnumbeFrom], 
+    [vwCfdiRelacionados].[soptypeTo] AS [soptypeTo], 
+    [vwCfdiRelacionados].[sopnumbeTo] AS [sopnumbeTo]
+    FROM [dbo].[vwCfdiRelacionados] AS [vwCfdiRelacionados]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -158,11 +190,11 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraDocumentoDeVenta' does not h
           <Property Name="sopnumbe" Type="String" MaxLength="21" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="LNITMSEQ" Type="Int32" Nullable="false" />
           <Property Name="ITEMNMBR" Type="String" MaxLength="31" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="SERLTNUM" Type="String" MaxLength="21" FixedLength="true" Unicode="false" />
+          <Property Name="SERLTNUM" Type="String" MaxLength="1" Nullable="false" Unicode="false" FixedLength="false" />
           <Property Name="ITEMDESC" Type="String" MaxLength="101" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="CMPNTSEQ" Type="Int32" Nullable="false" />
-          <Property Name="udemSunat" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="NoIdentificacion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="udemSunat" Type="String" MaxLength="255" FixedLength="true" Unicode="false" />
+          <Property Name="NoIdentificacion" Type="String" MaxLength="1" Nullable="false" Unicode="false" FixedLength="false" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="precioUniConIva" Type="Decimal" Precision="38" Scale="8" />
           <Property Name="valorUni" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
@@ -211,11 +243,28 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraDocumentoDeVenta' does not h
           <Property Name="soptype" Type="Int16" Nullable="false" />
           <Property Name="sopnumbe" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
           <Property Name="ORTDISAM" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+          <Property Name="discrepanciaTipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="discrepanciaDesc" Type="String" MaxLength="51" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityContainer Name="PERUEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="vwCfdiConceptos" EntityType="Self.vwCfdiConceptos" />
           <EntitySet Name="vwCfdiGeneraDocumentoDeVenta" EntityType="Self.vwCfdiGeneraDocumentoDeVenta" />
+          <EntitySet Name="vwCfdiRelacionados" EntityType="PERUModel.vwCfdiRelacionados" />
         </EntityContainer>
+        <EntityType Name="vwCfdiRelacionados">
+          <Key>
+            <PropertyRef Name="orden" />
+            <PropertyRef Name="sopnumbeFrom" />
+            <PropertyRef Name="soptypeTo" />
+            <PropertyRef Name="sopnumbeTo" />
+          </Key>
+          <Property Name="orden" Type="Int32" Nullable="false" />
+          <Property Name="tipoDocumento" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="soptypeFrom" Type="Int16" />
+          <Property Name="sopnumbeFrom" Type="String" Nullable="false" MaxLength="21" FixedLength="true" Unicode="false" />
+          <Property Name="soptypeTo" Type="Int32" Nullable="false" />
+          <Property Name="sopnumbeTo" Type="String" Nullable="false" MaxLength="41" FixedLength="true" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -250,6 +299,8 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraDocumentoDeVenta' does not h
           <EntitySetMapping Name="vwCfdiGeneraDocumentoDeVenta">
             <EntityTypeMapping TypeName="PERUModel.vwCfdiGeneraDocumentoDeVenta">
               <MappingFragment StoreEntitySet="vwCfdiGeneraDocumentoDeVenta">
+                <ScalarProperty Name="discrepanciaDesc" ColumnName="discrepanciaDesc" />
+                <ScalarProperty Name="discrepanciaTipo" ColumnName="discrepanciaTipo" />
                 <ScalarProperty Name="ORTDISAM" ColumnName="ORTDISAM" />
                 <ScalarProperty Name="sopnumbe" ColumnName="sopnumbe" />
                 <ScalarProperty Name="soptype" ColumnName="soptype" />
@@ -277,6 +328,18 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraDocumentoDeVenta' does not h
                 <ScalarProperty Name="exonerado" ColumnName="exonerado" />
                 <ScalarProperty Name="xchgrate" ColumnName="xchgrate" />
                 <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwCfdiRelacionados">
+            <EntityTypeMapping TypeName="PERUModel.vwCfdiRelacionados">
+              <MappingFragment StoreEntitySet="vwCfdiRelacionados">
+                <ScalarProperty Name="sopnumbeTo" ColumnName="sopnumbeTo" />
+                <ScalarProperty Name="soptypeTo" ColumnName="soptypeTo" />
+                <ScalarProperty Name="sopnumbeFrom" ColumnName="sopnumbeFrom" />
+                <ScalarProperty Name="soptypeFrom" ColumnName="soptypeFrom" />
+                <ScalarProperty Name="tipoDocumento" ColumnName="tipoDocumento" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

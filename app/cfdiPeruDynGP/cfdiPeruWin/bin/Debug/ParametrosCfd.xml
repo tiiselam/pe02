@@ -9,7 +9,7 @@
     <URLArchivoXSLT>NA</URLArchivoXSLT>
     <URLConsulta>NA</URLConsulta>
     <PAC>
-      <urlWebService>NA</urlWebService>
+      <urlWebService>https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService</urlWebService>
     </PAC>
     <reporteador>CRYSTAL</reporteador>
 	<reporteExtensiones>

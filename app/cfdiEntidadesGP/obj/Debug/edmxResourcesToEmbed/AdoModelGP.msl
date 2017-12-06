@@ -29,6 +29,8 @@
     <EntitySetMapping Name="vwCfdiGeneraDocumentoDeVenta">
       <EntityTypeMapping TypeName="PERUModel.vwCfdiGeneraDocumentoDeVenta">
         <MappingFragment StoreEntitySet="vwCfdiGeneraDocumentoDeVenta">
+          <ScalarProperty Name="discrepanciaDesc" ColumnName="discrepanciaDesc" />
+          <ScalarProperty Name="discrepanciaTipo" ColumnName="discrepanciaTipo" />
           <ScalarProperty Name="ORTDISAM" ColumnName="ORTDISAM" />
           <ScalarProperty Name="sopnumbe" ColumnName="sopnumbe" />
           <ScalarProperty Name="soptype" ColumnName="soptype" />
@@ -56,6 +58,18 @@
           <ScalarProperty Name="exonerado" ColumnName="exonerado" />
           <ScalarProperty Name="xchgrate" ColumnName="xchgrate" />
           <ScalarProperty Name="total" ColumnName="total" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwCfdiRelacionados">
+      <EntityTypeMapping TypeName="PERUModel.vwCfdiRelacionados">
+        <MappingFragment StoreEntitySet="vwCfdiRelacionados">
+          <ScalarProperty Name="sopnumbeTo" ColumnName="sopnumbeTo" />
+          <ScalarProperty Name="soptypeTo" ColumnName="soptypeTo" />
+          <ScalarProperty Name="sopnumbeFrom" ColumnName="sopnumbeFrom" />
+          <ScalarProperty Name="soptypeFrom" ColumnName="soptypeFrom" />
+          <ScalarProperty Name="tipoDocumento" ColumnName="tipoDocumento" />
+          <ScalarProperty Name="orden" ColumnName="orden" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

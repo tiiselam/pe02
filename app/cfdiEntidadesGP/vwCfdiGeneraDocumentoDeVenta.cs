@@ -41,5 +41,7 @@ namespace cfdiEntidadesGP
         public short soptype { get; set; }
         public string sopnumbe { get; set; }
         public decimal ORTDISAM { get; set; }
+        public string discrepanciaTipo { get; set; }
+        public string discrepanciaDesc { get; set; }
     }
 }

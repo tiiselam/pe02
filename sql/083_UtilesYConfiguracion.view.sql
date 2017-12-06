@@ -125,3 +125,28 @@ ELSE PRINT 'Error en la creación de: fCfdEsVacio()'
 GO
 --------------------------------------------------------------------------------------------------------
 
+-------------------------------------------------------------------------------------------------------
+IF OBJECT_ID ('dbo.fCfdiObtieneSegmento2') IS NOT NULL
+   DROP FUNCTION dbo.fCfdiObtieneSegmento2
+GO
+
+create function dbo.fCfdiObtieneSegmento2(@sopnumbe varchar(21), @separador char(1))
+returns table
+--Propósito. Obtiene el segundo segmento de una cadena separada por @separador y la convierte a entero
+--05/12/17 jcf Creación 
+--
+	return
+			select CONVERT( INT, 
+				case when ISNUMERIC(replace(right(@sopnumbe, len(@sopnumbe)-patindex('%'+@separador+'%', @sopnumbe)), '.', '')) = 1 then
+									replace(right(@sopnumbe, len(@sopnumbe)-patindex('%'+@separador+'%', @sopnumbe)), '.', '')
+					when  ISNUMERIC(replace(right(@sopnumbe, len(@sopnumbe)-patindex('% %', @sopnumbe)), '.', '')) = 1 then				--separador espacio
+									replace(right(@sopnumbe, len(@sopnumbe)-patindex('% %', @sopnumbe)), '.', '')
+				else 0
+				end
+				) segmento2
+
+go
+IF (@@Error = 0) PRINT 'Creación exitosa de: fCfdiObtieneSegmento2()'
+ELSE PRINT 'Error en la creación de: fCfdiObtieneSegmento2()'
+GO
+-------------------------------------------------------------------------------------------------------

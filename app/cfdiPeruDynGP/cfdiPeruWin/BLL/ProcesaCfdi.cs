@@ -18,13 +18,9 @@ namespace cfd.FacturaElectronica
     {
         private Parametros _Param;
         private ConexionAFuenteDatos _Conex;
+        private String tramaXmlFirmado;
+        private String tramaZipCdr;
         private String nroTicket=String.Empty;
-        private String _txtRutaCertificado = @"C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\app\cfdiPeruDynGP\cfdiPeruWin\cfdiPeruWin_TemporaryKey.pfx";
-        private String _txtUsuarioSol = "MODDATOS";
-        private String _txtClaveSol = "MODDATOS";
-        private String _endPointUrl = "https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService";
-        private String _carpetaXml = @"C:\GPUsuario\GPCfdi\feMCLNPERU\xml";
-        private String _carpetaCdr = @"C:\GPUsuario\GPCfdi\feMCLNPERU\cdr";
         private bool _rbRetenciones = false;
         private bool _rbResumen = false;
         private readonly HttpClient _client;
@@ -117,39 +113,41 @@ namespace cfd.FacturaElectronica
                                 if (!respuesta.Exito)
                                     throw new ApplicationException(respuesta.MensajeError);
 
-                                String RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{trxVenta.DocElectronico.IdDocumento}.xml");
-                                byte[] bTramaXmlSinFirma = Convert.FromBase64String(respuesta.TramaXmlSinFirma);
-                                File.WriteAllBytes(RutaArchivo, bTramaXmlSinFirma);
-                                
+                                if (!_Param.seguridadIntegrada)
+                                {
+                                    String RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{trxVenta.DocElectronico.IdDocumento}.xml");
+                                    byte[] bTramaXmlSinFirma = Convert.FromBase64String(respuesta.TramaXmlSinFirma);
+                                    File.WriteAllBytes(RutaArchivo, bTramaXmlSinFirma);
+                                }
+
                                 await EnviaSunat(respuesta.TramaXmlSinFirma);
 
                                 //Guarda el archivo xml, genera el cbb y el pdf. 
                                 //Luego anota en la bitácora la factura emitida o el error al generar cbb o pdf.
-                                DocVenta.AlmacenaEnRepositorio(trxVenta, bTramaXmlSinFirma.ToString(), maquina, String.Empty, String.Empty);
-
-                                //System.Text.Encoding encoding = new System.Text.UTF8Encoding();
-                                //DocVenta.AlmacenaEnRepositorio(trxVenta, encoding.GetString(bTramaXmlSinFirma), maquina, String.Empty, String.Empty);
-
-                                //IdDocumento = _documento.IdDocumento;
+                                DocVenta.AlmacenaEnRepositorio(trxVenta, Encoding.UTF8.GetString(Convert.FromBase64String(tramaXmlFirmado)), maquina, tramaXmlFirmado, tramaZipCdr);
 
                             }
                             else //si el documento está anulado en gp, agregar al log como emitido
                             {
                                 maquina.ValidaTransicion("FACTURA", "ANULA VENTA", trxVenta.EstadoActual, "emitido");
                                 msj = "Anulado en GP y marcado como emitido.";
-                                DocVenta.RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, "Anulado en GP", "0", _Conex.Usuario, "",
-                                                                         "emitido", maquina.eBinarioNuevo, msj.Trim());
+                                DocVenta.RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, "Anulado en GP", "0", _Conex.Usuario, "", "emitido", maquina.eBinarioNuevo, msj.Trim());
                             }
                     }
                     catch (ApplicationException ae)
                     {
-                        msj = ae.Message + " " + Environment.NewLine;
+                        msj = ae.Message + Environment.NewLine + ae.StackTrace;
+                        errores++;
+                    }
+                    catch (IOException io)
+                    {
+                        msj = "Excepción al revisar la carpeta/archivo: "+ trxVenta.Ruta_clave + " Verifique su existencia y privilegios." + Environment.NewLine + io.Message + Environment.NewLine;
                         errores++;
                     }
                     catch (Exception lo)
                     {
                         string imsj = lo.InnerException == null ? "" : lo.InnerException.ToString();
-                        msj = lo.Message + " " + imsj + Environment.NewLine; // + comprobante.InnerXml; //lo.StackTrace;
+                        msj = lo.Message + " " + imsj + Environment.NewLine + lo.StackTrace;
                         errores++;
                     }
                     finally
@@ -183,8 +181,9 @@ namespace cfd.FacturaElectronica
                 var firmadoRequest = new FirmadoRequest
                 {
                     TramaXmlSinFirma = tramaXmlSinFirma,
-                    CertificadoDigital = Convert.ToBase64String(File.ReadAllBytes(_txtRutaCertificado)),
-                    PasswordCertificado = "",   // txtPassCertificado.Text,
+                    //CertificadoDigital = Convert.ToBase64String(File.ReadAllBytes(_txtRutaCertificado)),
+                    CertificadoDigital = Convert.ToBase64String(File.ReadAllBytes(trxVenta.Ruta_clave)),
+                    PasswordCertificado = trxVenta.Contrasenia_clave,   // txtPassCertificado.Text,
                     UnSoloNodoExtension = _rbRetenciones || _rbResumen
                 };
 
@@ -196,9 +195,9 @@ namespace cfd.FacturaElectronica
                 var enviarDocumentoRequest = new EnviarDocumentoRequest
                 {
                     Ruc = trxVenta.DocElectronico.Emisor.NroDocumento,  // txtNroRuc.Text,
-                    UsuarioSol = _txtUsuarioSol,    //txtUsuarioSol.Text,
-                    ClaveSol = _txtClaveSol,
-                    EndPointUrl = _endPointUrl,
+                    UsuarioSol = trxVenta.Ruta_certificadoPac,    //txtUsuarioSol.Text,
+                    ClaveSol = trxVenta.Contrasenia_clavePac,
+                    EndPointUrl = _Param.URLwebServPAC,
                     IdDocumento = trxVenta.DocElectronico.IdDocumento,
                     TipoDocumento = codigoTipoDoc,
                     TramaXmlFirmado = respuestaFirmado.TramaXmlFirmado
@@ -221,9 +220,10 @@ namespace cfd.FacturaElectronica
                         {
                             if (!string.IsNullOrEmpty(rpta.TramaZipCdr))
                             {
-                                File.WriteAllBytes($"{_carpetaXml}\\{respuestaEnvio.NombreArchivo}", Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
-
-                                File.WriteAllBytes($"{_carpetaCdr}\\R-{respuestaEnvio.NombreArchivo}", Convert.FromBase64String(rpta.TramaZipCdr));
+                                tramaXmlFirmado = respuestaFirmado.TramaXmlFirmado;
+                                tramaZipCdr = rpta.TramaZipCdr;
+                                //File.WriteAllBytes($"{_carpetaXml}\\{respuestaEnvio.NombreArchivo}", Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
+                                //File.WriteAllBytes($"{_carpetaCdr}\\R-{respuestaEnvio.NombreArchivo}", Convert.FromBase64String(rpta.TramaZipCdr));
                             }
                             else
                             {
