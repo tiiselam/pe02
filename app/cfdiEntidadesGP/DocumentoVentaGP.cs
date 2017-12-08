@@ -10,6 +10,8 @@ namespace cfdiEntidadesGP
     public class DocumentoVentaGP
     {
         vwCfdiGeneraDocumentoDeVenta _DocVenta;
+        vwCfdiGeneraResumenDiario _resumenCab;
+        List<vwCfdiGeneraResumenDiario> _lDocResumenLineas;
         List <vwCfdiConceptos> _LDocVentaConceptos;
         List<vwCfdiRelacionados> _LDocVentaRelacionados;
 
@@ -18,6 +20,8 @@ namespace cfdiEntidadesGP
             _LDocVentaConceptos = new List<vwCfdiConceptos>();
             _DocVenta = new vwCfdiGeneraDocumentoDeVenta();
             _LDocVentaRelacionados = new List<vwCfdiRelacionados>();
+            _resumenCab = new vwCfdiGeneraResumenDiario();
+            _lDocResumenLineas = new List<vwCfdiGeneraResumenDiario>();
         }
 
         public vwCfdiGeneraDocumentoDeVenta DocVenta
@@ -59,6 +63,32 @@ namespace cfdiEntidadesGP
             }
         }
 
+        public vwCfdiGeneraResumenDiario ResumenCab
+        {
+            get
+            {
+                return _resumenCab;
+            }
+
+            set
+            {
+                _resumenCab = value;
+            }
+        }
+
+        public List<vwCfdiGeneraResumenDiario> LDocResumenLineas
+        {
+            get
+            {
+                return _lDocResumenLineas;
+            }
+
+            set
+            {
+                _lDocResumenLineas = value;
+            }
+        }
+
         public void GetDatosDocumentoVenta(String Sopnumbe, short Soptype)
         {
             using (PERUEntities dv = new PERUEntities())
@@ -83,6 +113,24 @@ namespace cfdiEntidadesGP
                 foreach (vwCfdiRelacionados c in resRelacionados)
                 {
                     _LDocVentaRelacionados.Add(c);
+                }
+
+            }
+
+        }
+        public void GetDatosResumenBoletas(String Sopnumbe, short Soptype)
+        {
+            using (PERUEntities dv = new PERUEntities())
+            {
+                var resDoc = dv.vwCfdiGeneraResumenDiario.Where(v => v.numResumenDiario == Sopnumbe && v.tipoResumenDiario == Soptype);
+                foreach (vwCfdiGeneraResumenDiario re in resDoc)
+                {
+                    _resumenCab = re;
+                    break;
+                }
+                foreach (vwCfdiGeneraResumenDiario re in resDoc)
+                {
+                    _lDocResumenLineas.Add(re);
                 }
 
             }

@@ -1,255 +1,10 @@
---FACTURA ELECTRONICA GP - MEXICO
+--FACTURA ELECTRONICA GP - PERU
 --Proyectos:		GETTY
---Propósito:		Genera funciones y vistas de FACTURAS para la facturación electrónica en GP - MEXICO
+--Propósito:		Genera funciones y vistas de FACTURAS para la facturación electrónica en GP - PERU
 --Referencia:		
---		01/11/11 Versión CFD 1 -	100823 Normativa formal Anexo 20.pdf, 
---		10/02/12 Versión CFD 2.2 - 111230 Normativa Anexo20.doc
---		25/04/12 Versión CFDI 3.2 - 111230 Normativa Anexo20.doc
---		23/10/17 Versión CFDI 3.3 - cfdv33.pdf
---Utilizado por:	Aplicación C# de generación de factura electrónica México
------------------------------------------------------------------------------------------------------------
-IF OBJECT_ID ('dbo.fCfdiInfoAduaneraXML') IS NOT NULL
-   DROP FUNCTION dbo.fCfdiInfoAduaneraXML
-GO
-
-create function dbo.fCfdiInfoAduaneraXML(@ITEMNMBR char(31), @SERLTNUM char(21))
-returns xml 
-as
---Propósito. Obtiene info aduanera para conceptos de importación
---Requisito. Se asume que todos los artículos importados usan número de serie o lote. De otro modo se consideran nacionales.
---			También se asume que no hay números de serie repetidos por artículo
---24/10/17 jcf Creación cfdi 3.3
---
-begin
-	declare @cncp xml;
-	select @cncp = null;
-
-	IF isnull(@SERLTNUM, '_NULO') <> '_NULO'	
-	begin
-		WITH XMLNAMESPACES ('http://www.sat.gob.mx/cfd/3' as "cfdi")
-		select @cncp = (
-		   select ad.NumeroPedimento	--, ad.fecha
-		   from (
-				--En caso de usar número de lote, la info aduanera viene en el número de lote y los atributos del lote
-				select top 1 stuff(stuff(stuff(dbo.fCfdReemplazaSecuenciaDeEspacios(ltrim(rtrim(@SERLTNUM)),10) , 3, 0, '  '), 7, 0, '  '), 13, 0, '  ') NumeroPedimento
-						--dbo.fCfdReemplazaSecuenciaDeEspacios(ltrim(rtrim(dbo.fCfdReemplazaCaracteresNI(la.LOTATRB1 +' '+ la.LOTATRB2))),10) numero, 
-				  from iv00301 la				--iv_lot_attributes [ITEMNMBR LOTNUMBR]
-				  inner join IV00101 ma			--iv_itm_mstr
-					on ma.ITEMNMBR = la.ITEMNMBR
-				 where ma.ITMTRKOP = 3			--lote
-					and la.ITEMNMBR = @ITEMNMBR
-					and la.LOTNUMBR = @SERLTNUM
-				union all
-				--En caso de usar número de serie, la info aduanera viene de los campos def por el usuario de la recepción de compra
-				select top 1 stuff(stuff(stuff(dbo.fCfdReemplazaSecuenciaDeEspacios(ltrim(rtrim(dbo.fCfdReemplazaCaracteresNI(ud.user_defined_text01))),10) , 3, 0, '  '), 7, 0, '  '), 13, 0, '  ') NumeroPedimento
-				  from POP30330	rs				--POP_SerialLotHist [POPRCTNM RCPTLNNM QTYTYPE SLTSQNUM]
-					inner JOIN POP10306 ud		--POP_ReceiptUserDefined 			
-					on ud.POPRCTNM = rs.POPRCTNM
-					inner join IV00101 ma		--iv_itm_mstr
-					on ma.ITEMNMBR = rs.ITEMNMBR
-				where ma.ITMTRKOP = 2			--serie
-					and rs.ITEMNMBR = @ITEMNMBR
-					and rs.SERLTNUM = @SERLTNUM
-				) ad
-			FOR XML raw('cfdi:InformacionAduanera') , type
-		)
-	end
-	return @cncp
-end
-go
-
-IF (@@Error = 0) PRINT 'Creación exitosa de: fCfdiInfoAduaneraXML()'
-ELSE PRINT 'Error en la creación de: fCfdiInfoAduaneraXML()'
-GO
-
+--		05/12/17 Versión CFDI UBL 2.0
+--Utilizado por:	Aplicación C# de generación de factura electrónica PERU
 -------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------
-IF (OBJECT_ID ('dbo.vwCfdiSopLineasTrxVentas', 'V') IS NULL)
-   exec('create view dbo.vwCfdiSopLineasTrxVentas as SELECT 1 as t');
-go
-
-alter view dbo.vwCfdiSopLineasTrxVentas as
---Propósito. Obtiene todas las líneas de facturas de venta SOP
---			Incluye descuentos
---Requisito. Atención ! DEBE usar unidades de medida listadas en el SAT. 
---30/11/17 JCF Creación cfdi 3.3
---
-select dt.soptype, dt.sopnumbe, dt.LNITMSEQ, dt.ITEMNMBR, dt.ShipToName,
-	dt.QUANTITY, dt.UOFM,
-	um.UOFMLONGDESC UOFMsat,
-	udmfa.descripcion UOFMsat_descripcion,
-	um.UOFMLONGDESC, 
-	dt.ITEMDESC,
-	dt.ORUNTPRC, dt.OXTNDPRC, dt.CMPNTSEQ, 
-	dt.QUANTITY * dt.ORUNTPRC importe, 
-	isnull(ma.ITMTRKOP, 1) ITMTRKOP,		--3 lote, 2 serie, 1 nada
-	ma.uscatvls_6, 
-	dt.ormrkdam,
-	dt.QUANTITY * dt.ormrkdam descuento
-from SOP30300 dt
-left join iv00101 ma				--iv_itm_mstr
-	on ma.ITEMNMBR = dt.ITEMNMBR
-outer apply dbo.fCfdiUofM(ma.UOMSCHDL, dt.UOFM ) um
-outer apply dbo.fCfdiCatalogoGetDescripcion('UDM', um.UOFMLONGDESC) udmfa
-
-go	
-
-IF (@@Error = 0) PRINT 'Creación exitosa de: vwCfdiSopLineasTrxVentas'
-ELSE PRINT 'Error en la creación de: vwCfdiSopLineasTrxVentas'
-GO
--------------------------------------------------------------------------------------------------------
---IF OBJECT_ID ('dbo.fCfdiParteXML') IS NOT NULL
---   DROP FUNCTION dbo.fCfdiParteXML
---GO
-
---create function dbo.fCfdiParteXML(@soptype smallint, @sopnumbe char(21), @LNITMSEQ int)
---returns xml 
---as
-----Propósito. Obtiene info de componentes de kit e info aduanera
-----2/5/12 jcf Creación
-----
---begin
---	declare @cncp xml;
---	WITH XMLNAMESPACES ('http://www.sat.gob.mx/cfd/3' as "cfdi")
---	select @cncp = (
---		select dt.uscatvls_6 ClaveProdServ,
---				case when dt.ITMTRKOP = 2 then --tracking option: serie
---					dbo.fCfdReemplazaSecuenciaDeEspacios(ltrim(rtrim(dbo.fCfdReemplazaCaracteresNI(dt.SERLTNUM))),10) 
---					else null
---				end NoIdentificacion, 
---				dt.cantidad, 
---				dbo.fCfdReemplazaSecuenciaDeEspacios(ltrim(rtrim(dbo.fCfdReemplazaCaracteresNI(dt.ITEMDESC))), 10) Descripcion,
---				dbo.fCfdiInfoAduaneraXML(dt.ITEMNMBR, dt.SERLTNUM)
---		from vwCfdiSopLineasTrxVentas dt
---		where dt.soptype = @soptype
---		and dt.sopnumbe = @sopnumbe
---		and dt.LNITMSEQ = @LNITMSEQ
---		and dt.CMPNTSEQ <> 0		--a nivel componente de kit
---		FOR XML raw('cfdi:Parte') , type
---	)
---	return @cncp
---end
---go
-
---IF (@@Error = 0) PRINT 'Creación exitosa de: fCfdiParteXML()'
---ELSE PRINT 'Error en la creación de: fCfdiParteXML()'
---GO
-----------------------------------------------------------------------------------------------------
-IF OBJECT_ID ('dbo.fCfdiImpuestosSop') IS NOT NULL
-   DROP FUNCTION dbo.fCfdiImpuestosSop
-GO
-
-create function dbo.fCfdiImpuestosSop(@SOPNUMBE char(21), @DOCTYPE smallint, @LNITMSEQ int, @prefijo varchar(15))
-returns table
-as
---Propósito. Detalle de impuestos en trabajo e históricos de SOP. Filtra los impuestos requeridos por @prefijo
---Requisitos. Los impuestos iva deben ser configurados con un prefijo constante
---27/11/17 jcf Creación 
---
-return
-(
-	select imp.soptype, imp.sopnumbe, imp.taxdtlid, imp.staxamnt, imp.orslstax, imp.tdttxsls, imp.ortxsls,
-			tx.NAME, tx.cntcprsn, tx.TXDTLPCT
-	from sop10105 imp
-		inner join tx00201 tx
-		on tx.taxdtlid = imp.taxdtlid
-	where imp.sopnumbe = @SOPNUMBE
-	and imp.soptype = @DOCTYPE
-	and imp.LNITMSEQ = @LNITMSEQ
-	and imp.taxdtlid like @prefijo + '%'
-)
-
-go
-
-
-IF (@@Error = 0) PRINT 'Creación exitosa de la función: fCfdiImpuestosSop()'
-ELSE PRINT 'Error en la creación de la función: fCfdiImpuestosSop()'
-GO
-
-----------------------------------------------------------------------------------------------------------
---IF (OBJECT_ID ('dbo.vwCfdiImpuestos', 'V') IS NULL)
---   exec('create view dbo.vwCfdiImpuestos as SELECT 1 as t');
---go
-
---alter view dbo.vwCfdiImpuestos	--(@p_soptype smallint, @p_sopnumbe varchar(21), @p_LNITMSEQ int)
---as
---		select 	
---			imp.ortxsls,
---			tx.NAME,
---			case when tx.TXDTLPCT=0 then 'Exento' else 'Tasa' end TipoFactor, 
---			tx.TXDTLPCT,
---			imp.orslstax
---		from sop10105 imp	--sop_tax_work_hist
---		inner join tx00201 tx
---			on tx.taxdtlid = imp.taxdtlid
-
---go
-
---IF (@@Error = 0) PRINT 'Creación exitosa de la función: vwCfdiImpuestos()'
---ELSE PRINT 'Error en la creación de la función: vwCfdiImpuestos()'
---GO
-
---------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------
-IF (OBJECT_ID ('dbo.vwCfdiConceptos', 'V') IS NULL)
-   exec('create view dbo.vwCfdiConceptos as SELECT 1 as t');
-go
-
-alter view dbo.vwCfdiConceptos --(@p_soptype smallint, @p_sopnumbe varchar(21), @p_subtotal numeric(19,6))
-as
---Propósito. Obtiene las líneas de una factura 
---			Elimina carriage returns, line feeds, tabs, secuencias de espacios y caracteres especiales.
---Requisito. Se asume que una línea de factura tiene una línea de impuesto
---27/11/17 jcf Creación cfdi 3.3
---
-		select ROW_NUMBER() OVER(ORDER BY Concepto.LNITMSEQ DESC) id, 
-			Concepto.soptype, Concepto.sopnumbe, Concepto.LNITMSEQ, rtrim(Concepto.ITEMNMBR) ITEMNMBR, '' SERLTNUM, 
-			Concepto.ITEMDESC, Concepto.CMPNTSEQ, 
-			rtrim(Concepto.UOFMsat) udemSunat,
-			'' NoIdentificacion,
-			dbo.fCfdReemplazaSecuenciaDeEspacios(ltrim(rtrim(dbo.fCfdReemplazaCaracteresNI(Concepto.ITEMDESC))), 10) Descripcion, 
-			Concepto.ORUNTPRC * (1 + iva.TXDTLPCT/100)	precioUniConIva,	--precioReferencial
-			Concepto.ORUNTPRC valorUni,							--valor unitario (precioUnitario)
-			Concepto.QUANTITY cantidad, 
-			--Concepto.ORUNTPRC * Concepto.cantidad valorVenta,	--valor venta bruto
-			Concepto.descuento,
-			Concepto.importe,									--valor de venta (totalVenta)
-			isnull(iva.orslstax, 0.00) orslstax,				--igv
-			--'01' tipoPrecio,	-- 01 incluye igv, 02 no oneroso
-
-			case when isnull(iva.orslstax, 0) != 0 
-				then rtrim(iva.cntcprsn)
-				else case when isnull(exe.ortxsls, 0) != 0 
-					then rtrim(exe.cntcprsn)
-					else case when isnull(xnr.ortxsls, 0) != 0
-						then rtrim(xnr.cntcprsn)
-						else ''
-						end
-					end
-				end tipoPrecio,
-			case when isnull(iva.orslstax, 0) != 0 
-				then rtrim(iva.name)
-				else case when isnull(exe.ortxsls, 0) != 0 
-					then rtrim(exe.name)
-					else case when isnull(xnr.ortxsls, 0) != 0
-						then rtrim(xnr.name)
-						else ''
-						end
-					end
-				end tipoImpuesto
-		from vwCfdiSopLineasTrxVentas Concepto
-			outer apply dbo.fLcLvParametros('V_PREFEXONERADO', 'V_PREFEXENTO', 'V_PREFIVA', 'na', 'na', 'na') pr	--Parámetros. prefijo inafectos, prefijo exento, prefijo iva
-			outer apply dbo.fCfdiImpuestosSop(Concepto.SOPNUMBE, Concepto.soptype, Concepto.LNITMSEQ, pr.param1) xnr --exonerado
-			outer apply dbo.fCfdiImpuestosSop(Concepto.SOPNUMBE, Concepto.soptype, Concepto.LNITMSEQ, pr.param2) exe --inafecto
-			outer apply dbo.fCfdiImpuestosSop(Concepto.SOPNUMBE, Concepto.soptype, Concepto.LNITMSEQ, pr.param3) iva --iva
-		where Concepto.CMPNTSEQ = 0					--a nivel kit
-
-go
-
-IF (@@Error = 0) PRINT 'Creación exitosa de: vwCfdiConceptos()'
-ELSE PRINT 'Error en la creación de: vwCfdiConceptos()'
-GO
-
 --------------------------------------------------------------------------------------------------------
 IF OBJECT_ID ('dbo.fCfdiCertificadoVigente') IS NOT NULL
    DROP FUNCTION dbo.fCfdiCertificadoVigente
@@ -320,6 +75,163 @@ ELSE PRINT 'Error en la creación de la función: fCfdiCertificadoPAC()'
 GO
 
 --------------------------------------------------------------------------------------------------------
+
+IF (OBJECT_ID ('dbo.vwCfdiSopLineasTrxVentas', 'V') IS NULL)
+   exec('create view dbo.vwCfdiSopLineasTrxVentas as SELECT 1 as t');
+go
+
+alter view dbo.vwCfdiSopLineasTrxVentas as
+--Propósito. Obtiene todas las líneas de facturas de venta SOP
+--			Incluye descuentos
+--Requisito. Atención ! DEBE usar unidades de medida listadas en el SERVICIO DE IMPUESTOS. 
+--30/11/17 JCF Creación cfdi 3.3
+--
+select dt.soptype, dt.sopnumbe, dt.LNITMSEQ, dt.ITEMNMBR, dt.ShipToName,
+	dt.QUANTITY, dt.UOFM,
+	um.UOFMLONGDESC UOFMsat,
+	udmfa.descripcion UOFMsat_descripcion,
+	um.UOFMLONGDESC, 
+	dt.ITEMDESC,
+	dt.ORUNTPRC, dt.OXTNDPRC, dt.CMPNTSEQ, 
+	dt.QUANTITY * dt.ORUNTPRC cantidadPorPrecioOri, 
+	isnull(ma.ITMTRKOP, 1) ITMTRKOP,		--3 lote, 2 serie, 1 nada
+	ma.uscatvls_6, 
+	dt.ormrkdam,
+	dt.QUANTITY * dt.ormrkdam descuento
+from SOP30300 dt
+left join iv00101 ma				--iv_itm_mstr
+	on ma.ITEMNMBR = dt.ITEMNMBR
+outer apply dbo.fCfdiUofM(ma.UOMSCHDL, dt.UOFM ) um
+outer apply dbo.fCfdiCatalogoGetDescripcion('UDM', um.UOFMLONGDESC) udmfa
+
+go	
+
+IF (@@Error = 0) PRINT 'Creación exitosa de: vwCfdiSopLineasTrxVentas'
+ELSE PRINT 'Error en la creación de: vwCfdiSopLineasTrxVentas'
+GO
+----------------------------------------------------------------------------------------------------
+IF OBJECT_ID ('dbo.fCfdiImpuestosSop') IS NOT NULL
+   DROP FUNCTION dbo.fCfdiImpuestosSop
+GO
+
+create function dbo.fCfdiImpuestosSop(@SOPNUMBE char(21), @DOCTYPE smallint, @LNITMSEQ int, @prefijo varchar(15), @tipoPrecio varchar(10))
+returns table
+as
+--Propósito. Detalle de impuestos en trabajo e históricos de SOP. Filtra los impuestos requeridos por @prefijo
+--Requisitos. Los impuestos iva deben ser configurados con un prefijo constante
+--27/11/17 jcf Creación 
+--
+return
+(
+	select imp.soptype, imp.sopnumbe, imp.taxdtlid, imp.staxamnt, imp.orslstax, imp.tdttxsls, imp.ortxsls,
+			tx.NAME, tx.cntcprsn, tx.TXDTLPCT
+	from sop10105 imp
+		inner join tx00201 tx
+		on tx.taxdtlid = imp.taxdtlid
+		and tx.cntcprsn like @tipoPrecio
+	where imp.sopnumbe = @SOPNUMBE
+	and imp.soptype = @DOCTYPE
+	and imp.LNITMSEQ = @LNITMSEQ
+	and imp.taxdtlid like @prefijo + '%'
+)
+
+go
+
+
+IF (@@Error = 0) PRINT 'Creación exitosa de la función: fCfdiImpuestosSop()'
+ELSE PRINT 'Error en la creación de la función: fCfdiImpuestosSop()'
+GO
+
+----------------------------------------------------------------------------------------------------------
+--IF (OBJECT_ID ('dbo.vwCfdiImpuestos', 'V') IS NULL)
+--   exec('create view dbo.vwCfdiImpuestos as SELECT 1 as t');
+--go
+
+--alter view dbo.vwCfdiImpuestos	--(@p_soptype smallint, @p_sopnumbe varchar(21), @p_LNITMSEQ int)
+--as
+--		select 	
+--			imp.ortxsls,
+--			tx.NAME,
+--			case when tx.TXDTLPCT=0 then 'Exento' else 'Tasa' end TipoFactor, 
+--			tx.TXDTLPCT,
+--			imp.orslstax
+--		from sop10105 imp	--sop_tax_work_hist
+--		inner join tx00201 tx
+--			on tx.taxdtlid = imp.taxdtlid
+
+--go
+
+--IF (@@Error = 0) PRINT 'Creación exitosa de la función: vwCfdiImpuestos()'
+--ELSE PRINT 'Error en la creación de la función: vwCfdiImpuestos()'
+--GO
+
+--------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+IF (OBJECT_ID ('dbo.vwCfdiConceptos', 'V') IS NULL)
+   exec('create view dbo.vwCfdiConceptos as SELECT 1 as t');
+go
+
+alter view dbo.vwCfdiConceptos --(@p_soptype smallint, @p_sopnumbe varchar(21), @p_subtotal numeric(19,6))
+as
+--Propósito. Obtiene las líneas de una factura 
+--			Elimina carriage returns, line feeds, tabs, secuencias de espacios y caracteres especiales.
+--Requisito. Se asume que una línea de factura tiene una línea de impuesto
+--27/11/17 jcf Creación cfdi 3.3
+--
+		select ROW_NUMBER() OVER(ORDER BY Concepto.LNITMSEQ asc) id, 
+			Concepto.soptype, Concepto.sopnumbe, Concepto.LNITMSEQ, rtrim(Concepto.ITEMNMBR) ITEMNMBR, '' SERLTNUM, 
+			Concepto.ITEMDESC, Concepto.CMPNTSEQ, 
+			rtrim(Concepto.UOFMsat) udemSunat,
+			'' NoIdentificacion,
+			dbo.fCfdReemplazaSecuenciaDeEspacios(ltrim(rtrim(dbo.fCfdReemplazaCaracteresNI(Concepto.ITEMDESC))), 10) Descripcion, 
+			(Concepto.OXTNDPRC + isnull(iva.orslstax, 0.00))/Concepto.QUANTITY precioUniConIva,	--precioReferencial
+			case when isnull(gra.ortxsls, 0) != 0 then 0.00 else Concepto.ORUNTPRC end valorUni,--valor unitario (precioUnitario)
+			Concepto.QUANTITY cantidad, 
+			--Concepto.ORUNTPRC * Concepto.cantidad valorVenta,	--valor venta bruto
+			Concepto.descuento,
+			Concepto.OXTNDPRC importe,							--valor de venta (totalVenta)
+			isnull(iva.orslstax, 0.00) orslstax,				--igv
+
+			case when isnull(iva.orslstax, 0) != 0 
+				then rtrim(iva.cntcprsn)
+				else case when isnull(exe.ortxsls, 0) != 0 
+					then rtrim(exe.cntcprsn)
+					else case when isnull(xnr.ortxsls, 0) != 0
+						then rtrim(xnr.cntcprsn)
+						else case when isnull(gra.ortxsls, 0) != 0
+							then rtrim(gra.cntcprsn)
+							else ''
+							end
+						end
+					end
+				end tipoPrecio,
+			case when isnull(iva.orslstax, 0) != 0 
+				then rtrim(iva.name)
+				else case when isnull(exe.ortxsls, 0) != 0 
+					then rtrim(exe.name)
+					else case when isnull(xnr.ortxsls, 0) != 0
+						then rtrim(xnr.name)
+						else case when isnull(gra.ortxsls, 0) != 0
+							then rtrim(gra.name)
+							else ''
+							end
+						end
+					end
+				end tipoImpuesto
+		from vwCfdiSopLineasTrxVentas Concepto
+			outer apply dbo.fLcLvParametros('V_PREFEXONERADO', 'V_PREFEXENTO', 'V_PREFIVA', 'V_GRATIS', 'na', 'na') pr	--Parámetros. prefijo inafectos, prefijo exento, prefijo iva
+			outer apply dbo.fCfdiImpuestosSop(Concepto.SOPNUMBE, Concepto.soptype, Concepto.LNITMSEQ, pr.param1, '%') xnr --exonerado
+			outer apply dbo.fCfdiImpuestosSop(Concepto.SOPNUMBE, Concepto.soptype, Concepto.LNITMSEQ, pr.param2, '%') exe --inafecto
+			outer apply dbo.fCfdiImpuestosSop(Concepto.SOPNUMBE, Concepto.soptype, Concepto.LNITMSEQ, pr.param3, '%') iva --iva
+			outer apply dbo.fCfdiImpuestosSop(Concepto.SOPNUMBE, Concepto.soptype, Concepto.LNITMSEQ, pr.param4, '%') gra --gratuito
+		where Concepto.CMPNTSEQ = 0					--a nivel kit
+
+go
+
+IF (@@Error = 0) PRINT 'Creación exitosa de: vwCfdiConceptos()'
+ELSE PRINT 'Error en la creación de: vwCfdiConceptos()'
+GO
+-----------------------------------------------------------------------------------------
 IF (OBJECT_ID ('dbo.vwCfdiGeneraDocumentoDeVenta', 'V') IS NULL)
    exec('create view dbo.vwCfdiGeneraDocumentoDeVenta as SELECT 1 as t');
 go
@@ -327,13 +239,14 @@ go
 alter view dbo.vwCfdiGeneraDocumentoDeVenta
 as
 --Propósito. Elabora un comprobante xml para factura electrónica cfdi Perú
---Requisitos. El total de impuestos de la factura debe corresponder a la suma del detalle de impuestos. 
+--Requisitos.  
 --27/11/17 jcf Creación cfdi Perú
 --
 	select 
 		tv.soptype,
 		tv.sopnumbe,
-		cmpr.tipo									tipoDocumento, 
+		cmpr.tipo									tipoDocumento,
+		emi.emisorTipoDoc, 
 		emi.TAXREGTN								emisorNroDoc,
 		emi.ADRCNTCT								emisorNombre,
 		emi.ZIPCODE									emisorUbigeo,
@@ -359,21 +272,23 @@ as
 
 		isnull(exe.tdttxsls, 0.00)					inafecta,
 		isnull(xnr.tdttxsls, 0.00)					exonerado,
+		isnull(gra.tdttxsls, 0.00)					gratuito,
 
 		tv.xchgrate,
-
 		tv.total,
 		--Para NC:
 		left(tv.commntid, 2)						discrepanciaTipo,
-		tv.comment_1								discrepanciaDesc
+		dbo.fCfdReemplazaSecuenciaDeEspacios(rtrim(dbo.fCfdReemplazaCaracteresNI(tv.comment_1)), 10) discrepanciaDesc,
+		UPPER(DBO.TII_INVOICE_AMOUNT_LETTERS(tv.total, default)) montoEnLetras,
+		tv.estadoContabilizado, tv.docdate
 	from dbo.vwCfdiSopTransaccionesVenta tv
 		cross join dbo.fCfdiEmisor() emi
---		outer apply dbo.fCfdiDatosDeUnaRelacion(tv.soptype, tv.sopnumbe, tv.docid) tr
 		outer apply dbo.fLcLvComprobanteSunat (tv.soptype, tv.sopnumbe)  cmpr
-		outer apply dbo.fLcLvParametros('V_PREFEXONERADO', 'V_PREFEXENTO', 'V_PREFIVA', 'na', 'na', 'na') pr	--Parámetros. prefijo inafectos, prefijo exento, prefijo iva
-		outer apply dbo.fLvSopTaxWorkHist(tv.sopnumbe, tv.soptype, pr.param1) xnr   --exonerado
-		outer apply dbo.fLvSopTaxWorkHist(tv.sopnumbe, tv.soptype, pr.param2) exe	--exento/inafecto
-		outer apply dbo.fLvSopTaxWorkHist(tv.sopnumbe, tv.soptype, pr.param3) iva	--iva
+		outer apply dbo.fLcLvParametros('V_PREFEXONERADO', 'V_PREFEXENTO', 'V_PREFIVA', 'V_GRATIS', 'na', 'na') pr	--Parámetros. prefijo inafectos, prefijo exento, prefijo iva
+		outer apply dbo.fCfdiImpuestosSop(tv.sopnumbe, tv.soptype, 0, pr.param1, '01') xnr  --exonerado
+		outer apply dbo.fCfdiImpuestosSop(tv.sopnumbe, tv.soptype, 0, pr.param2, '01') exe	--exento/inafecto
+		outer apply dbo.fCfdiImpuestosSop(tv.sopnumbe, tv.soptype, 0, pr.param3, '01') iva	--iva
+		outer apply dbo.fCfdiImpuestosSop(tv.sopnumbe, tv.soptype, 0, pr.param4, '02') gra	--gratuito
 
 go
 
@@ -407,34 +322,15 @@ select tv.estadoContabilizado, tv.soptype, tv.docid, tv.sopnumbe, tv.fechahora,
 		else cast('' as xml) 
 	end comprobanteXml,
 	
-	----Datos del xml sellado por el PAC:
-	--isnull(dx.selloCFD, '') selloCFD, 
-	--isnull(dx.FechaTimbrado, '') FechaTimbrado, 
-	--isnull(dx.UUID, '') UUID, 
-	--isnull(dx.noCertificadoSAT, '') noCertificadoSAT, 
-	--isnull(dx.[version], '') [version], 
-	--isnull(dx.selloSAT, '') selloSAT, 
-	--isnull(dx.FormaPago, '') formaDePago,
-	--isnull(dx.sello, '') sello, 
-	--isnull(dx.noCertificado, '') noCertificado, 
-	--isnull(dx.MetodoPago, '') metodoDePago,
-	--isnull(dx.usoCfdi, '') usoCfdi,
-	--isnull(dx.RfcPAC, '') RfcPAC,
-	--isnull(dx.Leyenda, '') Leyenda,
-
-	--'||'+dx.[version]+'|'+dx.UUID+'|'+dx.FechaTimbrado+'|'+dx.RfcPAC + 
-	--case when isnull(dx.Leyenda, '') = '' then '' else '|'+dx.Leyenda end
-	--+'|'+dx.selloCFD+'|'+dx.noCertificadoSAT+'||' cadenaOriginalSAT,
-	
 	fv.ID_Certificado, fv.ruta_certificado, fv.ruta_clave, fv.contrasenia_clave, 
 	isnull(pa.ruta_certificado, '_noexiste') ruta_certificadoPac, isnull(pa.ruta_clave, '_noexiste') ruta_clavePac, isnull(pa.contrasenia_clave, '') contrasenia_clavePac, 
-	emi.rfc, emi.regimen, emi.rutaXml, emi.codigoPostal,
+	emi.TAXREGTN rfc, emi.INET8 regimen, emi.INET7 rutaXml, emi.ZIPCODE codigoPostal,
 	isnull(lf.estadoActual, '000000') estadoActual, 
 	isnull(lf.mensajeEA, tv.estadoContabilizado) mensajeEA,
 	tv.curncyid isocurrc,
 	null addenda
 from dbo.vwCfdiSopTransaccionesVenta tv
-	cross join dbo.fCfdEmisor() emi
+	cross join dbo.fCfdiEmisor() emi
 	outer apply dbo.fCfdiCertificadoVigente(tv.fechahora) fv
 	outer apply dbo.fCfdiCertificadoPAC(tv.fechahora) pa
 	left join cfdlogfacturaxml lf

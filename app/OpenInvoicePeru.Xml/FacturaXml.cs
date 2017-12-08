@@ -549,21 +549,24 @@ namespace OpenInvoicePeru.Xml
                     {
                         CurrencyId = documento.Moneda,
                         // Comprobamos que sea una operacion gratuita.
-                        Value = documento.Gratuitas > 0 ? 0 : detalleDocumento.PrecioReferencial
+                        //jcf
+                        //Value = documento.Gratuitas > 0 ? 0 : detalleDocumento.PrecioReferencial
+                        Value = detalleDocumento.PrecioReferencial
                     },
                     PriceTypeCode = detalleDocumento.TipoPrecio
                 });
                 // Para operaciones no onerosas (gratuitas)
-                if (documento.Gratuitas > 0)
-                    linea.PricingReference.AlternativeConditionPrices.Add(new AlternativeConditionPrice
-                    {
-                        PriceAmount = new PayableAmount
-                        {
-                            CurrencyId = documento.Moneda,
-                            Value = detalleDocumento.PrecioReferencial
-                        },
-                        PriceTypeCode = "02"
-                    });
+                //jcf Error cuando tipoPrecio del anterior bloque, es igual al tipoPrecio de este bloque
+                //if (documento.Gratuitas > 0)
+                //    linea.PricingReference.AlternativeConditionPrices.Add(new AlternativeConditionPrice
+                //    {
+                //        PriceAmount = new PayableAmount
+                //        {
+                //            CurrencyId = documento.Moneda,
+                //            Value = detalleDocumento.PrecioReferencial
+                //        },
+                //        PriceTypeCode = "02"
+                //    });
 
                 /* 51 - Descuentos por ítem */
                 if (detalleDocumento.Descuento > 0)

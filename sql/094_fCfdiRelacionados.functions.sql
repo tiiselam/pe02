@@ -12,7 +12,7 @@ as
 --24/10/17 jcf Creación
 --
 return(
-			--relaciona a su mismo tipo de documento. 
+			--ND relaciona a factura
 			select 1 orden,	
 				cmpr.tipo tipoDocumento,
 				da.soptype soptypeTo, left(da.tracking_number, 5) + convert(varchar(10), sg.segmento2) sopnumbeTo,
@@ -22,6 +22,7 @@ return(
 				cross apply dbo.fLcLvComprobanteSunat (da.soptype, left(da.tracking_number, 5) + right('0000000'+convert(varchar(10), sg.segmento2), 8))  cmpr
 			where da.sopnumbe = @p_sopnumbe
 			and da.soptype = @soptype
+			and @soptype = 3
 
 			union all
 
@@ -51,7 +52,7 @@ go
 alter view dbo.vwCfdiRelacionados
 as
 
-select rel.orden, rel.tipoDocumento, rel.soptypeFrom, rel.sopnumbeFrom, rel.soptypeTo, rel.sopnumbeTo 
+select rel.orden, rel.tipoDocumento, rel.soptypeFrom, rel.sopnumbeFrom, rel.soptypeTo, upper(rel.sopnumbeTo) sopnumbeTo
 from sop30200 sop
 	cross apply dbo.fCfdiRelacionados(sop.soptype, sop.sopnumbe) rel
 

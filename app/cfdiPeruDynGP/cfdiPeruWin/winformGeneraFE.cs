@@ -66,9 +66,9 @@ namespace cfdiPeru
                     dGridActivo = dgridTrxFacturas;
                     vistaActiva = "vwCfdiTransaccionesDeVenta";
                     break;
-                case "tabCobros":
+                case "tabResumen":
                     dGridActivo = dgridTrxCobros;
-                    vistaActiva = "vwCfdiTrxCobros";
+                    vistaActiva = "vwCfdiListaResumenDiario";
                     break;
                 default:
                     dGridActivo = dgridTrxFacturas;
@@ -322,6 +322,8 @@ namespace cfdiPeru
             txtbxMensajes.Text = "";
 
             Parametros Param = new Parametros(DatosConexionDB.Elemento.Intercompany);
+            Param.ExtDefault = this.tabCfdi.SelectedTab.Name;
+
             if (!Param.ultimoMensaje.Equals(string.Empty)) 
             {
                 txtbxMensajes.Text = Param.ultimoMensaje;
@@ -346,7 +348,11 @@ namespace cfdiPeru
                 proc.Progreso += new ProcesaCfdi.LogHandler(reportaProgreso);
 
                 pBarProcesoActivo.Visible = true;
-                await proc.GeneraXmlAsync();
+
+                if (this.tabCfdi.SelectedTab.Name.Equals("tabResumen"))
+                    await proc.GeneraResumenXmlAsync();
+                else
+                    await proc.GeneraDocumentoXmlAsync();
 
                 //Actualiza la pantalla
                 Parametros Cia = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml

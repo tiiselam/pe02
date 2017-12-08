@@ -29,6 +29,11 @@
     <EntitySetMapping Name="vwCfdiGeneraDocumentoDeVenta">
       <EntityTypeMapping TypeName="PERUModel.vwCfdiGeneraDocumentoDeVenta">
         <MappingFragment StoreEntitySet="vwCfdiGeneraDocumentoDeVenta">
+          <ScalarProperty Name="emisorTipoDoc" ColumnName="emisorTipoDoc" />
+          <ScalarProperty Name="docdate" ColumnName="docdate" />
+          <ScalarProperty Name="estadoContabilizado" ColumnName="estadoContabilizado" />
+          <ScalarProperty Name="montoEnLetras" ColumnName="montoEnLetras" />
+          <ScalarProperty Name="gratuito" ColumnName="gratuito" />
           <ScalarProperty Name="discrepanciaDesc" ColumnName="discrepanciaDesc" />
           <ScalarProperty Name="discrepanciaTipo" ColumnName="discrepanciaTipo" />
           <ScalarProperty Name="ORTDISAM" ColumnName="ORTDISAM" />
@@ -70,6 +75,38 @@
           <ScalarProperty Name="soptypeFrom" ColumnName="soptypeFrom" />
           <ScalarProperty Name="tipoDocumento" ColumnName="tipoDocumento" />
           <ScalarProperty Name="orden" ColumnName="orden" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vwCfdiGeneraResumenDiario">
+      <EntityTypeMapping TypeName="PERUModel.vwCfdiGeneraResumenDiario">
+        <MappingFragment StoreEntitySet="vwCfdiGeneraResumenDiario">
+          <ScalarProperty Name="serie" ColumnName="serie" />
+          <ScalarProperty Name="finRango" ColumnName="finRango" />
+          <ScalarProperty Name="iniRango" ColumnName="iniRango" />
+          <ScalarProperty Name="emisorTipoDoc" ColumnName="emisorTipoDoc" />
+          <ScalarProperty Name="docdate" ColumnName="docdate" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="totalGratuito" ColumnName="totalGratuito" />
+          <ScalarProperty Name="totalExonerado" ColumnName="totalExonerado" />
+          <ScalarProperty Name="totalInafecta" ColumnName="totalInafecta" />
+          <ScalarProperty Name="totalIva" ColumnName="totalIva" />
+          <ScalarProperty Name="totalIvaImponible" ColumnName="totalIvaImponible" />
+          <ScalarProperty Name="moneda" ColumnName="moneda" />
+          <ScalarProperty Name="receptorNroDoc" ColumnName="receptorNroDoc" />
+          <ScalarProperty Name="receptorTipoDoc" ColumnName="receptorTipoDoc" />
+          <ScalarProperty Name="emisorDistrito" ColumnName="emisorDistrito" />
+          <ScalarProperty Name="emisorProvincia" ColumnName="emisorProvincia" />
+          <ScalarProperty Name="emisorDepartamento" ColumnName="emisorDepartamento" />
+          <ScalarProperty Name="emisorUrbanizacion" ColumnName="emisorUrbanizacion" />
+          <ScalarProperty Name="emisorDireccion" ColumnName="emisorDireccion" />
+          <ScalarProperty Name="emisorUbigeo" ColumnName="emisorUbigeo" />
+          <ScalarProperty Name="emisorNombre" ColumnName="emisorNombre" />
+          <ScalarProperty Name="emisorNroDoc" ColumnName="emisorNroDoc" />
+          <ScalarProperty Name="tipoDocumento" ColumnName="tipoDocumento" />
+          <ScalarProperty Name="numResumenDiario" ColumnName="numResumenDiario" />
+          <ScalarProperty Name="tipoResumenDiario" ColumnName="tipoResumenDiario" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

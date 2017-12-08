@@ -43,5 +43,10 @@ namespace cfdiEntidadesGP
         public decimal ORTDISAM { get; set; }
         public string discrepanciaTipo { get; set; }
         public string discrepanciaDesc { get; set; }
+        public decimal gratuito { get; set; }
+        public string montoEnLetras { get; set; }
+        public string estadoContabilizado { get; set; }
+        public System.DateTime docdate { get; set; }
+        public string emisorTipoDoc { get; set; }
     }
 }

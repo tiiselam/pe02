@@ -27,11 +27,13 @@ namespace OpenInvoicePeru.Firmado
 
                 string resultado;
 
-                var betterBytes = Encoding.Convert(Encoding.UTF8,
-                    Encoding.GetEncoding(Formatos.EncodingIso),
-                    Convert.FromBase64String(request.TramaXmlSinFirma));
+                //jcf. Comenta encoding
+                //var betterBytes = Encoding.Convert(Encoding.UTF8,
+                //    Encoding.GetEncoding(Formatos.EncodingIso),
+                //    Convert.FromBase64String(request.TramaXmlSinFirma));
 
-                using (var documento = new MemoryStream(betterBytes))
+                //using (var documento = new MemoryStream(betterBytes))
+                using (var documento = new MemoryStream(Convert.FromBase64String(request.TramaXmlSinFirma)))
                 {
                     xmlDoc.PreserveWhitespace = true;
                     xmlDoc.Load(documento);
@@ -73,9 +75,10 @@ namespace OpenInvoicePeru.Firmado
 
                     using (var memDoc = new MemoryStream())
                     {
-
-                        using (var writer = XmlWriter.Create(memDoc,
-                            new XmlWriterSettings {Encoding = Encoding.GetEncoding(Formatos.EncodingIso)}))
+                        //jcf. Comenta encoding
+                        //using (var writer = XmlWriter.Create(memDoc,
+                        //    new XmlWriterSettings {Encoding = Encoding.GetEncoding(Formatos.EncodingIso)}))
+                        using (var writer = XmlWriter.Create(memDoc))
                         {
                             xmlDoc.WriteTo(writer);
                         }

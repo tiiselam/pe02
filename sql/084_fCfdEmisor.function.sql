@@ -14,7 +14,7 @@ as
 --
 return
 ( 
-select rtrim(replace(ci.TAXREGTN, 'RFC ', '')) TAXREGTN, 
+select rtrim(replace(ci.TAXREGTN, 'RFC ', '')) TAXREGTN, '6' emisorTipoDoc,
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(RTRIM(ci.ADRCNTCT)), 10) ADRCNTCT, 
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(rtrim(ci.ADDRESS1)), 10) ADDRESS1, 
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(rtrim(ci.ADDRESS2)), 10) ADDRESS2, 

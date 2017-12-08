@@ -31,6 +31,21 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(winformGeneraFE));
             this.dgridTrxFacturas = new System.Windows.Forms.DataGridView();
+            this.Mark = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Docid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EstadoContabilizado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Voidstts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MensajeEA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eBinAct = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vwCfdTransaccionesDeVentaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cmbBIdDoc = new System.Windows.Forms.ComboBox();
             this.cmbBEstado = new System.Windows.Forms.ComboBox();
             this.checkBoxEstado = new System.Windows.Forms.CheckBox();
@@ -105,103 +120,26 @@
             this.pBarProcesoActivo = new System.Windows.Forms.ProgressBar();
             this.tabCfdi = new System.Windows.Forms.TabControl();
             this.tabFacturas = new System.Windows.Forms.TabPage();
-            this.tabCobros = new System.Windows.Forms.TabPage();
+            this.tabResumen = new System.Windows.Forms.TabPage();
             this.cBoxMarcCobros = new System.Windows.Forms.CheckBox();
             this.dgridTrxCobros = new System.Windows.Forms.DataGridView();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.MarcaCobro = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.iddoc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Soptype = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sopnumbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.Mark = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Docid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EstadoContabilizado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Voidstts = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MensajeEA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.eBinAct = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.vwCfdTransaccionesDeVentaBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.estadoContabilizadoDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.docidDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cUSTNMBRDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.montoActualOriginalDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.voidsttsDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.comprobanteXmlDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.iDCertificadoDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rutacertificadoDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rutaclaveDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contraseniaclaveDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rutacertificadoPacDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rutaclavePacDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contraseniaclavePacDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rfcDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.regimenDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rutaXmlDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.isocurrcDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addendaDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sEstadoContabilizadoDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sSoptypeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sDocidDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sSopnumbeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sFechahoraDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sCUSTNMBRDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sNombreClienteDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sIdImpuestoClienteDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sTotalDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sMontoActualOriginalDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sVoidsttsDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sEstadoDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sMensajeDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sComprobanteXmlDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sIDCertificadoDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sRutacertificadoDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sRutaclaveDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sContraseniaclaveDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sRutacertificadoPacDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sRutaclavePacDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sContraseniaclavePacDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sRfcDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sRegimenDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sRutaXmlDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sEstadoActualDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sMensajeEADataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sIsocurrcDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sAddendaDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.whereDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.aggregateDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.querySourceDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mappingNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.schemaGlobalDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.schemaTableViewDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.schemaStoredProcedureDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.notRecommendedConnectionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.connectionStringDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.connectionStringConfigDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.filterDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sortDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rowCountDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.eOFDataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.queryDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgridTrxFacturas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vwCfdTransaccionesDeVentaBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStripAccionesXML.SuspendLayout();
             this.toolStripImpresion.SuspendLayout();
@@ -219,9 +157,8 @@
             this.panel3.SuspendLayout();
             this.tabCfdi.SuspendLayout();
             this.tabFacturas.SuspendLayout();
-            this.tabCobros.SuspendLayout();
+            this.tabResumen.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgridTrxCobros)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.vwCfdTransaccionesDeVentaBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dgridTrxFacturas
@@ -259,6 +196,114 @@
             this.dgridTrxFacturas.Size = new System.Drawing.Size(990, 287);
             this.dgridTrxFacturas.TabIndex = 50;
             this.dgridTrxFacturas.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgridTrxFacturas_RowPostPaint_1);
+            // 
+            // Mark
+            // 
+            this.Mark.FalseValue = "0";
+            this.Mark.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Mark.Frozen = true;
+            this.Mark.HeaderText = "M";
+            this.Mark.IndeterminateValue = "-1";
+            this.Mark.Name = "Mark";
+            this.Mark.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Mark.TrueValue = "1";
+            this.Mark.Width = 20;
+            // 
+            // Docid
+            // 
+            this.Docid.DataPropertyName = "Docid";
+            this.Docid.Frozen = true;
+            this.Docid.HeaderText = "Id Doc.";
+            this.Docid.Name = "Docid";
+            this.Docid.ReadOnly = true;
+            this.Docid.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "Soptype";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Tipo";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "Sopnumbe";
+            this.dataGridViewTextBoxColumn4.HeaderText = "Número Doc.";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Fechahora";
+            this.dataGridViewTextBoxColumn5.HeaderText = "Fecha";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "NombreCliente";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Nombre Cliente";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.DataPropertyName = "IdImpuestoCliente";
+            this.dataGridViewTextBoxColumn7.HeaderText = "Id. de Impuesto";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.DataPropertyName = "Total";
+            this.dataGridViewTextBoxColumn8.HeaderText = "Total";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.DataPropertyName = "Estado";
+            this.dataGridViewTextBoxColumn9.HeaderText = "Estado";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.DataPropertyName = "Mensaje";
+            this.dataGridViewTextBoxColumn10.HeaderText = "Mensaje";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            // 
+            // EstadoContabilizado
+            // 
+            this.EstadoContabilizado.DataPropertyName = "EstadoContabilizado";
+            this.EstadoContabilizado.HeaderText = "Estado Contab.";
+            this.EstadoContabilizado.Name = "EstadoContabilizado";
+            this.EstadoContabilizado.Visible = false;
+            // 
+            // Voidstts
+            // 
+            this.Voidstts.DataPropertyName = "Voidstts";
+            this.Voidstts.HeaderText = "Anulado";
+            this.Voidstts.Name = "Voidstts";
+            this.Voidstts.Visible = false;
+            // 
+            // MensajeEA
+            // 
+            this.MensajeEA.DataPropertyName = "MensajeEA";
+            this.MensajeEA.HeaderText = "Observaciones";
+            this.MensajeEA.Name = "MensajeEA";
+            this.MensajeEA.Width = 180;
+            // 
+            // eBinAct
+            // 
+            this.eBinAct.DataPropertyName = "EstadoActual";
+            this.eBinAct.HeaderText = "E";
+            this.eBinAct.Name = "eBinAct";
+            this.eBinAct.ReadOnly = true;
+            this.eBinAct.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.eBinAct.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.eBinAct.Visible = false;
+            this.eBinAct.Width = 20;
+            // 
+            // vwCfdTransaccionesDeVentaBindingSource
+            // 
+            this.vwCfdTransaccionesDeVentaBindingSource.DataSource = typeof(cfdiPeru.vwCfdTransaccionesDeVenta);
             // 
             // cmbBIdDoc
             // 
@@ -1050,7 +1095,7 @@
             // tabCfdi
             // 
             this.tabCfdi.Controls.Add(this.tabFacturas);
-            this.tabCfdi.Controls.Add(this.tabCobros);
+            this.tabCfdi.Controls.Add(this.tabResumen);
             this.tabCfdi.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabCfdi.Location = new System.Drawing.Point(0, 174);
             this.tabCfdi.Name = "tabCfdi";
@@ -1068,20 +1113,20 @@
             this.tabFacturas.Padding = new System.Windows.Forms.Padding(3);
             this.tabFacturas.Size = new System.Drawing.Size(996, 293);
             this.tabFacturas.TabIndex = 0;
-            this.tabFacturas.Text = "Facturas";
+            this.tabFacturas.Text = "FACTURAS";
             this.tabFacturas.UseVisualStyleBackColor = true;
             // 
-            // tabCobros
+            // tabResumen
             // 
-            this.tabCobros.Controls.Add(this.cBoxMarcCobros);
-            this.tabCobros.Controls.Add(this.dgridTrxCobros);
-            this.tabCobros.Location = new System.Drawing.Point(4, 22);
-            this.tabCobros.Name = "tabCobros";
-            this.tabCobros.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCobros.Size = new System.Drawing.Size(996, 293);
-            this.tabCobros.TabIndex = 1;
-            this.tabCobros.Text = "-";
-            this.tabCobros.UseVisualStyleBackColor = true;
+            this.tabResumen.Controls.Add(this.cBoxMarcCobros);
+            this.tabResumen.Controls.Add(this.dgridTrxCobros);
+            this.tabResumen.Location = new System.Drawing.Point(4, 22);
+            this.tabResumen.Name = "tabResumen";
+            this.tabResumen.Padding = new System.Windows.Forms.Padding(3);
+            this.tabResumen.Size = new System.Drawing.Size(996, 293);
+            this.tabResumen.TabIndex = 1;
+            this.tabResumen.Text = "RESUMEN";
+            this.tabResumen.UseVisualStyleBackColor = true;
             // 
             // cBoxMarcCobros
             // 
@@ -1089,7 +1134,7 @@
             this.cBoxMarcCobros.Checked = true;
             this.cBoxMarcCobros.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cBoxMarcCobros.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cBoxMarcCobros.Location = new System.Drawing.Point(17, 15);
+            this.cBoxMarcCobros.Location = new System.Drawing.Point(17, 8);
             this.cBoxMarcCobros.Name = "cBoxMarcCobros";
             this.cBoxMarcCobros.Size = new System.Drawing.Size(12, 11);
             this.cBoxMarcCobros.TabIndex = 43;
@@ -1109,79 +1154,16 @@
             this.iddoc,
             this.Soptype,
             this.Sopnumbe,
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.estadoContabilizadoDataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn13,
-            this.docidDataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn14,
             this.dataGridViewTextBoxColumn15,
-            this.cUSTNMBRDataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn16,
             this.dataGridViewTextBoxColumn17,
             this.dataGridViewTextBoxColumn18,
-            this.montoActualOriginalDataGridViewTextBoxColumn1,
-            this.voidsttsDataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn19,
             this.dataGridViewTextBoxColumn20,
-            this.comprobanteXmlDataGridViewTextBoxColumn1,
-            this.iDCertificadoDataGridViewTextBoxColumn1,
-            this.rutacertificadoDataGridViewTextBoxColumn1,
-            this.rutaclaveDataGridViewTextBoxColumn1,
-            this.contraseniaclaveDataGridViewTextBoxColumn1,
-            this.rutacertificadoPacDataGridViewTextBoxColumn1,
-            this.rutaclavePacDataGridViewTextBoxColumn1,
-            this.contraseniaclavePacDataGridViewTextBoxColumn1,
-            this.rfcDataGridViewTextBoxColumn1,
-            this.regimenDataGridViewTextBoxColumn1,
-            this.rutaXmlDataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn21,
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn22,
-            this.isocurrcDataGridViewTextBoxColumn1,
-            this.addendaDataGridViewTextBoxColumn1,
-            this.sEstadoContabilizadoDataGridViewTextBoxColumn1,
-            this.sSoptypeDataGridViewTextBoxColumn1,
-            this.sDocidDataGridViewTextBoxColumn1,
-            this.sSopnumbeDataGridViewTextBoxColumn1,
-            this.sFechahoraDataGridViewTextBoxColumn1,
-            this.sCUSTNMBRDataGridViewTextBoxColumn1,
-            this.sNombreClienteDataGridViewTextBoxColumn1,
-            this.sIdImpuestoClienteDataGridViewTextBoxColumn1,
-            this.sTotalDataGridViewTextBoxColumn1,
-            this.sMontoActualOriginalDataGridViewTextBoxColumn1,
-            this.sVoidsttsDataGridViewTextBoxColumn1,
-            this.sEstadoDataGridViewTextBoxColumn1,
-            this.sMensajeDataGridViewTextBoxColumn1,
-            this.sComprobanteXmlDataGridViewTextBoxColumn1,
-            this.sIDCertificadoDataGridViewTextBoxColumn1,
-            this.sRutacertificadoDataGridViewTextBoxColumn1,
-            this.sRutaclaveDataGridViewTextBoxColumn1,
-            this.sContraseniaclaveDataGridViewTextBoxColumn1,
-            this.sRutacertificadoPacDataGridViewTextBoxColumn1,
-            this.sRutaclavePacDataGridViewTextBoxColumn1,
-            this.sContraseniaclavePacDataGridViewTextBoxColumn1,
-            this.sRfcDataGridViewTextBoxColumn1,
-            this.sRegimenDataGridViewTextBoxColumn1,
-            this.sRutaXmlDataGridViewTextBoxColumn1,
-            this.sEstadoActualDataGridViewTextBoxColumn1,
-            this.sMensajeEADataGridViewTextBoxColumn1,
-            this.sIsocurrcDataGridViewTextBoxColumn1,
-            this.sAddendaDataGridViewTextBoxColumn1,
-            this.whereDataGridViewTextBoxColumn1,
-            this.aggregateDataGridViewTextBoxColumn1,
-            this.querySourceDataGridViewTextBoxColumn1,
-            this.mappingNameDataGridViewTextBoxColumn1,
-            this.schemaGlobalDataGridViewTextBoxColumn1,
-            this.schemaTableViewDataGridViewTextBoxColumn1,
-            this.schemaStoredProcedureDataGridViewTextBoxColumn1,
-            this.notRecommendedConnectionDataGridViewTextBoxColumn1,
-            this.connectionStringDataGridViewTextBoxColumn1,
-            this.connectionStringConfigDataGridViewTextBoxColumn1,
-            this.filterDataGridViewTextBoxColumn1,
-            this.sortDataGridViewTextBoxColumn1,
-            this.rowCountDataGridViewTextBoxColumn1,
-            this.eOFDataGridViewCheckBoxColumn1,
-            this.queryDataGridViewTextBoxColumn1});
+            this.dataGridViewTextBoxColumn21});
             this.dgridTrxCobros.Cursor = System.Windows.Forms.Cursors.Default;
             this.dgridTrxCobros.DataSource = this.vwCfdTransaccionesDeVentaBindingSource;
             this.dgridTrxCobros.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1190,6 +1172,15 @@
             this.dgridTrxCobros.RowHeadersWidth = 10;
             this.dgridTrxCobros.Size = new System.Drawing.Size(990, 287);
             this.dgridTrxCobros.TabIndex = 0;
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
             // 
             // MarcaCobro
             // 
@@ -1206,20 +1197,59 @@
             this.iddoc.DataPropertyName = "docid";
             this.iddoc.HeaderText = "Id Doc";
             this.iddoc.Name = "iddoc";
-            this.iddoc.Visible = false;
             // 
             // Soptype
             // 
             this.Soptype.DataPropertyName = "Soptype";
-            this.Soptype.HeaderText = "Soptype";
+            this.Soptype.HeaderText = "Tipo";
             this.Soptype.Name = "Soptype";
-            this.Soptype.Visible = false;
             // 
             // Sopnumbe
             // 
             this.Sopnumbe.DataPropertyName = "Sopnumbe";
-            this.Sopnumbe.HeaderText = "Número Pago";
+            this.Sopnumbe.HeaderText = "Número";
             this.Sopnumbe.Name = "Sopnumbe";
+            // 
+            // dataGridViewTextBoxColumn15
+            // 
+            this.dataGridViewTextBoxColumn15.DataPropertyName = "Fechahora";
+            this.dataGridViewTextBoxColumn15.HeaderText = "Fecha";
+            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            this.dataGridViewTextBoxColumn16.DataPropertyName = "NombreCliente";
+            this.dataGridViewTextBoxColumn16.HeaderText = "Nombre Cliente";
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            this.dataGridViewTextBoxColumn16.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn17
+            // 
+            this.dataGridViewTextBoxColumn17.DataPropertyName = "IdImpuestoCliente";
+            this.dataGridViewTextBoxColumn17.HeaderText = "IdImpuestoCliente";
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn18
+            // 
+            this.dataGridViewTextBoxColumn18.DataPropertyName = "Total";
+            this.dataGridViewTextBoxColumn18.HeaderText = "Total";
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            this.dataGridViewTextBoxColumn18.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn19
+            // 
+            this.dataGridViewTextBoxColumn19.DataPropertyName = "Estado";
+            this.dataGridViewTextBoxColumn19.HeaderText = "Estado";
+            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            this.dataGridViewTextBoxColumn19.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn20
+            // 
+            this.dataGridViewTextBoxColumn20.DataPropertyName = "Mensaje";
+            this.dataGridViewTextBoxColumn20.HeaderText = "Mensaje";
+            this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
+            this.dataGridViewTextBoxColumn20.Width = 200;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -1235,553 +1265,19 @@
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.Visible = false;
             // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
-            // 
-            // Mark
-            // 
-            this.Mark.FalseValue = "0";
-            this.Mark.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Mark.Frozen = true;
-            this.Mark.HeaderText = "M";
-            this.Mark.IndeterminateValue = "-1";
-            this.Mark.Name = "Mark";
-            this.Mark.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Mark.TrueValue = "1";
-            this.Mark.Width = 20;
-            // 
-            // Docid
-            // 
-            this.Docid.DataPropertyName = "Docid";
-            this.Docid.Frozen = true;
-            this.Docid.HeaderText = "Id Doc.";
-            this.Docid.Name = "Docid";
-            this.Docid.ReadOnly = true;
-            this.Docid.Width = 50;
-            // 
-            // EstadoContabilizado
-            // 
-            this.EstadoContabilizado.DataPropertyName = "EstadoContabilizado";
-            this.EstadoContabilizado.HeaderText = "Estado Contab.";
-            this.EstadoContabilizado.Name = "EstadoContabilizado";
-            this.EstadoContabilizado.Visible = false;
-            // 
-            // Voidstts
-            // 
-            this.Voidstts.DataPropertyName = "Voidstts";
-            this.Voidstts.HeaderText = "Anulado";
-            this.Voidstts.Name = "Voidstts";
-            this.Voidstts.Visible = false;
-            // 
-            // MensajeEA
-            // 
-            this.MensajeEA.DataPropertyName = "MensajeEA";
-            this.MensajeEA.HeaderText = "Observaciones";
-            this.MensajeEA.Name = "MensajeEA";
-            this.MensajeEA.Width = 180;
-            // 
-            // eBinAct
-            // 
-            this.eBinAct.DataPropertyName = "EstadoActual";
-            this.eBinAct.HeaderText = "E";
-            this.eBinAct.Name = "eBinAct";
-            this.eBinAct.ReadOnly = true;
-            this.eBinAct.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.eBinAct.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.eBinAct.Visible = false;
-            this.eBinAct.Width = 20;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Soptype";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Tipo";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "Sopnumbe";
-            this.dataGridViewTextBoxColumn4.HeaderText = "Número Doc.";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Fechahora";
-            this.dataGridViewTextBoxColumn5.HeaderText = "Fecha";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "NombreCliente";
-            this.dataGridViewTextBoxColumn6.HeaderText = "Nombre Cliente";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.DataPropertyName = "IdImpuestoCliente";
-            this.dataGridViewTextBoxColumn7.HeaderText = "Id. de Impuesto";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.DataPropertyName = "Total";
-            this.dataGridViewTextBoxColumn8.HeaderText = "Total";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.DataPropertyName = "Estado";
-            this.dataGridViewTextBoxColumn9.HeaderText = "Estado";
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.Visible = false;
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            this.dataGridViewTextBoxColumn10.DataPropertyName = "Mensaje";
-            this.dataGridViewTextBoxColumn10.HeaderText = "Mensaje";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            // 
-            // vwCfdTransaccionesDeVentaBindingSource
-            // 
-            this.vwCfdTransaccionesDeVentaBindingSource.DataSource = typeof(cfdiPeru.vwCfdTransaccionesDeVenta);
-            // 
-            // estadoContabilizadoDataGridViewTextBoxColumn1
-            // 
-            this.estadoContabilizadoDataGridViewTextBoxColumn1.DataPropertyName = "EstadoContabilizado";
-            this.estadoContabilizadoDataGridViewTextBoxColumn1.HeaderText = "EstadoContabilizado";
-            this.estadoContabilizadoDataGridViewTextBoxColumn1.Name = "estadoContabilizadoDataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn13
-            // 
-            this.dataGridViewTextBoxColumn13.DataPropertyName = "Soptype";
-            this.dataGridViewTextBoxColumn13.HeaderText = "Soptype";
-            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            // 
-            // docidDataGridViewTextBoxColumn1
-            // 
-            this.docidDataGridViewTextBoxColumn1.DataPropertyName = "Docid";
-            this.docidDataGridViewTextBoxColumn1.HeaderText = "Docid";
-            this.docidDataGridViewTextBoxColumn1.Name = "docidDataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn14
-            // 
-            this.dataGridViewTextBoxColumn14.DataPropertyName = "Sopnumbe";
-            this.dataGridViewTextBoxColumn14.HeaderText = "Sopnumbe";
-            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-            // 
-            // dataGridViewTextBoxColumn15
-            // 
-            this.dataGridViewTextBoxColumn15.DataPropertyName = "Fechahora";
-            this.dataGridViewTextBoxColumn15.HeaderText = "Fechahora";
-            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
-            // 
-            // cUSTNMBRDataGridViewTextBoxColumn1
-            // 
-            this.cUSTNMBRDataGridViewTextBoxColumn1.DataPropertyName = "CUSTNMBR";
-            this.cUSTNMBRDataGridViewTextBoxColumn1.HeaderText = "CUSTNMBR";
-            this.cUSTNMBRDataGridViewTextBoxColumn1.Name = "cUSTNMBRDataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn16
-            // 
-            this.dataGridViewTextBoxColumn16.DataPropertyName = "NombreCliente";
-            this.dataGridViewTextBoxColumn16.HeaderText = "NombreCliente";
-            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            // 
-            // dataGridViewTextBoxColumn17
-            // 
-            this.dataGridViewTextBoxColumn17.DataPropertyName = "IdImpuestoCliente";
-            this.dataGridViewTextBoxColumn17.HeaderText = "IdImpuestoCliente";
-            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            // 
-            // dataGridViewTextBoxColumn18
-            // 
-            this.dataGridViewTextBoxColumn18.DataPropertyName = "Total";
-            this.dataGridViewTextBoxColumn18.HeaderText = "Total";
-            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-            // 
-            // montoActualOriginalDataGridViewTextBoxColumn1
-            // 
-            this.montoActualOriginalDataGridViewTextBoxColumn1.DataPropertyName = "MontoActualOriginal";
-            this.montoActualOriginalDataGridViewTextBoxColumn1.HeaderText = "MontoActualOriginal";
-            this.montoActualOriginalDataGridViewTextBoxColumn1.Name = "montoActualOriginalDataGridViewTextBoxColumn1";
-            // 
-            // voidsttsDataGridViewTextBoxColumn1
-            // 
-            this.voidsttsDataGridViewTextBoxColumn1.DataPropertyName = "Voidstts";
-            this.voidsttsDataGridViewTextBoxColumn1.HeaderText = "Voidstts";
-            this.voidsttsDataGridViewTextBoxColumn1.Name = "voidsttsDataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn19
-            // 
-            this.dataGridViewTextBoxColumn19.DataPropertyName = "Estado";
-            this.dataGridViewTextBoxColumn19.HeaderText = "Estado";
-            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
-            // 
-            // dataGridViewTextBoxColumn20
-            // 
-            this.dataGridViewTextBoxColumn20.DataPropertyName = "Mensaje";
-            this.dataGridViewTextBoxColumn20.HeaderText = "Mensaje";
-            this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
-            // 
-            // comprobanteXmlDataGridViewTextBoxColumn1
-            // 
-            this.comprobanteXmlDataGridViewTextBoxColumn1.DataPropertyName = "ComprobanteXml";
-            this.comprobanteXmlDataGridViewTextBoxColumn1.HeaderText = "ComprobanteXml";
-            this.comprobanteXmlDataGridViewTextBoxColumn1.Name = "comprobanteXmlDataGridViewTextBoxColumn1";
-            // 
-            // iDCertificadoDataGridViewTextBoxColumn1
-            // 
-            this.iDCertificadoDataGridViewTextBoxColumn1.DataPropertyName = "ID_Certificado";
-            this.iDCertificadoDataGridViewTextBoxColumn1.HeaderText = "ID_Certificado";
-            this.iDCertificadoDataGridViewTextBoxColumn1.Name = "iDCertificadoDataGridViewTextBoxColumn1";
-            // 
-            // rutacertificadoDataGridViewTextBoxColumn1
-            // 
-            this.rutacertificadoDataGridViewTextBoxColumn1.DataPropertyName = "Ruta_certificado";
-            this.rutacertificadoDataGridViewTextBoxColumn1.HeaderText = "Ruta_certificado";
-            this.rutacertificadoDataGridViewTextBoxColumn1.Name = "rutacertificadoDataGridViewTextBoxColumn1";
-            // 
-            // rutaclaveDataGridViewTextBoxColumn1
-            // 
-            this.rutaclaveDataGridViewTextBoxColumn1.DataPropertyName = "Ruta_clave";
-            this.rutaclaveDataGridViewTextBoxColumn1.HeaderText = "Ruta_clave";
-            this.rutaclaveDataGridViewTextBoxColumn1.Name = "rutaclaveDataGridViewTextBoxColumn1";
-            // 
-            // contraseniaclaveDataGridViewTextBoxColumn1
-            // 
-            this.contraseniaclaveDataGridViewTextBoxColumn1.DataPropertyName = "Contrasenia_clave";
-            this.contraseniaclaveDataGridViewTextBoxColumn1.HeaderText = "Contrasenia_clave";
-            this.contraseniaclaveDataGridViewTextBoxColumn1.Name = "contraseniaclaveDataGridViewTextBoxColumn1";
-            // 
-            // rutacertificadoPacDataGridViewTextBoxColumn1
-            // 
-            this.rutacertificadoPacDataGridViewTextBoxColumn1.DataPropertyName = "Ruta_certificadoPac";
-            this.rutacertificadoPacDataGridViewTextBoxColumn1.HeaderText = "Ruta_certificadoPac";
-            this.rutacertificadoPacDataGridViewTextBoxColumn1.Name = "rutacertificadoPacDataGridViewTextBoxColumn1";
-            // 
-            // rutaclavePacDataGridViewTextBoxColumn1
-            // 
-            this.rutaclavePacDataGridViewTextBoxColumn1.DataPropertyName = "Ruta_clavePac";
-            this.rutaclavePacDataGridViewTextBoxColumn1.HeaderText = "Ruta_clavePac";
-            this.rutaclavePacDataGridViewTextBoxColumn1.Name = "rutaclavePacDataGridViewTextBoxColumn1";
-            // 
-            // contraseniaclavePacDataGridViewTextBoxColumn1
-            // 
-            this.contraseniaclavePacDataGridViewTextBoxColumn1.DataPropertyName = "Contrasenia_clavePac";
-            this.contraseniaclavePacDataGridViewTextBoxColumn1.HeaderText = "Contrasenia_clavePac";
-            this.contraseniaclavePacDataGridViewTextBoxColumn1.Name = "contraseniaclavePacDataGridViewTextBoxColumn1";
-            // 
-            // rfcDataGridViewTextBoxColumn1
-            // 
-            this.rfcDataGridViewTextBoxColumn1.DataPropertyName = "Rfc";
-            this.rfcDataGridViewTextBoxColumn1.HeaderText = "Rfc";
-            this.rfcDataGridViewTextBoxColumn1.Name = "rfcDataGridViewTextBoxColumn1";
-            // 
-            // regimenDataGridViewTextBoxColumn1
-            // 
-            this.regimenDataGridViewTextBoxColumn1.DataPropertyName = "Regimen";
-            this.regimenDataGridViewTextBoxColumn1.HeaderText = "Regimen";
-            this.regimenDataGridViewTextBoxColumn1.Name = "regimenDataGridViewTextBoxColumn1";
-            // 
-            // rutaXmlDataGridViewTextBoxColumn1
-            // 
-            this.rutaXmlDataGridViewTextBoxColumn1.DataPropertyName = "RutaXml";
-            this.rutaXmlDataGridViewTextBoxColumn1.HeaderText = "RutaXml";
-            this.rutaXmlDataGridViewTextBoxColumn1.Name = "rutaXmlDataGridViewTextBoxColumn1";
+            // dataGridViewTextBoxColumn22
+            // 
+            this.dataGridViewTextBoxColumn22.DataPropertyName = "MensajeEA";
+            this.dataGridViewTextBoxColumn22.HeaderText = "Observaciones";
+            this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
+            this.dataGridViewTextBoxColumn22.Width = 200;
             // 
             // dataGridViewTextBoxColumn21
             // 
             this.dataGridViewTextBoxColumn21.DataPropertyName = "EstadoActual";
             this.dataGridViewTextBoxColumn21.HeaderText = "EstadoActual";
             this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
-            // 
-            // dataGridViewTextBoxColumn22
-            // 
-            this.dataGridViewTextBoxColumn22.DataPropertyName = "MensajeEA";
-            this.dataGridViewTextBoxColumn22.HeaderText = "MensajeEA";
-            this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
-            // 
-            // isocurrcDataGridViewTextBoxColumn1
-            // 
-            this.isocurrcDataGridViewTextBoxColumn1.DataPropertyName = "Isocurrc";
-            this.isocurrcDataGridViewTextBoxColumn1.HeaderText = "Isocurrc";
-            this.isocurrcDataGridViewTextBoxColumn1.Name = "isocurrcDataGridViewTextBoxColumn1";
-            // 
-            // addendaDataGridViewTextBoxColumn1
-            // 
-            this.addendaDataGridViewTextBoxColumn1.DataPropertyName = "Addenda";
-            this.addendaDataGridViewTextBoxColumn1.HeaderText = "Addenda";
-            this.addendaDataGridViewTextBoxColumn1.Name = "addendaDataGridViewTextBoxColumn1";
-            // 
-            // sEstadoContabilizadoDataGridViewTextBoxColumn1
-            // 
-            this.sEstadoContabilizadoDataGridViewTextBoxColumn1.DataPropertyName = "s_EstadoContabilizado";
-            this.sEstadoContabilizadoDataGridViewTextBoxColumn1.HeaderText = "s_EstadoContabilizado";
-            this.sEstadoContabilizadoDataGridViewTextBoxColumn1.Name = "sEstadoContabilizadoDataGridViewTextBoxColumn1";
-            // 
-            // sSoptypeDataGridViewTextBoxColumn1
-            // 
-            this.sSoptypeDataGridViewTextBoxColumn1.DataPropertyName = "s_Soptype";
-            this.sSoptypeDataGridViewTextBoxColumn1.HeaderText = "s_Soptype";
-            this.sSoptypeDataGridViewTextBoxColumn1.Name = "sSoptypeDataGridViewTextBoxColumn1";
-            // 
-            // sDocidDataGridViewTextBoxColumn1
-            // 
-            this.sDocidDataGridViewTextBoxColumn1.DataPropertyName = "s_Docid";
-            this.sDocidDataGridViewTextBoxColumn1.HeaderText = "s_Docid";
-            this.sDocidDataGridViewTextBoxColumn1.Name = "sDocidDataGridViewTextBoxColumn1";
-            // 
-            // sSopnumbeDataGridViewTextBoxColumn1
-            // 
-            this.sSopnumbeDataGridViewTextBoxColumn1.DataPropertyName = "s_Sopnumbe";
-            this.sSopnumbeDataGridViewTextBoxColumn1.HeaderText = "s_Sopnumbe";
-            this.sSopnumbeDataGridViewTextBoxColumn1.Name = "sSopnumbeDataGridViewTextBoxColumn1";
-            // 
-            // sFechahoraDataGridViewTextBoxColumn1
-            // 
-            this.sFechahoraDataGridViewTextBoxColumn1.DataPropertyName = "s_Fechahora";
-            this.sFechahoraDataGridViewTextBoxColumn1.HeaderText = "s_Fechahora";
-            this.sFechahoraDataGridViewTextBoxColumn1.Name = "sFechahoraDataGridViewTextBoxColumn1";
-            // 
-            // sCUSTNMBRDataGridViewTextBoxColumn1
-            // 
-            this.sCUSTNMBRDataGridViewTextBoxColumn1.DataPropertyName = "s_CUSTNMBR";
-            this.sCUSTNMBRDataGridViewTextBoxColumn1.HeaderText = "s_CUSTNMBR";
-            this.sCUSTNMBRDataGridViewTextBoxColumn1.Name = "sCUSTNMBRDataGridViewTextBoxColumn1";
-            // 
-            // sNombreClienteDataGridViewTextBoxColumn1
-            // 
-            this.sNombreClienteDataGridViewTextBoxColumn1.DataPropertyName = "s_NombreCliente";
-            this.sNombreClienteDataGridViewTextBoxColumn1.HeaderText = "s_NombreCliente";
-            this.sNombreClienteDataGridViewTextBoxColumn1.Name = "sNombreClienteDataGridViewTextBoxColumn1";
-            // 
-            // sIdImpuestoClienteDataGridViewTextBoxColumn1
-            // 
-            this.sIdImpuestoClienteDataGridViewTextBoxColumn1.DataPropertyName = "s_IdImpuestoCliente";
-            this.sIdImpuestoClienteDataGridViewTextBoxColumn1.HeaderText = "s_IdImpuestoCliente";
-            this.sIdImpuestoClienteDataGridViewTextBoxColumn1.Name = "sIdImpuestoClienteDataGridViewTextBoxColumn1";
-            // 
-            // sTotalDataGridViewTextBoxColumn1
-            // 
-            this.sTotalDataGridViewTextBoxColumn1.DataPropertyName = "s_Total";
-            this.sTotalDataGridViewTextBoxColumn1.HeaderText = "s_Total";
-            this.sTotalDataGridViewTextBoxColumn1.Name = "sTotalDataGridViewTextBoxColumn1";
-            // 
-            // sMontoActualOriginalDataGridViewTextBoxColumn1
-            // 
-            this.sMontoActualOriginalDataGridViewTextBoxColumn1.DataPropertyName = "s_MontoActualOriginal";
-            this.sMontoActualOriginalDataGridViewTextBoxColumn1.HeaderText = "s_MontoActualOriginal";
-            this.sMontoActualOriginalDataGridViewTextBoxColumn1.Name = "sMontoActualOriginalDataGridViewTextBoxColumn1";
-            // 
-            // sVoidsttsDataGridViewTextBoxColumn1
-            // 
-            this.sVoidsttsDataGridViewTextBoxColumn1.DataPropertyName = "s_Voidstts";
-            this.sVoidsttsDataGridViewTextBoxColumn1.HeaderText = "s_Voidstts";
-            this.sVoidsttsDataGridViewTextBoxColumn1.Name = "sVoidsttsDataGridViewTextBoxColumn1";
-            // 
-            // sEstadoDataGridViewTextBoxColumn1
-            // 
-            this.sEstadoDataGridViewTextBoxColumn1.DataPropertyName = "s_Estado";
-            this.sEstadoDataGridViewTextBoxColumn1.HeaderText = "s_Estado";
-            this.sEstadoDataGridViewTextBoxColumn1.Name = "sEstadoDataGridViewTextBoxColumn1";
-            // 
-            // sMensajeDataGridViewTextBoxColumn1
-            // 
-            this.sMensajeDataGridViewTextBoxColumn1.DataPropertyName = "s_Mensaje";
-            this.sMensajeDataGridViewTextBoxColumn1.HeaderText = "s_Mensaje";
-            this.sMensajeDataGridViewTextBoxColumn1.Name = "sMensajeDataGridViewTextBoxColumn1";
-            // 
-            // sComprobanteXmlDataGridViewTextBoxColumn1
-            // 
-            this.sComprobanteXmlDataGridViewTextBoxColumn1.DataPropertyName = "s_ComprobanteXml";
-            this.sComprobanteXmlDataGridViewTextBoxColumn1.HeaderText = "s_ComprobanteXml";
-            this.sComprobanteXmlDataGridViewTextBoxColumn1.Name = "sComprobanteXmlDataGridViewTextBoxColumn1";
-            // 
-            // sIDCertificadoDataGridViewTextBoxColumn1
-            // 
-            this.sIDCertificadoDataGridViewTextBoxColumn1.DataPropertyName = "s_ID_Certificado";
-            this.sIDCertificadoDataGridViewTextBoxColumn1.HeaderText = "s_ID_Certificado";
-            this.sIDCertificadoDataGridViewTextBoxColumn1.Name = "sIDCertificadoDataGridViewTextBoxColumn1";
-            // 
-            // sRutacertificadoDataGridViewTextBoxColumn1
-            // 
-            this.sRutacertificadoDataGridViewTextBoxColumn1.DataPropertyName = "s_Ruta_certificado";
-            this.sRutacertificadoDataGridViewTextBoxColumn1.HeaderText = "s_Ruta_certificado";
-            this.sRutacertificadoDataGridViewTextBoxColumn1.Name = "sRutacertificadoDataGridViewTextBoxColumn1";
-            // 
-            // sRutaclaveDataGridViewTextBoxColumn1
-            // 
-            this.sRutaclaveDataGridViewTextBoxColumn1.DataPropertyName = "s_Ruta_clave";
-            this.sRutaclaveDataGridViewTextBoxColumn1.HeaderText = "s_Ruta_clave";
-            this.sRutaclaveDataGridViewTextBoxColumn1.Name = "sRutaclaveDataGridViewTextBoxColumn1";
-            // 
-            // sContraseniaclaveDataGridViewTextBoxColumn1
-            // 
-            this.sContraseniaclaveDataGridViewTextBoxColumn1.DataPropertyName = "s_Contrasenia_clave";
-            this.sContraseniaclaveDataGridViewTextBoxColumn1.HeaderText = "s_Contrasenia_clave";
-            this.sContraseniaclaveDataGridViewTextBoxColumn1.Name = "sContraseniaclaveDataGridViewTextBoxColumn1";
-            // 
-            // sRutacertificadoPacDataGridViewTextBoxColumn1
-            // 
-            this.sRutacertificadoPacDataGridViewTextBoxColumn1.DataPropertyName = "s_Ruta_certificadoPac";
-            this.sRutacertificadoPacDataGridViewTextBoxColumn1.HeaderText = "s_Ruta_certificadoPac";
-            this.sRutacertificadoPacDataGridViewTextBoxColumn1.Name = "sRutacertificadoPacDataGridViewTextBoxColumn1";
-            // 
-            // sRutaclavePacDataGridViewTextBoxColumn1
-            // 
-            this.sRutaclavePacDataGridViewTextBoxColumn1.DataPropertyName = "s_Ruta_clavePac";
-            this.sRutaclavePacDataGridViewTextBoxColumn1.HeaderText = "s_Ruta_clavePac";
-            this.sRutaclavePacDataGridViewTextBoxColumn1.Name = "sRutaclavePacDataGridViewTextBoxColumn1";
-            // 
-            // sContraseniaclavePacDataGridViewTextBoxColumn1
-            // 
-            this.sContraseniaclavePacDataGridViewTextBoxColumn1.DataPropertyName = "s_Contrasenia_clavePac";
-            this.sContraseniaclavePacDataGridViewTextBoxColumn1.HeaderText = "s_Contrasenia_clavePac";
-            this.sContraseniaclavePacDataGridViewTextBoxColumn1.Name = "sContraseniaclavePacDataGridViewTextBoxColumn1";
-            // 
-            // sRfcDataGridViewTextBoxColumn1
-            // 
-            this.sRfcDataGridViewTextBoxColumn1.DataPropertyName = "s_Rfc";
-            this.sRfcDataGridViewTextBoxColumn1.HeaderText = "s_Rfc";
-            this.sRfcDataGridViewTextBoxColumn1.Name = "sRfcDataGridViewTextBoxColumn1";
-            // 
-            // sRegimenDataGridViewTextBoxColumn1
-            // 
-            this.sRegimenDataGridViewTextBoxColumn1.DataPropertyName = "s_Regimen";
-            this.sRegimenDataGridViewTextBoxColumn1.HeaderText = "s_Regimen";
-            this.sRegimenDataGridViewTextBoxColumn1.Name = "sRegimenDataGridViewTextBoxColumn1";
-            // 
-            // sRutaXmlDataGridViewTextBoxColumn1
-            // 
-            this.sRutaXmlDataGridViewTextBoxColumn1.DataPropertyName = "s_RutaXml";
-            this.sRutaXmlDataGridViewTextBoxColumn1.HeaderText = "s_RutaXml";
-            this.sRutaXmlDataGridViewTextBoxColumn1.Name = "sRutaXmlDataGridViewTextBoxColumn1";
-            // 
-            // sEstadoActualDataGridViewTextBoxColumn1
-            // 
-            this.sEstadoActualDataGridViewTextBoxColumn1.DataPropertyName = "s_EstadoActual";
-            this.sEstadoActualDataGridViewTextBoxColumn1.HeaderText = "s_EstadoActual";
-            this.sEstadoActualDataGridViewTextBoxColumn1.Name = "sEstadoActualDataGridViewTextBoxColumn1";
-            // 
-            // sMensajeEADataGridViewTextBoxColumn1
-            // 
-            this.sMensajeEADataGridViewTextBoxColumn1.DataPropertyName = "s_MensajeEA";
-            this.sMensajeEADataGridViewTextBoxColumn1.HeaderText = "s_MensajeEA";
-            this.sMensajeEADataGridViewTextBoxColumn1.Name = "sMensajeEADataGridViewTextBoxColumn1";
-            // 
-            // sIsocurrcDataGridViewTextBoxColumn1
-            // 
-            this.sIsocurrcDataGridViewTextBoxColumn1.DataPropertyName = "s_Isocurrc";
-            this.sIsocurrcDataGridViewTextBoxColumn1.HeaderText = "s_Isocurrc";
-            this.sIsocurrcDataGridViewTextBoxColumn1.Name = "sIsocurrcDataGridViewTextBoxColumn1";
-            // 
-            // sAddendaDataGridViewTextBoxColumn1
-            // 
-            this.sAddendaDataGridViewTextBoxColumn1.DataPropertyName = "s_Addenda";
-            this.sAddendaDataGridViewTextBoxColumn1.HeaderText = "s_Addenda";
-            this.sAddendaDataGridViewTextBoxColumn1.Name = "sAddendaDataGridViewTextBoxColumn1";
-            // 
-            // whereDataGridViewTextBoxColumn1
-            // 
-            this.whereDataGridViewTextBoxColumn1.DataPropertyName = "Where";
-            this.whereDataGridViewTextBoxColumn1.HeaderText = "Where";
-            this.whereDataGridViewTextBoxColumn1.Name = "whereDataGridViewTextBoxColumn1";
-            this.whereDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // aggregateDataGridViewTextBoxColumn1
-            // 
-            this.aggregateDataGridViewTextBoxColumn1.DataPropertyName = "Aggregate";
-            this.aggregateDataGridViewTextBoxColumn1.HeaderText = "Aggregate";
-            this.aggregateDataGridViewTextBoxColumn1.Name = "aggregateDataGridViewTextBoxColumn1";
-            this.aggregateDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // querySourceDataGridViewTextBoxColumn1
-            // 
-            this.querySourceDataGridViewTextBoxColumn1.DataPropertyName = "QuerySource";
-            this.querySourceDataGridViewTextBoxColumn1.HeaderText = "QuerySource";
-            this.querySourceDataGridViewTextBoxColumn1.Name = "querySourceDataGridViewTextBoxColumn1";
-            // 
-            // mappingNameDataGridViewTextBoxColumn1
-            // 
-            this.mappingNameDataGridViewTextBoxColumn1.DataPropertyName = "MappingName";
-            this.mappingNameDataGridViewTextBoxColumn1.HeaderText = "MappingName";
-            this.mappingNameDataGridViewTextBoxColumn1.Name = "mappingNameDataGridViewTextBoxColumn1";
-            // 
-            // schemaGlobalDataGridViewTextBoxColumn1
-            // 
-            this.schemaGlobalDataGridViewTextBoxColumn1.DataPropertyName = "SchemaGlobal";
-            this.schemaGlobalDataGridViewTextBoxColumn1.HeaderText = "SchemaGlobal";
-            this.schemaGlobalDataGridViewTextBoxColumn1.Name = "schemaGlobalDataGridViewTextBoxColumn1";
-            // 
-            // schemaTableViewDataGridViewTextBoxColumn1
-            // 
-            this.schemaTableViewDataGridViewTextBoxColumn1.DataPropertyName = "SchemaTableView";
-            this.schemaTableViewDataGridViewTextBoxColumn1.HeaderText = "SchemaTableView";
-            this.schemaTableViewDataGridViewTextBoxColumn1.Name = "schemaTableViewDataGridViewTextBoxColumn1";
-            // 
-            // schemaStoredProcedureDataGridViewTextBoxColumn1
-            // 
-            this.schemaStoredProcedureDataGridViewTextBoxColumn1.DataPropertyName = "SchemaStoredProcedure";
-            this.schemaStoredProcedureDataGridViewTextBoxColumn1.HeaderText = "SchemaStoredProcedure";
-            this.schemaStoredProcedureDataGridViewTextBoxColumn1.Name = "schemaStoredProcedureDataGridViewTextBoxColumn1";
-            // 
-            // notRecommendedConnectionDataGridViewTextBoxColumn1
-            // 
-            this.notRecommendedConnectionDataGridViewTextBoxColumn1.DataPropertyName = "NotRecommendedConnection";
-            this.notRecommendedConnectionDataGridViewTextBoxColumn1.HeaderText = "NotRecommendedConnection";
-            this.notRecommendedConnectionDataGridViewTextBoxColumn1.Name = "notRecommendedConnectionDataGridViewTextBoxColumn1";
-            // 
-            // connectionStringDataGridViewTextBoxColumn1
-            // 
-            this.connectionStringDataGridViewTextBoxColumn1.DataPropertyName = "ConnectionString";
-            this.connectionStringDataGridViewTextBoxColumn1.HeaderText = "ConnectionString";
-            this.connectionStringDataGridViewTextBoxColumn1.Name = "connectionStringDataGridViewTextBoxColumn1";
-            // 
-            // connectionStringConfigDataGridViewTextBoxColumn1
-            // 
-            this.connectionStringConfigDataGridViewTextBoxColumn1.DataPropertyName = "ConnectionStringConfig";
-            this.connectionStringConfigDataGridViewTextBoxColumn1.HeaderText = "ConnectionStringConfig";
-            this.connectionStringConfigDataGridViewTextBoxColumn1.Name = "connectionStringConfigDataGridViewTextBoxColumn1";
-            // 
-            // filterDataGridViewTextBoxColumn1
-            // 
-            this.filterDataGridViewTextBoxColumn1.DataPropertyName = "Filter";
-            this.filterDataGridViewTextBoxColumn1.HeaderText = "Filter";
-            this.filterDataGridViewTextBoxColumn1.Name = "filterDataGridViewTextBoxColumn1";
-            // 
-            // sortDataGridViewTextBoxColumn1
-            // 
-            this.sortDataGridViewTextBoxColumn1.DataPropertyName = "Sort";
-            this.sortDataGridViewTextBoxColumn1.HeaderText = "Sort";
-            this.sortDataGridViewTextBoxColumn1.Name = "sortDataGridViewTextBoxColumn1";
-            // 
-            // rowCountDataGridViewTextBoxColumn1
-            // 
-            this.rowCountDataGridViewTextBoxColumn1.DataPropertyName = "RowCount";
-            this.rowCountDataGridViewTextBoxColumn1.HeaderText = "RowCount";
-            this.rowCountDataGridViewTextBoxColumn1.Name = "rowCountDataGridViewTextBoxColumn1";
-            this.rowCountDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // eOFDataGridViewCheckBoxColumn1
-            // 
-            this.eOFDataGridViewCheckBoxColumn1.DataPropertyName = "EOF";
-            this.eOFDataGridViewCheckBoxColumn1.HeaderText = "EOF";
-            this.eOFDataGridViewCheckBoxColumn1.Name = "eOFDataGridViewCheckBoxColumn1";
-            this.eOFDataGridViewCheckBoxColumn1.ReadOnly = true;
-            // 
-            // queryDataGridViewTextBoxColumn1
-            // 
-            this.queryDataGridViewTextBoxColumn1.DataPropertyName = "Query";
-            this.queryDataGridViewTextBoxColumn1.HeaderText = "Query";
-            this.queryDataGridViewTextBoxColumn1.Name = "queryDataGridViewTextBoxColumn1";
-            this.queryDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn21.Visible = false;
             // 
             // winformGeneraFE
             // 
@@ -1802,6 +1298,7 @@
             this.Text = "GP Factura Electrónica";
             this.Load += new System.EventHandler(this.winformGeneraFE_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgridTrxFacturas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vwCfdTransaccionesDeVentaBindingSource)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStripAccionesXML.ResumeLayout(false);
@@ -1832,10 +1329,9 @@
             this.panel3.PerformLayout();
             this.tabCfdi.ResumeLayout(false);
             this.tabFacturas.ResumeLayout(false);
-            this.tabCobros.ResumeLayout(false);
-            this.tabCobros.PerformLayout();
+            this.tabResumen.ResumeLayout(false);
+            this.tabResumen.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgridTrxCobros)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.vwCfdTransaccionesDeVentaBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1928,95 +1424,18 @@
         private System.Windows.Forms.ToolStripComboBox tsComboDestinoRep;
         private System.Windows.Forms.TabControl tabCfdi;
         private System.Windows.Forms.TabPage tabFacturas;
-        private System.Windows.Forms.TabPage tabCobros;
+        private System.Windows.Forms.TabPage tabResumen;
         private System.Windows.Forms.ToolStripProgressBar tsPbProcesoActivo;
         private System.Windows.Forms.CheckBox cBoxMarcCobros;
         private System.Windows.Forms.DataGridView dgridTrxCobros;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn MarcaCobro;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iddoc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Soptype;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sopnumbe;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechahoraDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreClienteDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn idImpuestoClienteDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn totalDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn estadoDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn mensajeDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn mensajeEADataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn estadoActualDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn estadoContabilizadoDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn docidDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cUSTNMBRDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
-        private System.Windows.Forms.DataGridViewTextBoxColumn montoActualOriginalDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn voidsttsDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
-        private System.Windows.Forms.DataGridViewTextBoxColumn comprobanteXmlDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn iDCertificadoDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn rutacertificadoDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn rutaclaveDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn contraseniaclaveDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn rutacertificadoPacDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn rutaclavePacDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn contraseniaclavePacDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn rfcDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn regimenDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn rutaXmlDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;
-        private System.Windows.Forms.DataGridViewTextBoxColumn isocurrcDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn addendaDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sEstadoContabilizadoDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sSoptypeDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sDocidDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sSopnumbeDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sFechahoraDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sCUSTNMBRDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sNombreClienteDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sIdImpuestoClienteDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sTotalDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sMontoActualOriginalDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sVoidsttsDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sEstadoDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sMensajeDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sComprobanteXmlDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sIDCertificadoDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sRutacertificadoDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sRutaclaveDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sContraseniaclaveDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sRutacertificadoPacDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sRutaclavePacDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sContraseniaclavePacDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sRfcDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sRegimenDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sRutaXmlDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sEstadoActualDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sMensajeEADataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sIsocurrcDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sAddendaDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn whereDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn aggregateDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn querySourceDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn mappingNameDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn schemaGlobalDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn schemaTableViewDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn schemaStoredProcedureDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn notRecommendedConnectionDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn connectionStringDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn connectionStringConfigDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn filterDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sortDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn rowCountDataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn eOFDataGridViewCheckBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn queryDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Mark;
         private System.Windows.Forms.DataGridViewTextBoxColumn Docid;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -2031,6 +1450,20 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Voidstts;
         private System.Windows.Forms.DataGridViewTextBoxColumn MensajeEA;
         private System.Windows.Forms.DataGridViewTextBoxColumn eBinAct;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn MarcaCobro;
+        private System.Windows.Forms.DataGridViewTextBoxColumn iddoc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Soptype;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sopnumbe;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
     }
 }
 

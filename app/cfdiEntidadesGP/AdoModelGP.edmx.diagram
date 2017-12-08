@@ -6,8 +6,9 @@
     <edmx:Diagrams>
       <Diagram DiagramId="dd51f268602f4b1ea0e553b5f749ddfd" Name="Diagram1">
         <EntityTypeShape EntityType="PERUModel.vwCfdiConceptos" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PERUModel.vwCfdiGeneraDocumentoDeVenta" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PERUModel.vwCfdiRelacionados" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PERUModel.vwCfdiGeneraDocumentoDeVenta" Width="1.75" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PERUModel.vwCfdiRelacionados" Width="1.75" PointX="5.125" PointY="0.75" />
+        <EntityTypeShape EntityType="PERUModel.vwCfdiGeneraResumenDiario" Width="1.875" PointX="7" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

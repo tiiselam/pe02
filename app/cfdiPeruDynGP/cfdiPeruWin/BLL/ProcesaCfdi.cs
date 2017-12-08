@@ -62,13 +62,13 @@ namespace cfd.FacturaElectronica
         }
 
         /// <summary>
-        /// Ejecuta la generación de archivos xml en un thread independiente
+        /// Ejecuta la generación de documentos xml: factura, boleta, nc, nd
         /// </summary>
-        /// <param name="e">trxVentas</param>
-        public async Task GeneraXmlAsync()
+        public async Task GeneraDocumentoXmlAsync()
         {
             try
             {
+                _rbResumen = false;
                 String msj = String.Empty;
                 trxVenta.Rewind();                                                          //move to first record
 
@@ -115,12 +115,19 @@ namespace cfd.FacturaElectronica
 
                                 if (!_Param.seguridadIntegrada)
                                 {
-                                    String RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{trxVenta.DocElectronico.IdDocumento}.xml");
+                                    String RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{trxVenta.DocElectronico.IdDocumento}sf.xml");
                                     byte[] bTramaXmlSinFirma = Convert.FromBase64String(respuesta.TramaXmlSinFirma);
                                     File.WriteAllBytes(RutaArchivo, bTramaXmlSinFirma);
                                 }
 
-                                await EnviaSunat(respuesta.TramaXmlSinFirma);
+                                await EnviaSunat(respuesta.TramaXmlSinFirma, trxVenta.DocElectronico.TipoDocumento, trxVenta.DocElectronico.IdDocumento, trxVenta.DocElectronico.Emisor.NroDocumento);
+
+                                //if (!_Param.seguridadIntegrada)
+                                //{
+                                //    String RutaArchivox = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{trxVenta.DocElectronico.IdDocumento}.xml");
+                                //    byte[] bTramaXmlFirmado = Convert.FromBase64String(tramaXmlFirmado);
+                                //    File.WriteAllBytes(RutaArchivox, bTramaXmlFirmado);
+                                //}
 
                                 //Guarda el archivo xml, genera el cbb y el pdf. 
                                 //Luego anota en la bitácora la factura emitida o el error al generar cbb o pdf.
@@ -169,11 +176,112 @@ namespace cfd.FacturaElectronica
             OnProgreso(100, "Proceso finalizado!");
         }
 
-        async Task EnviaSunat(String xmlSinFirma)
+        /// <summary>
+        /// Ejecuta la generación de documentos xml: factura, boleta, nc, nd
+        /// </summary>
+        public async Task GeneraResumenXmlAsync()
         {
-                string codigoTipoDoc = trxVenta.DocElectronico.TipoDocumento;
+            try
+            {
+                _rbResumen = true;
+                String msj = String.Empty;
+                trxVenta.Rewind();                                                          //move to first record
 
-                if (string.IsNullOrEmpty(trxVenta.DocElectronico.IdDocumento))
+                int errores = 0; int i = 1;
+                cfdReglasFacturaXml DocVenta = new cfdReglasFacturaXml(_Conex, _Param);     //log de facturas xml emitidas y anuladas
+                ReglasME maquina = new ReglasME(_Param);
+                //ValidadorXML validadorxml = new ValidadorXML(_Param);
+                //TransformerXML loader = new TransformerXML();
+                //String Sello = string.Empty;
+
+                OnProgreso(1, "INICIANDO...");              //Notifica al suscriptor
+                do
+                {
+                    msj = String.Empty;
+                    try
+                    {
+                        if (trxVenta.Estado.Equals("no emitido") &&
+                            maquina.ValidaTransicion(_Param.tipoDoc, "EMITE XML Y PDF", trxVenta.EstadoActual, "emitido/impreso"))
+                            if (trxVenta.Voidstts == 0)  //documento no anulado
+                            {
+                                trxVenta.ArmarResumenElectronico();
+
+                                var proxy = new HttpClient { BaseAddress = new Uri(ConfigurationManager.AppSettings["UrlOpenInvoicePeruApi"]) };
+
+                                var response = await proxy.PostAsJsonAsync("api/GenerarResumenDiario/v2", trxVenta.ResumenElectronico);
+                                //response.EnsureSuccessStatusCode();
+                                var respuesta = await response.Content.ReadAsAsync<DocumentoResponse>();
+                                if (!respuesta.Exito)
+                                    throw new ApplicationException(respuesta.MensajeError);
+
+                                if (!_Param.seguridadIntegrada)
+                                {
+                                    String RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{trxVenta.ResumenElectronico.IdDocumento}sf.xml");
+                                    byte[] bTramaXmlSinFirma = Convert.FromBase64String(respuesta.TramaXmlSinFirma);
+                                    File.WriteAllBytes(RutaArchivo, bTramaXmlSinFirma);
+                                }
+
+                                await EnviaSunat(respuesta.TramaXmlSinFirma, String.Empty, trxVenta.ResumenElectronico.IdDocumento, trxVenta.ResumenElectronico.Emisor.NroDocumento);
+
+                                //if (!_Param.seguridadIntegrada)
+                                //{
+                                //    String RutaArchivox = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{trxVenta.DocElectronico.IdDocumento}.xml");
+                                //    byte[] bTramaXmlFirmado = Convert.FromBase64String(tramaXmlFirmado);
+                                //    File.WriteAllBytes(RutaArchivox, bTramaXmlFirmado);
+                                //}
+
+                                //Guarda el archivo xml, genera el cbb y el pdf. 
+                                //Luego anota en la bitácora la factura emitida o el error al generar cbb o pdf.
+                                DocVenta.AlmacenaEnRepositorio(trxVenta, Encoding.UTF8.GetString(Convert.FromBase64String(tramaXmlFirmado)), maquina, tramaXmlFirmado, tramaZipCdr);
+
+                            }
+                            else //si el documento está anulado en gp, agregar al log como emitido
+                            {
+                                maquina.ValidaTransicion("FACTURA", "ANULA VENTA", trxVenta.EstadoActual, "emitido");
+                                msj = "Anulado en GP y marcado como emitido.";
+                                DocVenta.RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, "Anulado en GP", "0", _Conex.Usuario, "", "emitido", maquina.eBinarioNuevo, msj.Trim());
+                            }
+                    }
+                    catch (ApplicationException ae)
+                    {
+                        msj = ae.Message + Environment.NewLine + ae.StackTrace;
+                        errores++;
+                    }
+                    catch (IOException io)
+                    {
+                        msj = "Excepción al revisar la carpeta/archivo: " + trxVenta.Ruta_clave + " Verifique su existencia y privilegios." + Environment.NewLine + io.Message + Environment.NewLine;
+                        errores++;
+                    }
+                    catch (Exception lo)
+                    {
+                        string imsj = lo.InnerException == null ? "" : lo.InnerException.ToString();
+                        msj = lo.Message + " " + imsj + Environment.NewLine + lo.StackTrace;
+                        errores++;
+                    }
+                    finally
+                    {
+                        OnProgreso(i * 100 / trxVenta.RowCount, "Doc:" + trxVenta.Sopnumbe + " " + msj.Trim() + Environment.NewLine);              //Notifica al suscriptor
+                        i++;
+                    }
+                } while (trxVenta.MoveNext() && errores < 10);
+            }
+            catch (Exception xw)
+            {
+                string imsj = xw.InnerException == null ? "" : xw.InnerException.ToString();
+                this.ultimoMensaje = xw.Message + " " + imsj + Environment.NewLine + xw.StackTrace;
+            }
+            finally
+            {
+                OnProgreso(100, ultimoMensaje);
+            }
+            OnProgreso(100, "Proceso finalizado!");
+        }
+
+        async Task EnviaSunat(String xmlSinFirma, String tipoDoc, String IdDocumento, String emisorNroDocumento)
+        {
+            string codigoTipoDoc = tipoDoc;
+
+                if (string.IsNullOrEmpty(IdDocumento))
                     throw new InvalidOperationException("La Serie y el Correlativo no pueden estar vacíos");
 
                 var tramaXmlSinFirma = xmlSinFirma;
@@ -194,11 +302,11 @@ namespace cfd.FacturaElectronica
 
                 var enviarDocumentoRequest = new EnviarDocumentoRequest
                 {
-                    Ruc = trxVenta.DocElectronico.Emisor.NroDocumento,  // txtNroRuc.Text,
+                    Ruc = emisorNroDocumento,  // txtNroRuc.Text,
                     UsuarioSol = trxVenta.Ruta_certificadoPac,    //txtUsuarioSol.Text,
                     ClaveSol = trxVenta.Contrasenia_clavePac,
                     EndPointUrl = _Param.URLwebServPAC,
-                    IdDocumento = trxVenta.DocElectronico.IdDocumento,
+                    IdDocumento = IdDocumento,
                     TipoDocumento = codigoTipoDoc,
                     TramaXmlFirmado = respuestaFirmado.TramaXmlFirmado
                 };

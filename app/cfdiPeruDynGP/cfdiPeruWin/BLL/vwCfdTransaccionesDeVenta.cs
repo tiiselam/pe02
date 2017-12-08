@@ -9,7 +9,9 @@ namespace cfdiPeru
     class vwCfdTransaccionesDeVenta : vwCfdiTransaccionesDeVenta
     {
         DocumentoElectronico _docElectronico;
+        ResumenDiarioNuevo _resumenElectronico;
         List<DetalleDocumento> lDetalleDocumento;
+        private const string FormatoFecha = "yyyy-MM-dd";
 
         public DocumentoElectronico DocElectronico
         {
@@ -21,6 +23,19 @@ namespace cfdiPeru
             set
             {
                 _docElectronico = value;
+            }
+        }
+
+        public ResumenDiarioNuevo ResumenElectronico
+        {
+            get
+            {
+                return _resumenElectronico;
+            }
+
+            set
+            {
+                _resumenElectronico = value;
             }
         }
 
@@ -66,24 +81,27 @@ namespace cfdiPeru
                 _docElectronico.Gravadas = docGP.DocVenta.ivaImponible;
                 _docElectronico.Inafectas = docGP.DocVenta.inafecta;
                 _docElectronico.Exoneradas = docGP.DocVenta.exonerado;
+                _docElectronico.Gratuitas = docGP.DocVenta.gratuito;
                 _docElectronico.TotalVenta = docGP.DocVenta.total;
-                _docElectronico.MontoEnLetras = "mil";
+                _docElectronico.MontoEnLetras = docGP.DocVenta.montoEnLetras;
 
                 lDetalleDocumento = new List<DetalleDocumento>();
                 foreach (vwCfdiConceptos d in docGP.LDocVentaConceptos)
                 {
                     lDetalleDocumento.Add(new DetalleDocumento()
                     {
-                        CodigoItem = d.ITEMNMBR
-                        , Id = Convert.ToInt16(d.id)
-                        , Descripcion = d.Descripcion
-                        , Cantidad = d.cantidad
-                        , UnidadMedida = d.udemSunat
-                        , PrecioUnitario = d.valorUni
-                        , PrecioReferencial = Convert.ToDecimal(d.precioUniConIva)
-                        , TipoPrecio = d.tipoPrecio
-                        , Impuesto = d.orslstax
-                        ,TipoImpuesto = d.tipoImpuesto
+                        CodigoItem = d.ITEMNMBR,
+                        Id = Convert.ToInt16(d.id),
+                        Descripcion = d.Descripcion,
+                        Cantidad = d.cantidad,
+                        UnidadMedida = d.udemSunat,
+                        PrecioUnitario = d.valorUni,
+                        PrecioReferencial = Convert.ToDecimal(d.precioUniConIva),
+                        TotalVenta = Convert.ToDecimal(d.importe),
+                        TipoPrecio = d.tipoPrecio,
+                        Impuesto = d.orslstax,
+                        TipoImpuesto = d.tipoImpuesto,
+                        
                     });
                 }
                 _docElectronico.Items = new List<DetalleDocumento>();
@@ -120,5 +138,62 @@ namespace cfdiPeru
             }
         }
 
+        public void ArmarResumenElectronico()
+        {
+            try
+            {
+                DocumentoVentaGP docGP = new DocumentoVentaGP();
+                docGP.GetDatosResumenBoletas(this.Sopnumbe, this.Soptype);
+
+                _resumenElectronico = new ResumenDiarioNuevo()
+                {
+                    IdDocumento = docGP.ResumenCab.numResumenDiario,
+                    FechaEmision = docGP.ResumenCab.docdate.ToString(FormatoFecha), //DateTime.Today.ToString(FormatoFecha),
+                    FechaReferencia = docGP.ResumenCab.docdate.ToString(FormatoFecha),
+                    Emisor = new Contribuyente()
+                    {
+                        NroDocumento = docGP.ResumenCab.emisorNroDoc,
+                        TipoDocumento = docGP.ResumenCab.emisorTipoDoc,
+                        Direccion = docGP.ResumenCab.emisorDireccion,
+                        Urbanizacion = docGP.ResumenCab.emisorUrbanizacion,
+                        Departamento = docGP.ResumenCab.emisorDepartamento,
+                        Provincia = docGP.ResumenCab.emisorProvincia,
+                        Distrito = docGP.ResumenCab.emisorDistrito,
+                        NombreComercial = docGP.ResumenCab.emisorNombre,
+                        NombreLegal = docGP.ResumenCab.emisorNombre,
+                        Ubigeo = docGP.ResumenCab.emisorUbigeo
+                    },
+                    Resumenes=new List<GrupoResumenNuevo>()
+                };
+
+                int i = 1;
+                foreach (vwCfdiGeneraResumenDiario re in docGP.LDocResumenLineas)
+                {
+                    _resumenElectronico.Resumenes.Add(new GrupoResumenNuevo
+                    {
+                        Id = i,
+                        TipoDocumento=re.tipoDocumento,
+                        IdDocumento= re.numResumenDiario,
+                        Serie=re.serie,
+                        NroDocumentoReceptor=re.receptorNroDoc,
+                        TipoDocumentoReceptor=re.receptorTipoDoc,
+                        Moneda=re.moneda,
+                        Gravadas = Convert.ToDecimal(re.totalIvaImponible),
+                        Exoneradas = Convert.ToDecimal(re.totalExonerado),
+                        //Gratuitas=re.totalGratuito,
+                        Inafectas= Convert.ToDecimal(re.totalInafecta),
+                        TotalIgv= Convert.ToDecimal(re.totalIva),
+                        TotalVenta = Convert.ToDecimal(re.total),
+                        CodigoEstadoItem=1,
+                        CorrelativoInicio=Convert.ToInt32(re.iniRango),
+                        CorrelativoFin=Convert.ToInt32(re.finRango)
+                    });
+                    i++;
+                }
+            }
+            catch (Exception)
+            { throw;
+            }
+        }
     }
 }
