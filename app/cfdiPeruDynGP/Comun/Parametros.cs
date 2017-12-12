@@ -481,10 +481,25 @@ namespace Comun
                         Convert.ToInt32(_emite) +
                     2 * 0 +
                     4 * Convert.ToInt32(_imprime) +
-                    8 * Convert.ToInt32(_publica) +
+                    8 * 0 +
                     16 * Convert.ToInt32(_envia);
             }
         }
+
+        public int intEstadoCompletadoResumen
+        {
+            get
+            {
+                return
+                        Convert.ToInt32(_emite) +
+                    2 * 0 +
+                    4 * 0 +
+                    8 * Convert.ToInt32(_publica) +
+                    16 * 0 +
+                    32; //aceptado sunat
+            }
+        }
+
         public bool emite
         {
             get { return _emite.Equals("1"); }

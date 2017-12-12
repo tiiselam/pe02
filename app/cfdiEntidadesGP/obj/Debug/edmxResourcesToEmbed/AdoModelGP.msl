@@ -29,6 +29,9 @@
     <EntitySetMapping Name="vwCfdiGeneraDocumentoDeVenta">
       <EntityTypeMapping TypeName="PERUModel.vwCfdiGeneraDocumentoDeVenta">
         <MappingFragment StoreEntitySet="vwCfdiGeneraDocumentoDeVenta">
+          <ScalarProperty Name="correlativo" ColumnName="correlativo" />
+          <ScalarProperty Name="numero" ColumnName="numero" />
+          <ScalarProperty Name="serie" ColumnName="serie" />
           <ScalarProperty Name="emisorTipoDoc" ColumnName="emisorTipoDoc" />
           <ScalarProperty Name="docdate" ColumnName="docdate" />
           <ScalarProperty Name="estadoContabilizado" ColumnName="estadoContabilizado" />
@@ -81,6 +84,7 @@
     <EntitySetMapping Name="vwCfdiGeneraResumenDiario">
       <EntityTypeMapping TypeName="PERUModel.vwCfdiGeneraResumenDiario">
         <MappingFragment StoreEntitySet="vwCfdiGeneraResumenDiario">
+          <ScalarProperty Name="totalDescuento" ColumnName="totalDescuento" />
           <ScalarProperty Name="serie" ColumnName="serie" />
           <ScalarProperty Name="finRango" ColumnName="finRango" />
           <ScalarProperty Name="iniRango" ColumnName="iniRango" />

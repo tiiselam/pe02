@@ -17,7 +17,7 @@ as
 --Requisitos.  
 --07/12/17 jcf Creación cfdi Perú
 --
-		select left(tx.sopnumbe, 4) serie, tx.docdate, tx.estadoContabilizado, 55 tipoResumenDiario, 
+		select tx.serie, tx.docdate, tx.estadoContabilizado, 55 tipoResumenDiario, 
 			'RESUMEN' idResumenDiario, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001' numResumenDiario, tx.tipoDocumento, tx.moneda,
 			tx.emisorTipoDoc,
 			tx.emisorNroDoc,
@@ -34,7 +34,7 @@ as
 			min(tx.sopnumbe) iniRango, 
 			max(tx.sopnumbe) finRango, 
 			sum(tx.gratuito) totalGratuito,
-
+			sum(tx.ORTDISAM) totalDescuento,
 			sum(tx.ivaImponible) totalIvaImponible,
 			sum(tx.exonerado) totalExonerado,
 			sum(tx.inafecta) totalInafecta,
@@ -43,7 +43,7 @@ as
 
 			COUNT(tx.sopnumbe)	cantidad
 		from vwCfdiGeneraDocumentoDeVenta tx
-		group by left(tx.sopnumbe, 4), tx.docdate, tx.estadoContabilizado, tx.tipoDocumento, tx.moneda,
+		group by tx.serie, tx.docdate, tx.estadoContabilizado, tx.tipoDocumento, tx.moneda,
 			tx.emisorTipoDoc,
 			tx.emisorNroDoc,
 			tx.emisorNombre,
@@ -101,6 +101,7 @@ as
 		tv.totalInafecta,
 		tv.totalExonerado,
 		tv.totalGratuito,
+		tv.totalDescuento,
 		tv.total,
 		tv.cantidad
 	from dbo.vwCfdiGeneraDocumentoDeVentaAgrupado tv
@@ -108,6 +109,8 @@ as
 		outer apply dbo.fCfdiObtieneSegmento2(tv.finRango, '-') fr
 	where tv.serie like 'B%'	--BOLETAS, NC Y ND APLICADAS A BOLETAS
 	and tv.estadoContabilizado = 'contabilizado' 
+	--and tv.serie = 'BB11'
+	--and tv.tipoDocumento = '03'
 
 go
 
@@ -129,7 +132,7 @@ alter view dbo.vwCfdiListaResumenDiario as
 --
 
 select rd.estadoContabilizado, cast(rd.tipoResumenDiario as smallint) Soptype, rd.idResumenDiario docid, rd.numResumenDiario sopnumbe, rd.docdate fechahora,
-	'' CUSTNMBR, '-' nombreCliente, '-' idImpuestoCliente, 0.00 total, 0.00 montoActualOriginal, cast(0 as smallint) Voidstts, 
+	'' CUSTNMBR, '' nombreCliente, '' idImpuestoCliente, 0.00 total, 0.00 montoActualOriginal, cast(0 as smallint) Voidstts, 
 
 	isnull(lf.estado, isnull(fv.estado, 'inconsistente')) estado,
 	case when isnull(lf.estado, isnull(fv.estado, 'inconsistente')) = 'inconsistente' 
@@ -140,7 +143,10 @@ select rd.estadoContabilizado, cast(rd.tipoResumenDiario as smallint) Soptype, r
 
 	fv.ID_Certificado, fv.ruta_certificado, fv.ruta_clave, fv.contrasenia_clave, 
 	isnull(pa.ruta_certificado, '_noexiste') ruta_certificadoPac, isnull(pa.ruta_clave, '_noexiste') ruta_clavePac, isnull(pa.contrasenia_clave, '') contrasenia_clavePac, 
-	emi.rfc, emi.regimen, emi.rutaXml, emi.codigoPostal,
+	emi.TAXREGTN rfc, 
+	isnull(lf.noAprobacion, '') regimen, 
+	emi.INET7 rutaXml, 
+	emi.ZIPCODE codigoPostal,
 	isnull(lf.estadoActual, '000000') estadoActual, 
 	isnull(lf.mensajeEA, rd.estadoContabilizado) mensajeEA,
 	'' isocurrc,
@@ -151,7 +157,7 @@ from
 		where serie like 'B%'	--BOLETAS, NC Y ND APLICADAS A BOLETAS
 		and estadoContabilizado = 'contabilizado' 
 		group by docdate, estadoContabilizado, tipoResumenDiario, idResumenDiario, numResumenDiario) rd
-	cross join dbo.fCfdEmisor() emi
+	cross join dbo.fCfdiEmisor() emi
 	outer apply dbo.fCfdiCertificadoVigente(rd.docdate) fv
 	outer apply dbo.fCfdiCertificadoPAC(rd.docdate) pa
 	left join cfdlogfacturaxml lf

@@ -20,9 +20,12 @@ namespace cfd.FacturaElectronica
         private ConexionAFuenteDatos _Conex;
         private String tramaXmlFirmado;
         private String tramaZipCdr;
+        private String nombreArchivoCdr;
         private String nroTicket=String.Empty;
+        private String _mensajeSunat = String.Empty;
         private bool _rbRetenciones = false;
         private bool _rbResumen = false;
+        private bool _consultaCDRExito = false;
         private readonly HttpClient _client;
 
         public string ultimoMensaje = "";
@@ -79,7 +82,7 @@ namespace cfd.FacturaElectronica
                 TransformerXML loader = new TransformerXML();
                 //String Sello = string.Empty;
 
-                OnProgreso(1, "INICIANDO...");              //Notifica al suscriptor
+                OnProgreso(1, "INICIANDO EMISION DE COMPROBANTES DE VENTA...");              //Notifica al suscriptor
                 do
                 {
                     msj = String.Empty;
@@ -131,7 +134,7 @@ namespace cfd.FacturaElectronica
 
                                 //Guarda el archivo xml, genera el cbb y el pdf. 
                                 //Luego anota en la bitácora la factura emitida o el error al generar cbb o pdf.
-                                DocVenta.AlmacenaEnRepositorio(trxVenta, Encoding.UTF8.GetString(Convert.FromBase64String(tramaXmlFirmado)), maquina, tramaXmlFirmado, tramaZipCdr);
+                                DocVenta.AlmacenaEnRepositorio(trxVenta, Encoding.UTF8.GetString(Convert.FromBase64String(tramaXmlFirmado)), maquina, tramaXmlFirmado, tramaZipCdr, "FAC", nombreArchivoCdr, _Param.tipoDoc);
 
                             }
                             else //si el documento está anulado en gp, agregar al log como emitido
@@ -177,7 +180,7 @@ namespace cfd.FacturaElectronica
         }
 
         /// <summary>
-        /// Ejecuta la generación de documentos xml: factura, boleta, nc, nd
+        /// Ejecuta la generación del resumen de boletas
         /// </summary>
         public async Task GeneraResumenXmlAsync()
         {
@@ -190,25 +193,21 @@ namespace cfd.FacturaElectronica
                 int errores = 0; int i = 1;
                 cfdReglasFacturaXml DocVenta = new cfdReglasFacturaXml(_Conex, _Param);     //log de facturas xml emitidas y anuladas
                 ReglasME maquina = new ReglasME(_Param);
-                //ValidadorXML validadorxml = new ValidadorXML(_Param);
-                //TransformerXML loader = new TransformerXML();
-                //String Sello = string.Empty;
 
-                OnProgreso(1, "INICIANDO...");              //Notifica al suscriptor
+                OnProgreso(1, "INICIANDO ENVIO DE RESUMEN...");              //Notifica al suscriptor
                 do
                 {
                     msj = String.Empty;
                     try
                     {
-                        if (trxVenta.Estado.Equals("no emitido") &&
-                            maquina.ValidaTransicion(_Param.tipoDoc, "EMITE XML Y PDF", trxVenta.EstadoActual, "emitido/impreso"))
+                        if (maquina.ValidaTransicion("RESUMEN", "ENVIA RESUMEN", trxVenta.EstadoActual, "emitido/enviado a la sunat"))
                             if (trxVenta.Voidstts == 0)  //documento no anulado
                             {
                                 trxVenta.ArmarResumenElectronico();
 
                                 var proxy = new HttpClient { BaseAddress = new Uri(ConfigurationManager.AppSettings["UrlOpenInvoicePeruApi"]) };
 
-                                var response = await proxy.PostAsJsonAsync("api/GenerarResumenDiario/v2", trxVenta.ResumenElectronico);
+                                var response = await proxy.PostAsJsonAsync("api/GenerarResumenDiario/v1", trxVenta.ResumenElectronico);
                                 //response.EnsureSuccessStatusCode();
                                 var respuesta = await response.Content.ReadAsAsync<DocumentoResponse>();
                                 if (!respuesta.Exito)
@@ -232,14 +231,93 @@ namespace cfd.FacturaElectronica
 
                                 //Guarda el archivo xml, genera el cbb y el pdf. 
                                 //Luego anota en la bitácora la factura emitida o el error al generar cbb o pdf.
-                                DocVenta.AlmacenaEnRepositorio(trxVenta, Encoding.UTF8.GetString(Convert.FromBase64String(tramaXmlFirmado)), maquina, tramaXmlFirmado, tramaZipCdr);
+                                DocVenta.AlmacenaEnRepositorio(trxVenta, Encoding.UTF8.GetString(Convert.FromBase64String(respuesta.TramaXmlSinFirma)), maquina, String.Empty, String.Empty, nroTicket, String.Empty, "RESUMEN");
 
                             }
-                            else //si el documento está anulado en gp, agregar al log como emitido
+                            //else //si el documento está anulado en gp, agregar al log como emitido
+                            //{
+                            //    maquina.ValidaTransicion("FACTURA", "ANULA VENTA", trxVenta.EstadoActual, "emitido");
+                            //    msj = "Anulado en GP y marcado como emitido.";
+                            //    DocVenta.RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, "Anulado en GP", "0", _Conex.Usuario, "", "emitido", maquina.eBinarioNuevo, msj.Trim());
+                            //}
+                    }
+                    catch (ApplicationException ae)
+                    {
+                        msj = ae.Message + Environment.NewLine + ae.StackTrace;
+                        errores++;
+                    }
+                    catch (IOException io)
+                    {
+                        msj = "Excepción al revisar la carpeta/archivo: " + trxVenta.Ruta_clave + " Verifique su existencia y privilegios." + Environment.NewLine + io.Message + Environment.NewLine;
+                        errores++;
+                    }
+                    catch (Exception lo)
+                    {
+                        string imsj = lo.InnerException == null ? "" : lo.InnerException.ToString();
+                        msj = lo.Message + " " + imsj + Environment.NewLine + lo.StackTrace;
+                        errores++;
+                    }
+                    finally
+                    {
+                        OnProgreso(i * 100 / trxVenta.RowCount, "Doc:" + trxVenta.Sopnumbe + " " + msj.Trim() + " " + maquina.ultimoMensaje + Environment.NewLine);              //Notifica al suscriptor
+                        i++;
+                    }
+                } while (trxVenta.MoveNext() && errores < 10);
+            }
+            catch (Exception xw)
+            {
+                string imsj = xw.InnerException == null ? "" : xw.InnerException.ToString();
+                this.ultimoMensaje = xw.Message + " " + imsj + Environment.NewLine + xw.StackTrace;
+            }
+            finally
+            {
+                OnProgreso(100, ultimoMensaje);
+            }
+            OnProgreso(100, "Proceso finalizado!");
+        }
+
+        public async Task ProcesaConsultaCDR()
+        {
+            try
+            {
+                _rbResumen = true;
+                String msj = String.Empty;
+                String eBinario = String.Empty;
+                trxVenta.Rewind();                                                          //move to first record
+
+                int errores = 0; int i = 1;
+                cfdReglasFacturaXml DocVenta = new cfdReglasFacturaXml(_Conex, _Param);     //log de facturas xml emitidas y anuladas
+                ReglasME maquina = new ReglasME(_Param);
+
+                OnProgreso(1, "INICIANDO CONSULTA DE CDRs...");              //Notifica al suscriptor
+                do
+                {
+                    msj = String.Empty;
+                    try
+                    {
+                        String ticket = trxVenta.Regimen;  //temp
+                        String td = trxVenta.Docid;
+                        if (!trxVenta.Docid.Equals("RESUMEN"))
+                            td = _Param.tipoDoc;
+
+                        if (maquina.ValidaTransicion(td, "CONSULTA CDR", trxVenta.EstadoActual, "aceptado por la sunat"))
+                            if (trxVenta.Voidstts == 0)  //documento no anulado
                             {
-                                maquina.ValidaTransicion("FACTURA", "ANULA VENTA", trxVenta.EstadoActual, "emitido");
-                                msj = "Anulado en GP y marcado como emitido.";
-                                DocVenta.RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, "Anulado en GP", "0", _Conex.Usuario, "", "emitido", maquina.eBinarioNuevo, msj.Trim());
+                                await ConsultaCDR(ticket, trxVenta.Sopnumbe, trxVenta.Rfc);
+
+                                if (!_consultaCDRExito)
+                                {
+                                    eBinario = maquina.eBinActualConError;
+                                    errores++;
+                                }
+                                else
+                                {
+                                    eBinario = maquina.eBinarioNuevo;
+                                    _mensajeSunat = String.Empty;
+                                }
+                                DocVenta.RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, _mensajeSunat, ticket, _Conex.Usuario, String.Empty, "sunat", eBinario, "Recibido el " + DateTime.Today.ToString());
+
+                                DocVenta.ActualizaFacturaEmitida(trxVenta.Soptype, trxVenta.Sopnumbe, _Conex.Usuario, "emitido", "emitido", eBinario, maquina.EnLetras(eBinario, td)+ _mensajeSunat, ticket);
                             }
                     }
                     catch (ApplicationException ae)
@@ -260,7 +338,7 @@ namespace cfd.FacturaElectronica
                     }
                     finally
                     {
-                        OnProgreso(i * 100 / trxVenta.RowCount, "Doc:" + trxVenta.Sopnumbe + " " + msj.Trim() + Environment.NewLine);              //Notifica al suscriptor
+                        OnProgreso(i * 100 / trxVenta.RowCount, "Doc:" + trxVenta.Sopnumbe + " " + msj.Trim() + " " + maquina.ultimoMensaje + Environment.NewLine);              //Notifica al suscriptor
                         i++;
                     }
                 } while (trxVenta.MoveNext() && errores < 10);
@@ -274,8 +352,92 @@ namespace cfd.FacturaElectronica
             {
                 OnProgreso(100, ultimoMensaje);
             }
+            OnProgreso(100, "PROCESO FINALIZADO!");
+        }
+
+        public async Task ProcesaBajaComprobante(String motivoBaja)
+        {
+            try
+            {
+                _rbResumen = true;
+                String msj = String.Empty;
+                String eBinario = String.Empty;
+                trxVenta.Rewind();                                                          //move to first record
+
+                int errores = 0; int i = 1;
+                cfdReglasFacturaXml DocVenta = new cfdReglasFacturaXml(_Conex, _Param);     //log de facturas xml emitidas y anuladas
+                ReglasME maquina = new ReglasME(_Param);
+
+                OnProgreso(1, "INICIANDO BAJA DE DOCUMENTO...");              //Notifica al suscriptor
+                do
+                {
+                    msj = String.Empty;
+                    try
+                    {
+                        if (maquina.ValidaTransicion(_Param.tipoDoc, "DAR DE BAJA", trxVenta.EstadoActual, "baja solicitada"))
+                        {
+                            eBinario = maquina.eBinarioNuevo;
+
+                            trxVenta.ArmarBaja(motivoBaja);
+
+                            var proxy = new HttpClient { BaseAddress = new Uri(ConfigurationManager.AppSettings["UrlOpenInvoicePeruApi"]) };
+
+                            var response = await proxy.PostAsJsonAsync("api/GenerarComunicacionBaja", trxVenta.DocumentoBaja);
+                            //response.EnsureSuccessStatusCode();
+                            var respuesta = await response.Content.ReadAsAsync<DocumentoResponse>();
+                            if (!respuesta.Exito)
+                                throw new ApplicationException(respuesta.MensajeError);
+
+                            if (!_Param.seguridadIntegrada)
+                            {
+                                String RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{trxVenta.DocumentoBaja.IdDocumento}sf.xml");
+                                byte[] bTramaXmlSinFirma = Convert.FromBase64String(respuesta.TramaXmlSinFirma);
+                                File.WriteAllBytes(RutaArchivo, bTramaXmlSinFirma);
+                            }
+
+                            await EnviaSunat(respuesta.TramaXmlSinFirma, trxVenta.DocumentoBaja.Bajas.First().TipoDocumento, trxVenta.DocumentoBaja.IdDocumento, trxVenta.DocumentoBaja.Emisor.NroDocumento);
+
+                            DocVenta.RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, "baja solicitada", nroTicket, _Conex.Usuario, String.Empty, "publicado", eBinario, "Enviado el " + DateTime.Today.ToString());
+
+                            DocVenta.ActualizaFacturaEmitida(trxVenta.Soptype, trxVenta.Sopnumbe, _Conex.Usuario, "emitido", "emitido", eBinario, maquina.EnLetras(eBinario, _Param.tipoDoc), nroTicket);
+
+                        }
+                    }
+                    catch (ApplicationException ae)
+                    {
+                        msj = ae.Message + Environment.NewLine + ae.StackTrace;
+                        errores++;
+                    }
+                    catch (IOException io)
+                    {
+                        msj = "Excepción al revisar la carpeta/archivo: " + trxVenta.Ruta_clave + " Verifique su existencia y privilegios." + Environment.NewLine + io.Message + Environment.NewLine;
+                        errores++;
+                    }
+                    catch (Exception lo)
+                    {
+                        string imsj = lo.InnerException == null ? "" : lo.InnerException.ToString();
+                        msj = lo.Message + " " + imsj + Environment.NewLine + lo.StackTrace;
+                        errores++;
+                    }
+                    finally
+                    {
+                        OnProgreso(i * 100 / trxVenta.RowCount, "Doc:" + trxVenta.Sopnumbe + " " + msj.Trim() + " " + maquina.ultimoMensaje + Environment.NewLine);              //Notifica al suscriptor
+                        i++;
+                    }
+                } while (trxVenta.MoveNext() && errores < 10 && i<2); //Dar de baja uno por uno
+            }
+            catch (Exception xw)
+            {
+                string imsj = xw.InnerException == null ? "" : xw.InnerException.ToString();
+                this.ultimoMensaje = xw.Message + " " + imsj + Environment.NewLine + xw.StackTrace;
+            }
+            finally
+            {
+                OnProgreso(100, ultimoMensaje);
+            }
             OnProgreso(100, "Proceso finalizado!");
         }
+
 
         async Task EnviaSunat(String xmlSinFirma, String tipoDoc, String IdDocumento, String emisorNroDocumento)
         {
@@ -330,6 +492,7 @@ namespace cfd.FacturaElectronica
                             {
                                 tramaXmlFirmado = respuestaFirmado.TramaXmlFirmado;
                                 tramaZipCdr = rpta.TramaZipCdr;
+                                nombreArchivoCdr = $"R-{respuestaEnvio.NombreArchivo}.zip";
                                 //File.WriteAllBytes($"{_carpetaXml}\\{respuestaEnvio.NombreArchivo}", Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
                                 //File.WriteAllBytes($"{_carpetaCdr}\\R-{respuestaEnvio.NombreArchivo}", Convert.FromBase64String(rpta.TramaZipCdr));
                             }
@@ -353,7 +516,7 @@ namespace cfd.FacturaElectronica
                 {
                     respuestaEnvio = await jsonEnvioDocumento.Content.ReadAsAsync<EnviarResumenResponse>();
                     var rpta = (EnviarResumenResponse)respuestaEnvio;
-                    nroTicket = rpta.NroTicket;
+                    nroTicket = string.IsNullOrEmpty(rpta.NroTicket)? String.Empty:rpta.NroTicket;
                     //txtResult.Text = $@"{Resources.procesoCorrecto}{Environment.NewLine}{rpta.NroTicket}";
                 }
 
@@ -362,6 +525,35 @@ namespace cfd.FacturaElectronica
 
         }
 
+        public async Task ConsultaCDR(String txtNroTicket, String IdDocumento, String emisorNroDocumento)
+        {
+            _consultaCDRExito = false;
+            var consultaTicketRequest = new ConsultaTicketRequest
+                    {
+                        Ruc = emisorNroDocumento,
+                        UsuarioSol = trxVenta.Ruta_certificadoPac,
+                        ClaveSol = trxVenta.Contrasenia_clavePac,
+                        EndPointUrl = _Param.URLwebServPAC,
+                        IdDocumento = IdDocumento,
+                        NroTicket = txtNroTicket
+                    };
+
+            var jsonConsultaTicket = await _client.PostAsJsonAsync("api/ConsultarTicket", consultaTicketRequest);
+
+            var respuestaEnvio = await jsonConsultaTicket.Content.ReadAsAsync<EnviarDocumentoResponse>();
+
+            if (!respuestaEnvio.Exito || !string.IsNullOrEmpty(respuestaEnvio.MensajeError))
+                        throw new InvalidOperationException(respuestaEnvio.MensajeError);
+
+            tramaZipCdr = respuestaEnvio.TramaZipCdr;
+            nombreArchivoCdr = $"R-{respuestaEnvio.NombreArchivo}.zip";
+            //File.WriteAllBytes($"{Program.CarpetaCdr}\\R-{respuestaEnvio.NombreArchivo}.zip", Convert.FromBase64String(respuestaEnvio.TramaZipCdr));
+
+            //txtResult.Text = $@"{respuestaEnvio.MensajeRespuesta}";
+            _consultaCDRExito = respuestaEnvio.Exito;
+            _mensajeSunat = respuestaEnvio.MensajeRespuesta;
+
+        }
     }
 }
 

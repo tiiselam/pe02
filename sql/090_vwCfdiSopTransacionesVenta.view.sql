@@ -45,7 +45,8 @@ SELECT	'contabilizado' estadoContabilizado,
 		right('00000'+dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(cab.zipcode), 10), 5) zipcode, 
 		cab.duedate, cab.pymtrmid, cab.glpostdt, 
 		dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(cab.cstponbr), 10) cstponbr,
-		da.USRDEF05, isnull(da.usrtab01, '') usrtab01, cab.commntid, isnull(da.comment_1, '') comment_1
+		da.USRDEF05, isnull(da.usrtab01, '') usrtab01, cab.commntid, isnull(da.comment_1, '') comment_1,
+		cab.dex_row_id
   from	sop30200 cab							--sop_hdr_hist
 		inner join vwCfdIdDocumentos id
 			on id.docid = cab.DOCID
@@ -71,7 +72,8 @@ SELECT	'contabilizado' estadoContabilizado,
 		cab.address1, cab.address2, cab.address3, cab.city, cab.[STATE], cab.country, cab.zipcode, 
 		cab.duedate, cab.pymtrmid, cab.glpostdt, 
 		cab.cstponbr,
-		ctrl.USRDEF05, ctrl.usrtab01, cab.commntid, ctrl.comment_1
+		ctrl.USRDEF05, ctrl.usrtab01, cab.commntid, ctrl.comment_1,
+		cab.dex_row_id
  from  SOP10100 cab								--sop_hdr_work
 		inner join vwCfdIdDocumentos id
 			on id.docid = cab.DOCID

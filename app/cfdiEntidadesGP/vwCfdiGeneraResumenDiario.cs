@@ -37,8 +37,9 @@ namespace cfdiEntidadesGP
         public Nullable<int> cantidad { get; set; }
         public System.DateTime docdate { get; set; }
         public string emisorTipoDoc { get; set; }
-        public Nullable<int> iniRango { get; set; }
-        public Nullable<int> finRango { get; set; }
+        public int iniRango { get; set; }
+        public int finRango { get; set; }
         public string serie { get; set; }
+        public Nullable<decimal> totalDescuento { get; set; }
     }
 }

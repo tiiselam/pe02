@@ -48,5 +48,8 @@ namespace cfdiEntidadesGP
         public string estadoContabilizado { get; set; }
         public System.DateTime docdate { get; set; }
         public string emisorTipoDoc { get; set; }
+        public string serie { get; set; }
+        public string numero { get; set; }
+        public string correlativo { get; set; }
     }
 }

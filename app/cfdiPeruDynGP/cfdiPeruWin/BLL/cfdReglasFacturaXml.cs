@@ -170,7 +170,7 @@ namespace cfd.FacturaElectronica
             catch (Exception eGen)
             {
                 ultimoMensaje = "Excepción al ingresar los pagos simultáneos en el log. [RegistraLogDePagosSimultaneos] " + eGen.Message + " " + eGen.Source;
-                ActualizaFacturaEmitida(Soptype, Sopnumbe, _Conexion.Usuario, "emitido", "emitido", eBinActualConError, eBinActualConErrorExplicado + ultimoMensaje.Trim());
+                ActualizaFacturaEmitida(Soptype, Sopnumbe, _Conexion.Usuario, "emitido", "emitido", eBinActualConError, eBinActualConErrorExplicado + ultimoMensaje.Trim(), String.Empty);
                 numMensajeError++;
                 throw;
             }
@@ -214,7 +214,7 @@ namespace cfd.FacturaElectronica
         /// Actualiza la fecha, estado y observaciones de una factura emitida en el log de facturas. 
         /// </summary>
         /// <returns></returns>
-        public void ActualizaFacturaEmitida(short Soptype, string Sopnumbe, string idusuario, string eBaseAnterior, string eBaseNuevo, string eBinarioActual, string mensajeEA)
+        public void ActualizaFacturaEmitida(short Soptype, string Sopnumbe, string idusuario, string eBaseAnterior, string eBaseNuevo, string eBinarioActual, string mensajeEA, string noAprobacion)
         {
             cfdLogFacturaXML xmlEmitido = new cfdLogFacturaXML(_Conexion.ConnStr);
             xmlEmitido.Where.Soptype.Value = Soptype;
@@ -235,6 +235,7 @@ namespace cfd.FacturaElectronica
                     xmlEmitido.IdUsuarioAnulacion = Utiles.Derecha(idusuario, 10);
                     xmlEmitido.EstadoActual = eBinarioActual;
                     xmlEmitido.MensajeEA = Utiles.Derecha(mensajeEA, 255);
+                    xmlEmitido.NoAprobacion = noAprobacion;
                     xmlEmitido.Save();
                     //ultimoMensaje = "Completado.";
                 }
@@ -258,46 +259,63 @@ namespace cfd.FacturaElectronica
         /// <param name="mEstados">Nuevo set de estados</param>
         /// <param name="tramaXmlFirmado">trama del xml firmado por la sunat en base 64</param>
         /// <param name="tramaZipCdr">trama zipeada del cdr enviado por la sunat</param>
-        public void AlmacenaEnRepositorio(vwCfdTransaccionesDeVenta trxVenta, String comprobante, ReglasME mEstados, String tramaXmlFirmado, String tramaZipCdr)
-        {   
+        public void AlmacenaEnRepositorio(vwCfdTransaccionesDeVenta trxVenta, String comprobante, ReglasME mEstados, String tramaXmlFirmado, String tramaZipCdr, String ticket, String nomArchivoCDR, String tipoDoc)
+        {
             try
             {   //arma el nombre del archivo xml
                 string nomArchivo = Utiles.FormatoNombreArchivo(trxVenta.Docid + trxVenta.Sopnumbe + "_" + trxVenta.s_CUSTNMBR, trxVenta.s_NombreCliente, 20);
                 string rutaYNomArchivoCfdi = trxVenta.RutaXml.Trim() + nomArchivo + ".xml";
-                string rutaYNomArchivoCdr = trxVenta.RutaXml.Trim() + @"\\CDR\R-"+nomArchivo+".zip";
+                string rutaYNomArchivoCdr = trxVenta.RutaXml.Trim() + @"\\CDR\"+ nomArchivoCDR;
 
                 //Guarda el archivo xml
-                File.WriteAllBytes($"{rutaYNomArchivoCfdi}", Convert.FromBase64String(tramaXmlFirmado));
-                File.WriteAllBytes($"{rutaYNomArchivoCdr}", Convert.FromBase64String(tramaZipCdr));
+                if (ticket.Equals("FAC"))
+                {
+                    if (!string.IsNullOrEmpty(tramaXmlFirmado))
+                        File.WriteAllBytes($"{rutaYNomArchivoCfdi}", Convert.FromBase64String(tramaXmlFirmado));
+                    else
+                        throw new ArgumentException("No se puede guardar el archivo xml " + nomArchivo + " porque está vacío.");
+                }
+
+                if (ticket.Equals("FAC") || ticket.Equals("CDR"))
+                {
+                    if (!string.IsNullOrEmpty(tramaZipCdr))
+                        File.WriteAllBytes($"{rutaYNomArchivoCdr}", Convert.FromBase64String(tramaZipCdr));
+                    else
+                        throw new ArgumentException("No se puede guardar el archivo cdr de la SUNAT porque está vacío.");
+                }
 
                 //Registra log de la emisión del xml antes de imprimir el pdf, sino habrá error al imprimir
-                RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, rutaYNomArchivoCfdi, "0", _Conexion.Usuario, comprobante.Replace("encoding=\"utf-8\"", ""),
-                                        "emitido", mEstados.eBinarioNuevo, mEstados.EnLetras(mEstados.eBinarioNuevo));
-                
-                    //Genera y guarda código de barras bidimensional
-                    //codigobb.GenerarQRBidimensional(_Param.URLConsulta + "?&id=" + uuid.Trim() + "&re=" + trxVenta.Rfc + "&rr=" + trxVenta.IdImpuestoCliente + "&tt=" + trxVenta.Total.ToString() + "&fe=" + Utiles.Derecha(sello, 8)
-                    //                                    , trxVenta.RutaXml.Trim() + "cbb\\" + nomArchivo + ".jpg");
+                RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, rutaYNomArchivoCfdi, ticket, _Conexion.Usuario, comprobante.Replace("encoding=\"utf-8\"", ""),
+                                        "emitido", mEstados.eBinarioNuevo, mEstados.EnLetras(mEstados.eBinarioNuevo, tipoDoc));
 
-                    //Genera pdf
-                        //if (codigobb.iErr == 0)
-                        //    reporte.generaEnFormatoPDF(rutaYNomArchivo, trxVenta.Soptype, trxVenta.Sopnumbe, trxVenta.EstadoContabilizado);
+                //Genera y guarda código de barras bidimensional
+                //codigobb.GenerarQRBidimensional(_Param.URLConsulta + "?&id=" + uuid.Trim() + "&re=" + trxVenta.Rfc + "&rr=" + trxVenta.IdImpuestoCliente + "&tt=" + trxVenta.Total.ToString() + "&fe=" + Utiles.Derecha(sello, 8)
+                //                                    , trxVenta.RutaXml.Trim() + "cbb\\" + nomArchivo + ".jpg");
 
-                    //Comprime el archivo xml
-                        //if (_Param.zip)
-                        //    Utiles.Zip(rutaYNomArchivo, ".xml");
+                //Genera pdf
+                //if (codigobb.iErr == 0)
+                //    reporte.generaEnFormatoPDF(rutaYNomArchivo, trxVenta.Soptype, trxVenta.Sopnumbe, trxVenta.EstadoContabilizado);
 
-                    //numMensajeError = codigobb.iErr + reporte.numErr;
-                    //ultimoMensaje = codigobb.strMensajeErr + " " + reporte.mensajeErr + " " + Utiles.msgErr;
+                //Comprime el archivo xml
+                //if (_Param.zip)
+                //    Utiles.Zip(rutaYNomArchivo, ".xml");
 
-                    //Si hay error en cbb o pdf o zip anota en la bitácora
-                    //if (numMensajeError != 0)
-                    //    ActualizaFacturaEmitida(trxVenta.Soptype, trxVenta.Sopnumbe, _Conexion.Usuario, "emitido", "emitido", mEstados.eBinActualConError,
-                    //                            mEstados.EnLetras(mEstados.eBinActualConError) + ultimoMensaje.Trim());
+                //numMensajeError = codigobb.iErr + reporte.numErr;
+                //ultimoMensaje = codigobb.strMensajeErr + " " + reporte.mensajeErr + " " + Utiles.msgErr;
+
+                //Si hay error en cbb o pdf o zip anota en la bitácora
+                //if (numMensajeError != 0)
+                //    ActualizaFacturaEmitida(trxVenta.Soptype, trxVenta.Sopnumbe, _Conexion.Usuario, "emitido", "emitido", mEstados.eBinActualConError,
+                //                            mEstados.EnLetras(mEstados.eBinActualConError) + ultimoMensaje.Trim());
+            }
+            catch (ArgumentException)
+            {
+                throw;
             }
             catch (DirectoryNotFoundException)
             {
                 string smsj = "Verifique en GP la existencia de la carpeta indicada en la configuración de Ruta de archivos Xml. La ruta de la carpeta no pudo ser encontrada: " + trxVenta.RutaXml;
-                throw new DirectoryNotFoundException( smsj);
+                throw new DirectoryNotFoundException(smsj);
             }
             catch (IOException)
             {

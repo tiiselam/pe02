@@ -42,7 +42,7 @@ namespace cfd.FacturaElectronica
                 trxVenta.Rewind();                                                          //move to first record
 
                 int errores = 0; int i = 1;
-                string antiguoIdCertificado = "";
+                //string antiguoIdCertificado = "";
                 XmlDocument sello = new XmlDocument();
                 //TecnicaDeEncriptacion criptografo = null;
                 XmlDocument comprobante = new XmlDocument();
@@ -100,7 +100,7 @@ namespace cfd.FacturaElectronica
 
                                 //Guarda el archivo xml, genera el cbb y el pdf. 
                                 //Luego anota en la bitácora la factura emitida o el error al generar cbb o pdf.
-                                DocVenta.AlmacenaEnRepositorio(trxVenta, comprobante.InnerXml, maquina, String.Empty, Sello);
+                                //DocVenta.AlmacenaEnRepositorio(trxVenta, comprobante.InnerXml, maquina, String.Empty, Sello);
 
                                 //CodigoDeBarras cbb = new CodigoDeBarras();
                                 //cbb.GenerarQRBidimensional(_Param.URLConsulta + "?&id=AABBCCDDEEFFGGHHIIOOPPQQRRSSTTUU&re=" + trxVenta.Rfc + "&rr=" + trxVenta.IdImpuestoCliente.Trim() + "&tt=" + trxVenta.Total.ToString() + "&fe=QWERTYU8"

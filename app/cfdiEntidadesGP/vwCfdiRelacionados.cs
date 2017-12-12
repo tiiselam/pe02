@@ -16,7 +16,7 @@ namespace cfdiEntidadesGP
     {
         public int orden { get; set; }
         public string tipoDocumento { get; set; }
-        public Nullable<short> soptypeFrom { get; set; }
+        public short soptypeFrom { get; set; }
         public string sopnumbeFrom { get; set; }
         public int soptypeTo { get; set; }
         public string sopnumbeTo { get; set; }

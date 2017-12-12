@@ -75,45 +75,46 @@ namespace OpenInvoicePeru.Xml
                         CurrencyId = grupo.Moneda,
                         Value = grupo.TotalVenta
                     },
-                    BillingPayments = new List<BillingPayment>()
-                    {
-                      new BillingPayment
-                      {
-                          PaidAmount = new PayableAmount
-                          {
-                              CurrencyId = grupo.Moneda,
-                              Value = grupo.Gravadas
-                          },
-                          InstructionId = "01"
-                      },
-                      new BillingPayment
-                      {
-                          PaidAmount = new PayableAmount
-                          {
-                              CurrencyId = grupo.Moneda,
-                              Value = grupo.Exoneradas
-                          },
-                          InstructionId = "02"
-                      },
-                      new BillingPayment
-                      {
-                          PaidAmount = new PayableAmount
-                          {
-                              CurrencyId = grupo.Moneda,
-                              Value = grupo.Inafectas
-                          },
-                          InstructionId = "03"
-                      },
-                    },
-                    AllowanceCharge = new AllowanceCharge
-                    {
-                        ChargeIndicator = true,
-                        Amount = new PayableAmount
-                        {
-                            CurrencyId = grupo.Moneda,
-                            Value = grupo.TotalDescuentos
-                        }
-                    },
+                    //jcf Sólo agregar este nodo si el monto > 0
+                    //BillingPayments = new List<BillingPayment>()
+                    //{
+                    //  new BillingPayment
+                    //  {
+                    //      PaidAmount = new PayableAmount
+                    //      {
+                    //          CurrencyId = grupo.Moneda,
+                    //          Value = grupo.Gravadas
+                    //      },
+                    //      InstructionId = "01"
+                    //  },
+                    //  new BillingPayment
+                    //  {
+                    //      PaidAmount = new PayableAmount
+                    //      {
+                    //          CurrencyId = grupo.Moneda,
+                    //          Value = grupo.Exoneradas
+                    //      },
+                    //      InstructionId = "02"
+                    //  },
+                    //  new BillingPayment
+                    //  {
+                    //      PaidAmount = new PayableAmount
+                    //      {
+                    //          CurrencyId = grupo.Moneda,
+                    //          Value = grupo.Inafectas
+                    //      },
+                    //      InstructionId = "03"
+                    //  },
+                    //},
+                    //AllowanceCharge = new AllowanceCharge
+                    //{
+                    //    ChargeIndicator = true,
+                    //    Amount = new PayableAmount
+                    //    {
+                    //        CurrencyId = grupo.Moneda,
+                    //        Value = grupo.TotalDescuentos
+                    //    }
+                    //},
                     TaxTotals = new List<TaxTotal>()
                     {
                         new TaxTotal
@@ -193,6 +194,52 @@ namespace OpenInvoicePeru.Xml
                         },
                     }
                 };
+
+                //jcf Sólo agregar este nodo si el monto > 0
+                if (grupo.Gravadas > 0)
+                    linea.BillingPayments.Add(new BillingPayment
+                    {
+                        PaidAmount = new PayableAmount
+                        {
+                            CurrencyId = grupo.Moneda,
+                            Value = grupo.Gravadas
+                        },
+                        InstructionId = "01"
+                    });
+                if (grupo.Exoneradas > 0)
+                    linea.BillingPayments.Add(new BillingPayment
+                    {
+                        PaidAmount = new PayableAmount
+                        {
+                            CurrencyId = grupo.Moneda,
+                            Value = grupo.Exoneradas
+                        },
+                        InstructionId = "02"
+                    });
+                if (grupo.Inafectas > 0)
+                    linea.BillingPayments.Add(new BillingPayment
+                    {
+                        PaidAmount = new PayableAmount
+                        {
+                            CurrencyId = grupo.Moneda,
+                            Value = grupo.Inafectas
+                        },
+                        InstructionId = "03"
+                    });
+
+                if (grupo.TotalDescuentos > 0)
+                {
+                    linea.AllowanceCharge = new AllowanceCharge
+                        {
+                            ChargeIndicator = true,
+                            Amount = new PayableAmount
+                            {
+                                CurrencyId = grupo.Moneda,
+                                Value = grupo.TotalDescuentos
+                            }
+                        };
+                }
+                //Fin modificación ////////////////
                 if (grupo.Exportacion > 0)
                 {
                     linea.BillingPayments.Add(new BillingPayment

@@ -16,6 +16,7 @@ namespace OpenInvoicePeru.Xml
         IEstructuraXml IDocumentoXml.Generar(IDocumentoElectronico request)
         {
             var documento = (DocumentoElectronico)request;
+            documento.MontoEnLetras = Conversion.Enletras(documento.TotalVenta);
             var creditNote = new CreditNote
             {
                 UblExtensions = new UblExtensions
@@ -35,33 +36,6 @@ namespace OpenInvoicePeru.Xml
                                         {
                                             CurrencyId = documento.Moneda,
                                             Value = documento.Gravadas
-                                        }
-                                    },
-                                    new AdditionalMonetaryTotal
-                                    {
-                                        Id = "1002",
-                                        PayableAmount = new PayableAmount
-                                        {
-                                            CurrencyId = documento.Moneda,
-                                            Value = documento.Inafectas
-                                        }
-                                    },
-                                    new AdditionalMonetaryTotal
-                                    {
-                                        Id = "1003",
-                                        PayableAmount = new PayableAmount
-                                        {
-                                            CurrencyId = documento.Moneda,
-                                            Value = documento.Exoneradas
-                                        }
-                                    },
-                                    new AdditionalMonetaryTotal
-                                    {
-                                        Id = "1004",
-                                        PayableAmount = new PayableAmount
-                                        {
-                                            CurrencyId = documento.Moneda,
-                                            Value = documento.Gratuitas
                                         }
                                     }
                                 },

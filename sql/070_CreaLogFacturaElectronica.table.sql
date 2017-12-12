@@ -23,7 +23,7 @@ begin
 	  archivoXML xml default ''
 	PRIMARY KEY(soptype, sopnumbe, secuencia));
 
-	alter table dbo.cfdLogFacturaXML add constraint chk_estado check(estado in ('emitido', 'anulado', 'impreso', 'enviado'));
+	alter table dbo.cfdLogFacturaXML add constraint chk_estado check(estado in ('emitido', 'anulado', 'impreso', 'publicado', 'enviado', 'sunat'));
 	create index idx1_cfdLogFacturaXML on dbo.cfdLogFacturaXML(soptype, sopnumbe, estado) include (estadoActual, archivoXML);
 end;
 go
@@ -32,5 +32,7 @@ go
 --Para actualizar Getty:
 --drop index idx1_cfdLogFacturaXML on dbo.cfdLogFacturaXML;
 --	create index idx1_cfdLogFacturaXML on dbo.cfdLogFacturaXML(soptype, sopnumbe, estado) include (estadoActual, archivoXML);
+
+--alter table dbo.cfdLogFacturaXML drop constraint chk_estado;
 
 

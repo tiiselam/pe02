@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using OpenInvoicePeru.Comun.Dto.Modelos;
 using cfdiEntidadesGP;
+using Comun;
 
 namespace cfdiPeru
 {
     class vwCfdTransaccionesDeVenta : vwCfdiTransaccionesDeVenta
     {
         DocumentoElectronico _docElectronico;
+        ComunicacionBaja _documentoBaja;
         ResumenDiarioNuevo _resumenElectronico;
         List<DetalleDocumento> lDetalleDocumento;
         private const string FormatoFecha = "yyyy-MM-dd";
@@ -36,6 +38,19 @@ namespace cfdiPeru
             set
             {
                 _resumenElectronico = value;
+            }
+        }
+
+        public ComunicacionBaja DocumentoBaja
+        {
+            get
+            {
+                return _documentoBaja;
+            }
+
+            set
+            {
+                _documentoBaja = value;
             }
         }
 
@@ -169,31 +184,75 @@ namespace cfdiPeru
                 int i = 1;
                 foreach (vwCfdiGeneraResumenDiario re in docGP.LDocResumenLineas)
                 {
-                    _resumenElectronico.Resumenes.Add(new GrupoResumenNuevo
+                    var grn = new GrupoResumenNuevo()
                     {
                         Id = i,
-                        TipoDocumento=re.tipoDocumento,
-                        IdDocumento= re.numResumenDiario,
-                        Serie=re.serie,
-                        NroDocumentoReceptor=re.receptorNroDoc,
-                        TipoDocumentoReceptor=re.receptorTipoDoc,
-                        Moneda=re.moneda,
+                        TipoDocumento = re.tipoDocumento,
+                        IdDocumento = re.serie,
+                        Serie = re.serie,
+                        NroDocumentoReceptor = re.receptorNroDoc,
+                        TipoDocumentoReceptor = re.receptorTipoDoc,
+                        Moneda = re.moneda,
+                        TotalVenta = Convert.ToDecimal(re.total),
+                        CodigoEstadoItem = 1,
+                        CorrelativoInicio = Convert.ToInt32(re.iniRango),
+                        CorrelativoFin = Convert.ToInt32(re.finRango),
+                        TotalDescuentos = Convert.ToDecimal(re.totalDescuento),
+                        Gratuitas = Convert.ToDecimal(re.totalGratuito),
                         Gravadas = Convert.ToDecimal(re.totalIvaImponible),
                         Exoneradas = Convert.ToDecimal(re.totalExonerado),
-                        //Gratuitas=re.totalGratuito,
-                        Inafectas= Convert.ToDecimal(re.totalInafecta),
-                        TotalIgv= Convert.ToDecimal(re.totalIva),
-                        TotalVenta = Convert.ToDecimal(re.total),
-                        CodigoEstadoItem=1,
-                        CorrelativoInicio=Convert.ToInt32(re.iniRango),
-                        CorrelativoFin=Convert.ToInt32(re.finRango)
-                    });
+                        Inafectas = Convert.ToDecimal(re.totalInafecta),
+                        TotalIgv = Convert.ToDecimal(re.totalIva)
+                    };
+
+                    _resumenElectronico.Resumenes.Add(grn);
+
                     i++;
                 }
             }
             catch (Exception)
             { throw;
             }
+        }
+
+        public void ArmarBaja(String motivoBaja)
+        {
+            DocumentoVentaGP docGP = new DocumentoVentaGP();
+
+            docGP.GetDatosDocumentoVenta(this.Sopnumbe, this.Soptype);
+
+            _documentoBaja = new ComunicacionBaja
+            {
+                
+                IdDocumento = string.Format("RA-{0:yyyyMMdd}-"+ Utiles.Derecha( docGP.DocVenta.correlativo, 5), DateTime.Today),
+                FechaEmision = DateTime.Today.ToString(FormatoFecha),
+                FechaReferencia = DateTime.Today.ToString(FormatoFecha),
+                Emisor = new Contribuyente()
+                {
+                    NroDocumento = docGP.DocVenta.emisorNroDoc,
+                    TipoDocumento = docGP.DocVenta.emisorTipoDoc,
+                    Direccion = docGP.DocVenta.emisorDireccion,
+                    Urbanizacion = docGP.DocVenta.emisorUrbanizacion,
+                    Departamento = docGP.DocVenta.emisorDepartamento,
+                    Provincia = docGP.DocVenta.emisorProvincia,
+                    Distrito = docGP.DocVenta.emisorDistrito,
+                    NombreComercial = docGP.DocVenta.emisorNombre,
+                    NombreLegal = docGP.DocVenta.emisorNombre,
+                    Ubigeo = docGP.DocVenta.emisorUbigeo
+                },
+
+                Bajas = new List<DocumentoBaja>()
+            };
+
+            _documentoBaja.Bajas.Add(new DocumentoBaja
+            {
+                Id = 1,
+                Correlativo = docGP.DocVenta.numero,
+                TipoDocumento = docGP.DocVenta.tipoDocumento,
+                Serie = docGP.DocVenta.serie,
+                MotivoBaja = motivoBaja
+            });
+
         }
     }
 }

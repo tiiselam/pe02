@@ -103,6 +103,9 @@
             this.lblUsuario = new System.Windows.Forms.Label();
             this.lblFecha = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.toolStripAuxRechazar = new System.Windows.Forms.ToolStrip();
+            this.tsTextBoxMotivoRechazo = new System.Windows.Forms.ToolStripTextBox();
+            this.tsBtnMotivoRechazo = new System.Windows.Forms.ToolStripButton();
             this.toolStripEmailMas = new System.Windows.Forms.ToolStrip();
             this.tsBtnConfiguraMsj = new System.Windows.Forms.ToolStripButton();
             this.toolStripEmail = new System.Windows.Forms.ToolStrip();
@@ -122,8 +125,7 @@
             this.tabFacturas = new System.Windows.Forms.TabPage();
             this.tabResumen = new System.Windows.Forms.TabPage();
             this.cBoxMarcCobros = new System.Windows.Forms.CheckBox();
-            this.dgridTrxCobros = new System.Windows.Forms.DataGridView();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.dgridTrxResumen = new System.Windows.Forms.DataGridView();
             this.MarcaCobro = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.iddoc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Soptype = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -138,6 +140,7 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgridTrxFacturas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vwCfdTransaccionesDeVentaBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -149,6 +152,7 @@
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.toolStripAuxRechazar.SuspendLayout();
             this.toolStripEmailMas.SuspendLayout();
             this.toolStripEmail.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -158,7 +162,7 @@
             this.tabCfdi.SuspendLayout();
             this.tabFacturas.SuspendLayout();
             this.tabResumen.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgridTrxCobros)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgridTrxResumen)).BeginInit();
             this.SuspendLayout();
             // 
             // dgridTrxFacturas
@@ -193,7 +197,7 @@
             this.dgridTrxFacturas.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgridTrxFacturas.RowHeadersWidth = 10;
             this.dgridTrxFacturas.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgridTrxFacturas.Size = new System.Drawing.Size(990, 287);
+            this.dgridTrxFacturas.Size = new System.Drawing.Size(1034, 287);
             this.dgridTrxFacturas.TabIndex = 50;
             this.dgridTrxFacturas.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgridTrxFacturas_RowPostPaint_1);
             // 
@@ -288,7 +292,7 @@
             this.MensajeEA.DataPropertyName = "MensajeEA";
             this.MensajeEA.HeaderText = "Observaciones";
             this.MensajeEA.Name = "MensajeEA";
-            this.MensajeEA.Width = 180;
+            this.MensajeEA.Width = 250;
             // 
             // eBinAct
             // 
@@ -452,7 +456,7 @@
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.progressBar1.Location = new System.Drawing.Point(0, 531);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(1004, 10);
+            this.progressBar1.Size = new System.Drawing.Size(1048, 10);
             this.progressBar1.Step = 4;
             this.progressBar1.TabIndex = 6;
             // 
@@ -466,7 +470,7 @@
             this.txtbxMensajes.Multiline = true;
             this.txtbxMensajes.Name = "txtbxMensajes";
             this.txtbxMensajes.ReadOnly = true;
-            this.txtbxMensajes.Size = new System.Drawing.Size(1004, 38);
+            this.txtbxMensajes.Size = new System.Drawing.Size(1048, 38);
             this.txtbxMensajes.TabIndex = 60;
             // 
             // toolStripProgressBar2
@@ -746,24 +750,21 @@
             // 
             // tsButtonConsultaTimbre
             // 
-            this.tsButtonConsultaTimbre.Enabled = false;
             this.tsButtonConsultaTimbre.Image = ((System.Drawing.Image)(resources.GetObject("tsButtonConsultaTimbre.Image")));
             this.tsButtonConsultaTimbre.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsButtonConsultaTimbre.Name = "tsButtonConsultaTimbre";
-            this.tsButtonConsultaTimbre.Size = new System.Drawing.Size(112, 20);
-            this.tsButtonConsultaTimbre.Text = "Consulta timbre";
+            this.tsButtonConsultaTimbre.Size = new System.Drawing.Size(104, 20);
+            this.tsButtonConsultaTimbre.Text = "Consultar CDR";
             this.tsButtonConsultaTimbre.Click += new System.EventHandler(this.tsButtonConsultaTimbre_Click);
             // 
             // tsBtnAnulaElimina
             // 
             this.tsBtnAnulaElimina.AutoToolTip = false;
-            this.tsBtnAnulaElimina.Enabled = false;
             this.tsBtnAnulaElimina.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnAnulaElimina.Image")));
             this.tsBtnAnulaElimina.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnAnulaElimina.Name = "tsBtnAnulaElimina";
-            this.tsBtnAnulaElimina.Size = new System.Drawing.Size(137, 20);
-            this.tsBtnAnulaElimina.Text = "Anular/Eliminar XML";
-            this.tsBtnAnulaElimina.Visible = false;
+            this.tsBtnAnulaElimina.Size = new System.Drawing.Size(111, 20);
+            this.tsBtnAnulaElimina.Text = "Comunicar Baja";
             this.tsBtnAnulaElimina.Click += new System.EventHandler(this.tsBtnAnulaElimina_Click);
             // 
             // tsBtnAbrirXML
@@ -835,7 +836,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1004, 26);
+            this.panel4.Size = new System.Drawing.Size(1048, 26);
             this.panel4.TabIndex = 74;
             // 
             // panel2
@@ -845,7 +846,7 @@
             this.panel2.Controls.Add(this.lblUsuario);
             this.panel2.Controls.Add(this.lblFecha);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(652, 0);
+            this.panel2.Location = new System.Drawing.Point(696, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(352, 26);
             this.panel2.TabIndex = 17;
@@ -883,6 +884,7 @@
             // 
             // panel5
             // 
+            this.panel5.Controls.Add(this.toolStripAuxRechazar);
             this.panel5.Controls.Add(this.toolStripEmailMas);
             this.panel5.Controls.Add(this.toolStripEmail);
             this.panel5.Controls.Add(this.toolStrip1);
@@ -894,8 +896,42 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 26);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1004, 88);
+            this.panel5.Size = new System.Drawing.Size(1048, 88);
             this.panel5.TabIndex = 75;
+            // 
+            // toolStripAuxRechazar
+            // 
+            this.toolStripAuxRechazar.AutoSize = false;
+            this.toolStripAuxRechazar.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.toolStripAuxRechazar.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripAuxRechazar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripAuxRechazar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsTextBoxMotivoRechazo,
+            this.tsBtnMotivoRechazo});
+            this.toolStripAuxRechazar.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
+            this.toolStripAuxRechazar.Location = new System.Drawing.Point(195, 26);
+            this.toolStripAuxRechazar.Name = "toolStripAuxRechazar";
+            this.toolStripAuxRechazar.Size = new System.Drawing.Size(146, 62);
+            this.toolStripAuxRechazar.TabIndex = 80;
+            this.toolStripAuxRechazar.Text = "toolStrip1";
+            this.toolStripAuxRechazar.Visible = false;
+            // 
+            // tsTextBoxMotivoRechazo
+            // 
+            this.tsTextBoxMotivoRechazo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tsTextBoxMotivoRechazo.Name = "tsTextBoxMotivoRechazo";
+            this.tsTextBoxMotivoRechazo.Size = new System.Drawing.Size(142, 23);
+            this.tsTextBoxMotivoRechazo.ToolTipText = "Indique el motivo del rechazo";
+            // 
+            // tsBtnMotivoRechazo
+            // 
+            this.tsBtnMotivoRechazo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnMotivoRechazo.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnMotivoRechazo.Image")));
+            this.tsBtnMotivoRechazo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnMotivoRechazo.Name = "tsBtnMotivoRechazo";
+            this.tsBtnMotivoRechazo.Size = new System.Drawing.Size(144, 19);
+            this.tsBtnMotivoRechazo.Text = "Confirmar";
+            this.tsBtnMotivoRechazo.Click += new System.EventHandler(this.tsBtnMotivoRechazo_Click);
             // 
             // toolStripEmailMas
             // 
@@ -958,7 +994,7 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsPbProcesoActivo});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStrip1.Location = new System.Drawing.Point(701, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(745, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(303, 88);
             this.toolStrip1.TabIndex = 72;
@@ -1019,7 +1055,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 114);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1004, 60);
+            this.panel1.Size = new System.Drawing.Size(1048, 60);
             this.panel1.TabIndex = 76;
             // 
             // textBCliente
@@ -1065,7 +1101,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(990, 287);
+            this.panel3.Size = new System.Drawing.Size(1034, 287);
             this.panel3.TabIndex = 77;
             // 
             // checkBoxMark
@@ -1100,7 +1136,7 @@
             this.tabCfdi.Location = new System.Drawing.Point(0, 174);
             this.tabCfdi.Name = "tabCfdi";
             this.tabCfdi.SelectedIndex = 0;
-            this.tabCfdi.Size = new System.Drawing.Size(1004, 319);
+            this.tabCfdi.Size = new System.Drawing.Size(1048, 319);
             this.tabCfdi.TabIndex = 78;
             this.tabCfdi.SelectedIndexChanged += new System.EventHandler(this.tabCfdi_SelectedIndexChanged);
             // 
@@ -1111,7 +1147,7 @@
             this.tabFacturas.Location = new System.Drawing.Point(4, 22);
             this.tabFacturas.Name = "tabFacturas";
             this.tabFacturas.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFacturas.Size = new System.Drawing.Size(996, 293);
+            this.tabFacturas.Size = new System.Drawing.Size(1040, 293);
             this.tabFacturas.TabIndex = 0;
             this.tabFacturas.Text = "FACTURAS";
             this.tabFacturas.UseVisualStyleBackColor = true;
@@ -1119,11 +1155,11 @@
             // tabResumen
             // 
             this.tabResumen.Controls.Add(this.cBoxMarcCobros);
-            this.tabResumen.Controls.Add(this.dgridTrxCobros);
+            this.tabResumen.Controls.Add(this.dgridTrxResumen);
             this.tabResumen.Location = new System.Drawing.Point(4, 22);
             this.tabResumen.Name = "tabResumen";
             this.tabResumen.Padding = new System.Windows.Forms.Padding(3);
-            this.tabResumen.Size = new System.Drawing.Size(996, 293);
+            this.tabResumen.Size = new System.Drawing.Size(1040, 293);
             this.tabResumen.TabIndex = 1;
             this.tabResumen.Text = "RESUMEN";
             this.tabResumen.UseVisualStyleBackColor = true;
@@ -1141,15 +1177,15 @@
             this.cBoxMarcCobros.UseVisualStyleBackColor = true;
             this.cBoxMarcCobros.CheckedChanged += new System.EventHandler(this.cBoxMarcCobros_CheckedChanged);
             // 
-            // dgridTrxCobros
+            // dgridTrxResumen
             // 
-            this.dgridTrxCobros.AllowUserToAddRows = false;
-            this.dgridTrxCobros.AllowUserToDeleteRows = false;
-            this.dgridTrxCobros.AllowUserToOrderColumns = true;
-            this.dgridTrxCobros.AutoGenerateColumns = false;
-            this.dgridTrxCobros.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgridTrxCobros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgridTrxCobros.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgridTrxResumen.AllowUserToAddRows = false;
+            this.dgridTrxResumen.AllowUserToDeleteRows = false;
+            this.dgridTrxResumen.AllowUserToOrderColumns = true;
+            this.dgridTrxResumen.AutoGenerateColumns = false;
+            this.dgridTrxResumen.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgridTrxResumen.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgridTrxResumen.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.MarcaCobro,
             this.iddoc,
             this.Soptype,
@@ -1164,23 +1200,15 @@
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn22,
             this.dataGridViewTextBoxColumn21});
-            this.dgridTrxCobros.Cursor = System.Windows.Forms.Cursors.Default;
-            this.dgridTrxCobros.DataSource = this.vwCfdTransaccionesDeVentaBindingSource;
-            this.dgridTrxCobros.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgridTrxCobros.Location = new System.Drawing.Point(3, 3);
-            this.dgridTrxCobros.Name = "dgridTrxCobros";
-            this.dgridTrxCobros.RowHeadersWidth = 10;
-            this.dgridTrxCobros.Size = new System.Drawing.Size(990, 287);
-            this.dgridTrxCobros.TabIndex = 0;
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.dgridTrxResumen.Cursor = System.Windows.Forms.Cursors.Default;
+            this.dgridTrxResumen.DataSource = this.vwCfdTransaccionesDeVentaBindingSource;
+            this.dgridTrxResumen.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgridTrxResumen.Location = new System.Drawing.Point(3, 3);
+            this.dgridTrxResumen.Name = "dgridTrxResumen";
+            this.dgridTrxResumen.RowHeadersWidth = 10;
+            this.dgridTrxResumen.Size = new System.Drawing.Size(1034, 287);
+            this.dgridTrxResumen.TabIndex = 0;
+            this.dgridTrxResumen.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgridTrxResumen_RowPostPaint);
             // 
             // MarcaCobro
             // 
@@ -1203,6 +1231,7 @@
             this.Soptype.DataPropertyName = "Soptype";
             this.Soptype.HeaderText = "Tipo";
             this.Soptype.Name = "Soptype";
+            this.Soptype.Width = 50;
             // 
             // Sopnumbe
             // 
@@ -1270,7 +1299,7 @@
             this.dataGridViewTextBoxColumn22.DataPropertyName = "MensajeEA";
             this.dataGridViewTextBoxColumn22.HeaderText = "Observaciones";
             this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
-            this.dataGridViewTextBoxColumn22.Width = 200;
+            this.dataGridViewTextBoxColumn22.Width = 300;
             // 
             // dataGridViewTextBoxColumn21
             // 
@@ -1279,11 +1308,20 @@
             this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
             this.dataGridViewTextBoxColumn21.Visible = false;
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            // 
             // winformGeneraFE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1004, 541);
+            this.ClientSize = new System.Drawing.Size(1048, 541);
             this.Controls.Add(this.tabCfdi);
             this.Controls.Add(this.pBarProcesoActivo);
             this.Controls.Add(this.tsConfirmaAnulaXml);
@@ -1315,6 +1353,8 @@
             this.panel4.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
+            this.toolStripAuxRechazar.ResumeLayout(false);
+            this.toolStripAuxRechazar.PerformLayout();
             this.toolStripEmailMas.ResumeLayout(false);
             this.toolStripEmailMas.PerformLayout();
             this.toolStripEmail.ResumeLayout(false);
@@ -1331,7 +1371,7 @@
             this.tabFacturas.ResumeLayout(false);
             this.tabResumen.ResumeLayout(false);
             this.tabResumen.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgridTrxCobros)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgridTrxResumen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1427,7 +1467,7 @@
         private System.Windows.Forms.TabPage tabResumen;
         private System.Windows.Forms.ToolStripProgressBar tsPbProcesoActivo;
         private System.Windows.Forms.CheckBox cBoxMarcCobros;
-        private System.Windows.Forms.DataGridView dgridTrxCobros;
+        private System.Windows.Forms.DataGridView dgridTrxResumen;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechahoraDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombreClienteDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn idImpuestoClienteDataGridViewTextBoxColumn1;
@@ -1436,20 +1476,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn mensajeDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn mensajeEADataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn estadoActualDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Mark;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Docid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn EstadoContabilizado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Voidstts;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MensajeEA;
-        private System.Windows.Forms.DataGridViewTextBoxColumn eBinAct;
         private System.Windows.Forms.DataGridViewCheckBoxColumn MarcaCobro;
         private System.Windows.Forms.DataGridViewTextBoxColumn iddoc;
         private System.Windows.Forms.DataGridViewTextBoxColumn Soptype;
@@ -1464,6 +1490,23 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
+        private System.Windows.Forms.ToolStrip toolStripAuxRechazar;
+        private System.Windows.Forms.ToolStripTextBox tsTextBoxMotivoRechazo;
+        private System.Windows.Forms.ToolStripButton tsBtnMotivoRechazo;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Mark;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Docid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EstadoContabilizado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Voidstts;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MensajeEA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn eBinAct;
     }
 }
 

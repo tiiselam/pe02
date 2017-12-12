@@ -13,8 +13,12 @@ where sopnumbe = 'FF11-00000002'
 
 
 select *
-from cfdlogfacturaxml
-where sopnumbe = 'FF11-00000002'
+--update c set estadoActual='000101'	-- noAprobacion = '1513019407979'
+--delete c
+from cfdlogfacturaxml c
+where c.sopnumbe = 'BB11-00000001'
+and c.soptype = 3
+and estado = 'publicado'
 
 select *
 from dbo.fLcLvParametros('V_PREFEXONERADO', 'V_PREFEXENTO', 'V_PREFIVA', 'V_GRATIS', 'na', 'na') pr	--Parámetros. prefijo inafectos, prefijo exento, prefijo iva
@@ -31,6 +35,9 @@ select *
 from vwCfdiGeneraDocumentoDeVenta
 where sopnumbe like 'FF11-00000002'
 
+
+select *
+from vwCfdiGeneraResumenDiario
 
 SP_COLUMNS cfdlogfacturaxml
 

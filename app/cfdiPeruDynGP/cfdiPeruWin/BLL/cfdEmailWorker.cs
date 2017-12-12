@@ -73,7 +73,7 @@ namespace cfd.FacturaElectronica
                                 eBinario = maquina.eBinarioNuevo;
 
                             doc.ActualizaFacturaEmitida(trxVenta.Soptype, trxVenta.Sopnumbe, _Conex.Usuario,
-                                                        "emitido", "emitido", eBinario, maquina.EnLetras(eBinario) + cliente.ultimoMensaje);
+                                                        "emitido", "emitido", eBinario, maquina.EnLetras(eBinario, _Param.tipoDoc) + cliente.ultimoMensaje, String.Empty);
                         }
                     }
 

@@ -93,27 +93,33 @@ namespace cfdiEntidadesGP
         {
             using (PERUEntities dv = new PERUEntities())
             {
-                //var options = new DataLoadOptions();
-                //options.LoadWith<PERUEntities>(v => v.vwCfdiConceptos);
-                //options.AssociateWith<PERUEntities>(v => v.vwCfdiConceptos.Where(n => n.sopnumbe == Sopnumbe && n.soptype == Soptype));
-                
-                var resDoc = dv.vwCfdiGeneraDocumentoDeVenta.Where(v => v.sopnumbe == Sopnumbe && v.soptype == Soptype);
-                foreach (vwCfdiGeneraDocumentoDeVenta doc in resDoc)
-                {
-                    _DocVenta = doc;
-                    break;
-                }
-                var resCon = dv.vwCfdiConceptos.Where(v => v.sopnumbe == Sopnumbe && v.soptype == Soptype);
-                foreach (vwCfdiConceptos c in resCon)
-                {
-                    _LDocVentaConceptos.Add(c);
-                }
+                _DocVenta = dv.vwCfdiGeneraDocumentoDeVenta
+                                    .Where(v => v.sopnumbe == Sopnumbe && v.soptype == Soptype)
+                                    .First();
+                _LDocVentaConceptos = dv.vwCfdiConceptos
+                                    .Where(v => v.sopnumbe == Sopnumbe && v.soptype == Soptype)
+                                    .ToList();
+                _LDocVentaRelacionados = dv.vwCfdiRelacionados
+                                    .Where(v => v.sopnumbeFrom == Sopnumbe && v.soptypeFrom == Soptype)
+                                    .ToList();
 
-                var resRelacionados = dv.vwCfdiRelacionados.Where(v => v.sopnumbeFrom == Sopnumbe && v.soptypeFrom == Soptype);
-                foreach (vwCfdiRelacionados c in resRelacionados)
-                {
-                    _LDocVentaRelacionados.Add(c);
-                }
+                //var resDoc = dv.vwCfdiGeneraDocumentoDeVenta.Where(v => v.sopnumbe == Sopnumbe && v.soptype == Soptype);
+                //foreach (vwCfdiGeneraDocumentoDeVenta doc in resDoc)
+                //{
+                //    _DocVenta = doc;
+                //    break;
+                //}
+                //var resCon = dv.vwCfdiConceptos.Where(v => v.sopnumbe == Sopnumbe && v.soptype == Soptype);
+                //foreach (vwCfdiConceptos c in resCon)
+                //{
+                //    _LDocVentaConceptos.Add(c);
+                //}
+
+                //var resRelacionados = dv.vwCfdiRelacionados.Where(v => v.sopnumbeFrom == Sopnumbe && v.soptypeFrom == Soptype);
+                //foreach (vwCfdiRelacionados c in resRelacionados)
+                //{
+                //    _LDocVentaRelacionados.Add(c);
+                //}
 
             }
 
@@ -122,16 +128,18 @@ namespace cfdiEntidadesGP
         {
             using (PERUEntities dv = new PERUEntities())
             {
-                var resDoc = dv.vwCfdiGeneraResumenDiario.Where(v => v.numResumenDiario == Sopnumbe && v.tipoResumenDiario == Soptype);
-                foreach (vwCfdiGeneraResumenDiario re in resDoc)
-                {
-                    _resumenCab = re;
-                    break;
-                }
-                foreach (vwCfdiGeneraResumenDiario re in resDoc)
-                {
-                    _lDocResumenLineas.Add(re);
-                }
+                _lDocResumenLineas = dv.vwCfdiGeneraResumenDiario
+                                                        .Where(v => v.numResumenDiario == Sopnumbe && v.tipoResumenDiario == Soptype)
+                                                        .ToList();
+
+                _resumenCab = _lDocResumenLineas.First();
+
+                //var resDoc = dv.vwCfdiGeneraResumenDiario.Where(v => v.numResumenDiario == Sopnumbe && v.tipoResumenDiario == Soptype);
+                //foreach (vwCfdiGeneraResumenDiario re in resDoc)
+                //{
+                //    _resumenCab = re;
+                //    break;
+                //}
 
             }
 

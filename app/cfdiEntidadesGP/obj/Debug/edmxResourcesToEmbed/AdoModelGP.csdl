@@ -6,12 +6,7 @@
       <PropertyRef Name="sopnumbe" />
       <PropertyRef Name="LNITMSEQ" />
       <PropertyRef Name="ITEMNMBR" />
-      <PropertyRef Name="ITEMDESC" />
       <PropertyRef Name="CMPNTSEQ" />
-      <PropertyRef Name="valorUni" />
-      <PropertyRef Name="cantidad" />
-      <PropertyRef Name="orslstax" />
-      <PropertyRef Name="tipoPrecio" />
     </Key>
     <Property Name="soptype" Type="Int16" Nullable="false" />
     <Property Name="sopnumbe" Type="String" MaxLength="21" FixedLength="true" Unicode="false" Nullable="false" />
@@ -29,23 +24,14 @@
     <Property Name="descuento" Type="Decimal" Precision="38" Scale="9" />
     <Property Name="importe" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
     <Property Name="orslstax" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
-    <Property Name="tipoPrecio" Type="String" MaxLength="61" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="tipoPrecio" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
     <Property Name="tipoImpuesto" Type="String" MaxLength="31" FixedLength="false" Unicode="false" />
     <Property Name="id" Type="Int64" />
   </EntityType>
   <EntityType Name="vwCfdiGeneraDocumentoDeVenta">
     <Key>
-      <PropertyRef Name="ivaImponible" />
-      <PropertyRef Name="iva" />
-      <PropertyRef Name="inafecta" />
-      <PropertyRef Name="exonerado" />
-      <PropertyRef Name="xchgrate" />
       <PropertyRef Name="soptype" />
-      <PropertyRef Name="ORTDISAM" />
-      <PropertyRef Name="gratuito" />
-      <PropertyRef Name="estadoContabilizado" />
-      <PropertyRef Name="docdate" />
-      <PropertyRef Name="emisorTipoDoc" />
+      <PropertyRef Name="sopnumbe" />
     </Key>
     <Property Name="tipoDocumento" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
     <Property Name="emisorNroDoc" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
@@ -72,7 +58,7 @@
     <Property Name="xchgrate" Type="Decimal" Precision="19" Scale="7" Nullable="false" />
     <Property Name="total" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
     <Property Name="soptype" Type="Int16" Nullable="false" />
-    <Property Name="sopnumbe" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Name="sopnumbe" Type="String" MaxLength="21" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="ORTDISAM" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
     <Property Name="discrepanciaTipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
     <Property Name="discrepanciaDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -81,6 +67,9 @@
     <Property Name="estadoContabilizado" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
     <Property Name="docdate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="emisorTipoDoc" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="serie" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Name="numero" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+    <Property Name="correlativo" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
   </EntityType>
   <EntityContainer Name="PERUEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="vwCfdiConceptos" EntityType="Self.vwCfdiConceptos" />
@@ -94,10 +83,11 @@
       <PropertyRef Name="sopnumbeFrom" />
       <PropertyRef Name="soptypeTo" />
       <PropertyRef Name="sopnumbeTo" />
+      <PropertyRef Name="soptypeFrom" />
     </Key>
     <Property Name="orden" Type="Int32" Nullable="false" />
     <Property Name="tipoDocumento" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
-    <Property Name="soptypeFrom" Type="Int16" />
+    <Property Name="soptypeFrom" Type="Int16" Nullable="false" />
     <Property Name="sopnumbeFrom" Type="String" Nullable="false" MaxLength="21" FixedLength="true" Unicode="false" />
     <Property Name="soptypeTo" Type="Int32" Nullable="false" />
     <Property Name="sopnumbeTo" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
@@ -105,12 +95,15 @@
   <EntityType Name="vwCfdiGeneraResumenDiario">
     <Key>
       <PropertyRef Name="tipoResumenDiario" />
-      <PropertyRef Name="docdate" />
-      <PropertyRef Name="emisorTipoDoc" />
+      <PropertyRef Name="numResumenDiario" />
+      <PropertyRef Name="tipoDocumento" />
+      <PropertyRef Name="serie" />
+      <PropertyRef Name="iniRango" />
+      <PropertyRef Name="finRango" />
     </Key>
     <Property Name="tipoResumenDiario" Type="Int32" Nullable="false" />
-    <Property Name="numResumenDiario" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-    <Property Name="tipoDocumento" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+    <Property Name="numResumenDiario" Type="String" MaxLength="17" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="tipoDocumento" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="emisorNroDoc" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
     <Property Name="emisorNombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="emisorUbigeo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -131,8 +124,9 @@
     <Property Name="cantidad" Type="Int32" />
     <Property Name="docdate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="emisorTipoDoc" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="iniRango" Type="Int32" />
-    <Property Name="finRango" Type="Int32" />
-    <Property Name="serie" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+    <Property Name="iniRango" Type="Int32" Nullable="false" />
+    <Property Name="finRango" Type="Int32" Nullable="false" />
+    <Property Name="serie" Type="String" MaxLength="21" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="totalDescuento" Type="Decimal" Precision="38" Scale="5" />
   </EntityType>
 </Schema>

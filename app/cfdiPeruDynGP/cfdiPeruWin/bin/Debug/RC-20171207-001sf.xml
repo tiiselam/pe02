@@ -6,7 +6,7 @@
     </ext:UBLExtension>
   </ext:UBLExtensions>
   <cbc:UBLVersionID>2.0</cbc:UBLVersionID>
-  <cbc:CustomizationID>1.1</cbc:CustomizationID>
+  <cbc:CustomizationID>1.0</cbc:CustomizationID>
   <cbc:ID>RC-20171207-001</cbc:ID>
   <cbc:ReferenceDate>2017-12-07</cbc:ReferenceDate>
   <cbc:IssueDate>2017-12-07</cbc:IssueDate>
@@ -38,23 +38,27 @@
   <sac:SummaryDocumentsLine>
     <cbc:LineID>1</cbc:LineID>
     <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    <cbc:ID>RC-20171207-001</cbc:ID>
-    <cac:AccountingCustomerParty>
-      <cbc:CustomerAssignedAccountID>20510699948</cbc:CustomerAssignedAccountID>
-      <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
-    </cac:AccountingCustomerParty>
-    <cac:Status>
-      <cbc:ConditionCode>1</cbc:ConditionCode>
-    </cac:Status>
+    <sac:DocumentSerialID>BB11</sac:DocumentSerialID>
+    <sac:StartDocumentNumberID>1</sac:StartDocumentNumberID>
+    <sac:EndDocumentNumberID>1</sac:EndDocumentNumberID>
     <sac:TotalAmount currencyID="PEN">381.49</sac:TotalAmount>
     <sac:BillingPayment>
       <cbc:PaidAmount currencyID="PEN">323.30</cbc:PaidAmount>
       <cbc:InstructionID>01</cbc:InstructionID>
     </sac:BillingPayment>
-    <cac:AllowanceCharge>
-      <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
-      <cbc:Amount currencyID="PEN">0.00</cbc:Amount>
-    </cac:AllowanceCharge>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>2000</cbc:ID>
+            <cbc:Name>ISC</cbc:Name>
+            <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
     <cac:TaxTotal>
       <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
       <cac:TaxSubtotal>
@@ -64,6 +68,19 @@
             <cbc:ID>1000</cbc:ID>
             <cbc:Name>IGV</cbc:Name>
             <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>9999</cbc:ID>
+            <cbc:Name>OTROS</cbc:Name>
+            <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
           </cac:TaxScheme>
         </cac:TaxCategory>
       </cac:TaxSubtotal>
@@ -71,28 +88,32 @@
   </sac:SummaryDocumentsLine>
   <sac:SummaryDocumentsLine>
     <cbc:LineID>2</cbc:LineID>
-    <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    <cbc:ID>RC-20171207-001</cbc:ID>
-    <cac:AccountingCustomerParty>
-      <cbc:CustomerAssignedAccountID>20510699948</cbc:CustomerAssignedAccountID>
-      <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
-    </cac:AccountingCustomerParty>
-    <cac:Status>
-      <cbc:ConditionCode>1</cbc:ConditionCode>
-    </cac:Status>
-    <sac:TotalAmount currencyID="PEN">381.49</sac:TotalAmount>
+    <cbc:DocumentTypeCode>07</cbc:DocumentTypeCode>
+    <sac:DocumentSerialID>BB11</sac:DocumentSerialID>
+    <sac:StartDocumentNumberID>1</sac:StartDocumentNumberID>
+    <sac:EndDocumentNumberID>1</sac:EndDocumentNumberID>
+    <sac:TotalAmount currencyID="PEN">517.12</sac:TotalAmount>
     <sac:BillingPayment>
-      <cbc:PaidAmount currencyID="PEN">323.30</cbc:PaidAmount>
+      <cbc:PaidAmount currencyID="PEN">438.24</cbc:PaidAmount>
       <cbc:InstructionID>01</cbc:InstructionID>
     </sac:BillingPayment>
-    <cac:AllowanceCharge>
-      <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
-      <cbc:Amount currencyID="PEN">0.00</cbc:Amount>
-    </cac:AllowanceCharge>
     <cac:TaxTotal>
-      <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
-        <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>2000</cbc:ID>
+            <cbc:Name>ISC</cbc:Name>
+            <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">78.88</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">78.88</cbc:TaxAmount>
         <cac:TaxCategory>
           <cac:TaxScheme>
             <cbc:ID>1000</cbc:ID>
@@ -102,36 +123,66 @@
         </cac:TaxCategory>
       </cac:TaxSubtotal>
     </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>9999</cbc:ID>
+            <cbc:Name>OTROS</cbc:Name>
+            <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
   </sac:SummaryDocumentsLine>
   <sac:SummaryDocumentsLine>
     <cbc:LineID>3</cbc:LineID>
-    <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    <cbc:ID>RC-20171207-001</cbc:ID>
-    <cac:AccountingCustomerParty>
-      <cbc:CustomerAssignedAccountID>20510699948</cbc:CustomerAssignedAccountID>
-      <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
-    </cac:AccountingCustomerParty>
-    <cac:Status>
-      <cbc:ConditionCode>1</cbc:ConditionCode>
-    </cac:Status>
-    <sac:TotalAmount currencyID="PEN">381.49</sac:TotalAmount>
+    <cbc:DocumentTypeCode>08</cbc:DocumentTypeCode>
+    <sac:DocumentSerialID>BB11</sac:DocumentSerialID>
+    <sac:StartDocumentNumberID>2</sac:StartDocumentNumberID>
+    <sac:EndDocumentNumberID>2</sac:EndDocumentNumberID>
+    <sac:TotalAmount currencyID="PEN">684.40</sac:TotalAmount>
     <sac:BillingPayment>
-      <cbc:PaidAmount currencyID="PEN">323.30</cbc:PaidAmount>
+      <cbc:PaidAmount currencyID="PEN">580.00</cbc:PaidAmount>
       <cbc:InstructionID>01</cbc:InstructionID>
     </sac:BillingPayment>
-    <cac:AllowanceCharge>
-      <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
-      <cbc:Amount currencyID="PEN">0.00</cbc:Amount>
-    </cac:AllowanceCharge>
     <cac:TaxTotal>
-      <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
-        <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>2000</cbc:ID>
+            <cbc:Name>ISC</cbc:Name>
+            <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">104.40</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">104.40</cbc:TaxAmount>
         <cac:TaxCategory>
           <cac:TaxScheme>
             <cbc:ID>1000</cbc:ID>
             <cbc:Name>IGV</cbc:Name>
             <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>9999</cbc:ID>
+            <cbc:Name>OTROS</cbc:Name>
+            <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
           </cac:TaxScheme>
         </cac:TaxCategory>
       </cac:TaxSubtotal>
@@ -140,32 +191,49 @@
   <sac:SummaryDocumentsLine>
     <cbc:LineID>4</cbc:LineID>
     <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    <cbc:ID>RC-20171207-001</cbc:ID>
-    <cac:AccountingCustomerParty>
-      <cbc:CustomerAssignedAccountID>20510699948</cbc:CustomerAssignedAccountID>
-      <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
-    </cac:AccountingCustomerParty>
-    <cac:Status>
-      <cbc:ConditionCode>1</cbc:ConditionCode>
-    </cac:Status>
-    <sac:TotalAmount currencyID="PEN">381.49</sac:TotalAmount>
+    <sac:DocumentSerialID>BB12</sac:DocumentSerialID>
+    <sac:StartDocumentNumberID>1</sac:StartDocumentNumberID>
+    <sac:EndDocumentNumberID>1</sac:EndDocumentNumberID>
+    <sac:TotalAmount currencyID="PEN">5000.00</sac:TotalAmount>
     <sac:BillingPayment>
-      <cbc:PaidAmount currencyID="PEN">323.30</cbc:PaidAmount>
-      <cbc:InstructionID>01</cbc:InstructionID>
+      <cbc:PaidAmount currencyID="PEN">5000.00</cbc:PaidAmount>
+      <cbc:InstructionID>03</cbc:InstructionID>
     </sac:BillingPayment>
-    <cac:AllowanceCharge>
-      <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
-      <cbc:Amount currencyID="PEN">0.00</cbc:Amount>
-    </cac:AllowanceCharge>
     <cac:TaxTotal>
-      <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
-        <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>2000</cbc:ID>
+            <cbc:Name>ISC</cbc:Name>
+            <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
         <cac:TaxCategory>
           <cac:TaxScheme>
             <cbc:ID>1000</cbc:ID>
             <cbc:Name>IGV</cbc:Name>
             <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>9999</cbc:ID>
+            <cbc:Name>OTROS</cbc:Name>
+            <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
           </cac:TaxScheme>
         </cac:TaxCategory>
       </cac:TaxSubtotal>
@@ -173,28 +241,32 @@
   </sac:SummaryDocumentsLine>
   <sac:SummaryDocumentsLine>
     <cbc:LineID>5</cbc:LineID>
-    <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    <cbc:ID>RC-20171207-001</cbc:ID>
-    <cac:AccountingCustomerParty>
-      <cbc:CustomerAssignedAccountID>20510699948</cbc:CustomerAssignedAccountID>
-      <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
-    </cac:AccountingCustomerParty>
-    <cac:Status>
-      <cbc:ConditionCode>1</cbc:ConditionCode>
-    </cac:Status>
-    <sac:TotalAmount currencyID="PEN">381.49</sac:TotalAmount>
+    <cbc:DocumentTypeCode>07</cbc:DocumentTypeCode>
+    <sac:DocumentSerialID>BB12</sac:DocumentSerialID>
+    <sac:StartDocumentNumberID>1</sac:StartDocumentNumberID>
+    <sac:EndDocumentNumberID>1</sac:EndDocumentNumberID>
+    <sac:TotalAmount currencyID="PEN">500.00</sac:TotalAmount>
     <sac:BillingPayment>
-      <cbc:PaidAmount currencyID="PEN">323.30</cbc:PaidAmount>
-      <cbc:InstructionID>01</cbc:InstructionID>
+      <cbc:PaidAmount currencyID="PEN">500.00</cbc:PaidAmount>
+      <cbc:InstructionID>03</cbc:InstructionID>
     </sac:BillingPayment>
-    <cac:AllowanceCharge>
-      <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
-      <cbc:Amount currencyID="PEN">0.00</cbc:Amount>
-    </cac:AllowanceCharge>
     <cac:TaxTotal>
-      <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
-        <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>2000</cbc:ID>
+            <cbc:Name>ISC</cbc:Name>
+            <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
         <cac:TaxCategory>
           <cac:TaxScheme>
             <cbc:ID>1000</cbc:ID>
@@ -204,36 +276,66 @@
         </cac:TaxCategory>
       </cac:TaxSubtotal>
     </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>9999</cbc:ID>
+            <cbc:Name>OTROS</cbc:Name>
+            <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
   </sac:SummaryDocumentsLine>
   <sac:SummaryDocumentsLine>
     <cbc:LineID>6</cbc:LineID>
-    <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    <cbc:ID>RC-20171207-001</cbc:ID>
-    <cac:AccountingCustomerParty>
-      <cbc:CustomerAssignedAccountID>20510699948</cbc:CustomerAssignedAccountID>
-      <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
-    </cac:AccountingCustomerParty>
-    <cac:Status>
-      <cbc:ConditionCode>1</cbc:ConditionCode>
-    </cac:Status>
-    <sac:TotalAmount currencyID="PEN">381.49</sac:TotalAmount>
+    <cbc:DocumentTypeCode>08</cbc:DocumentTypeCode>
+    <sac:DocumentSerialID>BB12</sac:DocumentSerialID>
+    <sac:StartDocumentNumberID>2</sac:StartDocumentNumberID>
+    <sac:EndDocumentNumberID>2</sac:EndDocumentNumberID>
+    <sac:TotalAmount currencyID="PEN">556.60</sac:TotalAmount>
     <sac:BillingPayment>
-      <cbc:PaidAmount currencyID="PEN">323.30</cbc:PaidAmount>
-      <cbc:InstructionID>01</cbc:InstructionID>
+      <cbc:PaidAmount currencyID="PEN">556.60</cbc:PaidAmount>
+      <cbc:InstructionID>02</cbc:InstructionID>
     </sac:BillingPayment>
-    <cac:AllowanceCharge>
-      <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
-      <cbc:Amount currencyID="PEN">0.00</cbc:Amount>
-    </cac:AllowanceCharge>
     <cac:TaxTotal>
-      <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
-        <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>2000</cbc:ID>
+            <cbc:Name>ISC</cbc:Name>
+            <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
         <cac:TaxCategory>
           <cac:TaxScheme>
             <cbc:ID>1000</cbc:ID>
             <cbc:Name>IGV</cbc:Name>
             <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>9999</cbc:ID>
+            <cbc:Name>OTROS</cbc:Name>
+            <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
           </cac:TaxScheme>
         </cac:TaxCategory>
       </cac:TaxSubtotal>
@@ -242,32 +344,53 @@
   <sac:SummaryDocumentsLine>
     <cbc:LineID>7</cbc:LineID>
     <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    <cbc:ID>RC-20171207-001</cbc:ID>
-    <cac:AccountingCustomerParty>
-      <cbc:CustomerAssignedAccountID>20510699948</cbc:CustomerAssignedAccountID>
-      <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
-    </cac:AccountingCustomerParty>
-    <cac:Status>
-      <cbc:ConditionCode>1</cbc:ConditionCode>
-    </cac:Status>
-    <sac:TotalAmount currencyID="PEN">381.49</sac:TotalAmount>
+    <sac:DocumentSerialID>BB13</sac:DocumentSerialID>
+    <sac:StartDocumentNumberID>1</sac:StartDocumentNumberID>
+    <sac:EndDocumentNumberID>1</sac:EndDocumentNumberID>
+    <sac:TotalAmount currencyID="PEN">1859.00</sac:TotalAmount>
     <sac:BillingPayment>
-      <cbc:PaidAmount currencyID="PEN">323.30</cbc:PaidAmount>
+      <cbc:PaidAmount currencyID="PEN">1500.00</cbc:PaidAmount>
       <cbc:InstructionID>01</cbc:InstructionID>
     </sac:BillingPayment>
-    <cac:AllowanceCharge>
-      <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
-      <cbc:Amount currencyID="PEN">0.00</cbc:Amount>
-    </cac:AllowanceCharge>
+    <sac:BillingPayment>
+      <cbc:PaidAmount currencyID="PEN">89.00</cbc:PaidAmount>
+      <cbc:InstructionID>05</cbc:InstructionID>
+    </sac:BillingPayment>
     <cac:TaxTotal>
-      <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
-        <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>2000</cbc:ID>
+            <cbc:Name>ISC</cbc:Name>
+            <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">270.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">270.00</cbc:TaxAmount>
         <cac:TaxCategory>
           <cac:TaxScheme>
             <cbc:ID>1000</cbc:ID>
             <cbc:Name>IGV</cbc:Name>
             <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>9999</cbc:ID>
+            <cbc:Name>OTROS</cbc:Name>
+            <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
           </cac:TaxScheme>
         </cac:TaxCategory>
       </cac:TaxSubtotal>
@@ -276,32 +399,53 @@
   <sac:SummaryDocumentsLine>
     <cbc:LineID>8</cbc:LineID>
     <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    <cbc:ID>RC-20171207-001</cbc:ID>
-    <cac:AccountingCustomerParty>
-      <cbc:CustomerAssignedAccountID>20510699948</cbc:CustomerAssignedAccountID>
-      <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
-    </cac:AccountingCustomerParty>
-    <cac:Status>
-      <cbc:ConditionCode>1</cbc:ConditionCode>
-    </cac:Status>
-    <sac:TotalAmount currencyID="PEN">381.49</sac:TotalAmount>
+    <sac:DocumentSerialID>BB14</sac:DocumentSerialID>
+    <sac:StartDocumentNumberID>1</sac:StartDocumentNumberID>
+    <sac:EndDocumentNumberID>1</sac:EndDocumentNumberID>
+    <sac:TotalAmount currencyID="PEN">3540.00</sac:TotalAmount>
     <sac:BillingPayment>
-      <cbc:PaidAmount currencyID="PEN">323.30</cbc:PaidAmount>
+      <cbc:PaidAmount currencyID="PEN">3000.00</cbc:PaidAmount>
       <cbc:InstructionID>01</cbc:InstructionID>
     </sac:BillingPayment>
     <cac:AllowanceCharge>
       <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
-      <cbc:Amount currencyID="PEN">0.00</cbc:Amount>
+      <cbc:Amount currencyID="PEN">256.00</cbc:Amount>
     </cac:AllowanceCharge>
     <cac:TaxTotal>
-      <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
-        <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>2000</cbc:ID>
+            <cbc:Name>ISC</cbc:Name>
+            <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">540.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">540.00</cbc:TaxAmount>
         <cac:TaxCategory>
           <cac:TaxScheme>
             <cbc:ID>1000</cbc:ID>
             <cbc:Name>IGV</cbc:Name>
             <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>9999</cbc:ID>
+            <cbc:Name>OTROS</cbc:Name>
+            <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
           </cac:TaxScheme>
         </cac:TaxCategory>
       </cac:TaxSubtotal>
@@ -309,28 +453,32 @@
   </sac:SummaryDocumentsLine>
   <sac:SummaryDocumentsLine>
     <cbc:LineID>9</cbc:LineID>
-    <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    <cbc:ID>RC-20171207-001</cbc:ID>
-    <cac:AccountingCustomerParty>
-      <cbc:CustomerAssignedAccountID>20510699948</cbc:CustomerAssignedAccountID>
-      <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
-    </cac:AccountingCustomerParty>
-    <cac:Status>
-      <cbc:ConditionCode>1</cbc:ConditionCode>
-    </cac:Status>
-    <sac:TotalAmount currencyID="PEN">381.49</sac:TotalAmount>
+    <cbc:DocumentTypeCode>07</cbc:DocumentTypeCode>
+    <sac:DocumentSerialID>BB14</sac:DocumentSerialID>
+    <sac:StartDocumentNumberID>1</sac:StartDocumentNumberID>
+    <sac:EndDocumentNumberID>1</sac:EndDocumentNumberID>
+    <sac:TotalAmount currencyID="PEN">590.00</sac:TotalAmount>
     <sac:BillingPayment>
-      <cbc:PaidAmount currencyID="PEN">323.30</cbc:PaidAmount>
+      <cbc:PaidAmount currencyID="PEN">500.00</cbc:PaidAmount>
       <cbc:InstructionID>01</cbc:InstructionID>
     </sac:BillingPayment>
-    <cac:AllowanceCharge>
-      <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
-      <cbc:Amount currencyID="PEN">0.00</cbc:Amount>
-    </cac:AllowanceCharge>
     <cac:TaxTotal>
-      <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
-        <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>2000</cbc:ID>
+            <cbc:Name>ISC</cbc:Name>
+            <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">90.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">90.00</cbc:TaxAmount>
         <cac:TaxCategory>
           <cac:TaxScheme>
             <cbc:ID>1000</cbc:ID>
@@ -340,36 +488,66 @@
         </cac:TaxCategory>
       </cac:TaxSubtotal>
     </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>9999</cbc:ID>
+            <cbc:Name>OTROS</cbc:Name>
+            <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
   </sac:SummaryDocumentsLine>
   <sac:SummaryDocumentsLine>
     <cbc:LineID>10</cbc:LineID>
-    <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    <cbc:ID>RC-20171207-001</cbc:ID>
-    <cac:AccountingCustomerParty>
-      <cbc:CustomerAssignedAccountID>20510699948</cbc:CustomerAssignedAccountID>
-      <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
-    </cac:AccountingCustomerParty>
-    <cac:Status>
-      <cbc:ConditionCode>1</cbc:ConditionCode>
-    </cac:Status>
-    <sac:TotalAmount currencyID="PEN">381.49</sac:TotalAmount>
+    <cbc:DocumentTypeCode>08</cbc:DocumentTypeCode>
+    <sac:DocumentSerialID>BB14</sac:DocumentSerialID>
+    <sac:StartDocumentNumberID>2</sac:StartDocumentNumberID>
+    <sac:EndDocumentNumberID>2</sac:EndDocumentNumberID>
+    <sac:TotalAmount currencyID="PEN">302.73</sac:TotalAmount>
     <sac:BillingPayment>
-      <cbc:PaidAmount currencyID="PEN">323.30</cbc:PaidAmount>
+      <cbc:PaidAmount currencyID="PEN">256.55</cbc:PaidAmount>
       <cbc:InstructionID>01</cbc:InstructionID>
     </sac:BillingPayment>
-    <cac:AllowanceCharge>
-      <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
-      <cbc:Amount currencyID="PEN">0.00</cbc:Amount>
-    </cac:AllowanceCharge>
     <cac:TaxTotal>
-      <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
-        <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>2000</cbc:ID>
+            <cbc:Name>ISC</cbc:Name>
+            <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">46.18</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">46.18</cbc:TaxAmount>
         <cac:TaxCategory>
           <cac:TaxScheme>
             <cbc:ID>1000</cbc:ID>
             <cbc:Name>IGV</cbc:Name>
             <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>9999</cbc:ID>
+            <cbc:Name>OTROS</cbc:Name>
+            <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
           </cac:TaxScheme>
         </cac:TaxCategory>
       </cac:TaxSubtotal>
@@ -378,32 +556,49 @@
   <sac:SummaryDocumentsLine>
     <cbc:LineID>11</cbc:LineID>
     <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    <cbc:ID>RC-20171207-001</cbc:ID>
-    <cac:AccountingCustomerParty>
-      <cbc:CustomerAssignedAccountID>20510699948</cbc:CustomerAssignedAccountID>
-      <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
-    </cac:AccountingCustomerParty>
-    <cac:Status>
-      <cbc:ConditionCode>1</cbc:ConditionCode>
-    </cac:Status>
-    <sac:TotalAmount currencyID="PEN">381.49</sac:TotalAmount>
+    <sac:DocumentSerialID>BB50</sac:DocumentSerialID>
+    <sac:StartDocumentNumberID>1</sac:StartDocumentNumberID>
+    <sac:EndDocumentNumberID>1</sac:EndDocumentNumberID>
+    <sac:TotalAmount currencyID="USD">3044.40</sac:TotalAmount>
     <sac:BillingPayment>
-      <cbc:PaidAmount currencyID="PEN">323.30</cbc:PaidAmount>
+      <cbc:PaidAmount currencyID="USD">2580.00</cbc:PaidAmount>
       <cbc:InstructionID>01</cbc:InstructionID>
     </sac:BillingPayment>
-    <cac:AllowanceCharge>
-      <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
-      <cbc:Amount currencyID="PEN">0.00</cbc:Amount>
-    </cac:AllowanceCharge>
     <cac:TaxTotal>
-      <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="USD">0.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
-        <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="USD">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>2000</cbc:ID>
+            <cbc:Name>ISC</cbc:Name>
+            <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="USD">464.40</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="USD">464.40</cbc:TaxAmount>
         <cac:TaxCategory>
           <cac:TaxScheme>
             <cbc:ID>1000</cbc:ID>
             <cbc:Name>IGV</cbc:Name>
             <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="USD">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="USD">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>9999</cbc:ID>
+            <cbc:Name>OTROS</cbc:Name>
+            <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
           </cac:TaxScheme>
         </cac:TaxCategory>
       </cac:TaxSubtotal>
@@ -411,28 +606,32 @@
   </sac:SummaryDocumentsLine>
   <sac:SummaryDocumentsLine>
     <cbc:LineID>12</cbc:LineID>
-    <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    <cbc:ID>RC-20171207-001</cbc:ID>
-    <cac:AccountingCustomerParty>
-      <cbc:CustomerAssignedAccountID>20510699948</cbc:CustomerAssignedAccountID>
-      <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
-    </cac:AccountingCustomerParty>
-    <cac:Status>
-      <cbc:ConditionCode>1</cbc:ConditionCode>
-    </cac:Status>
-    <sac:TotalAmount currencyID="PEN">381.49</sac:TotalAmount>
+    <cbc:DocumentTypeCode>07</cbc:DocumentTypeCode>
+    <sac:DocumentSerialID>BB50</sac:DocumentSerialID>
+    <sac:StartDocumentNumberID>1</sac:StartDocumentNumberID>
+    <sac:EndDocumentNumberID>1</sac:EndDocumentNumberID>
+    <sac:TotalAmount currencyID="USD">423.62</sac:TotalAmount>
     <sac:BillingPayment>
-      <cbc:PaidAmount currencyID="PEN">323.30</cbc:PaidAmount>
+      <cbc:PaidAmount currencyID="USD">359.00</cbc:PaidAmount>
       <cbc:InstructionID>01</cbc:InstructionID>
     </sac:BillingPayment>
-    <cac:AllowanceCharge>
-      <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
-      <cbc:Amount currencyID="PEN">0.00</cbc:Amount>
-    </cac:AllowanceCharge>
     <cac:TaxTotal>
-      <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="USD">0.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
-        <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="USD">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>2000</cbc:ID>
+            <cbc:Name>ISC</cbc:Name>
+            <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="USD">64.62</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="USD">64.62</cbc:TaxAmount>
         <cac:TaxCategory>
           <cac:TaxScheme>
             <cbc:ID>1000</cbc:ID>
@@ -442,36 +641,66 @@
         </cac:TaxCategory>
       </cac:TaxSubtotal>
     </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="USD">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="USD">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>9999</cbc:ID>
+            <cbc:Name>OTROS</cbc:Name>
+            <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
   </sac:SummaryDocumentsLine>
   <sac:SummaryDocumentsLine>
     <cbc:LineID>13</cbc:LineID>
-    <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    <cbc:ID>RC-20171207-001</cbc:ID>
-    <cac:AccountingCustomerParty>
-      <cbc:CustomerAssignedAccountID>20510699948</cbc:CustomerAssignedAccountID>
-      <cbc:AdditionalAccountID>6</cbc:AdditionalAccountID>
-    </cac:AccountingCustomerParty>
-    <cac:Status>
-      <cbc:ConditionCode>1</cbc:ConditionCode>
-    </cac:Status>
-    <sac:TotalAmount currencyID="PEN">381.49</sac:TotalAmount>
+    <cbc:DocumentTypeCode>08</cbc:DocumentTypeCode>
+    <sac:DocumentSerialID>BB50</sac:DocumentSerialID>
+    <sac:StartDocumentNumberID>2</sac:StartDocumentNumberID>
+    <sac:EndDocumentNumberID>2</sac:EndDocumentNumberID>
+    <sac:TotalAmount currencyID="USD">1178.82</sac:TotalAmount>
     <sac:BillingPayment>
-      <cbc:PaidAmount currencyID="PEN">323.30</cbc:PaidAmount>
+      <cbc:PaidAmount currencyID="USD">999.00</cbc:PaidAmount>
       <cbc:InstructionID>01</cbc:InstructionID>
     </sac:BillingPayment>
-    <cac:AllowanceCharge>
-      <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
-      <cbc:Amount currencyID="PEN">0.00</cbc:Amount>
-    </cac:AllowanceCharge>
     <cac:TaxTotal>
-      <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="USD">0.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
-        <cbc:TaxAmount currencyID="PEN">58.19</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="USD">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>2000</cbc:ID>
+            <cbc:Name>ISC</cbc:Name>
+            <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="USD">179.82</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="USD">179.82</cbc:TaxAmount>
         <cac:TaxCategory>
           <cac:TaxScheme>
             <cbc:ID>1000</cbc:ID>
             <cbc:Name>IGV</cbc:Name>
             <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:TaxSubtotal>
+    </cac:TaxTotal>
+    <cac:TaxTotal>
+      <cbc:TaxAmount currencyID="USD">0.00</cbc:TaxAmount>
+      <cac:TaxSubtotal>
+        <cbc:TaxAmount currencyID="USD">0.00</cbc:TaxAmount>
+        <cac:TaxCategory>
+          <cac:TaxScheme>
+            <cbc:ID>9999</cbc:ID>
+            <cbc:Name>OTROS</cbc:Name>
+            <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
           </cac:TaxScheme>
         </cac:TaxCategory>
       </cac:TaxSubtotal>

@@ -60,7 +60,7 @@ namespace cfd.FacturaElectronica
 
                         //Si no emite y es primera impresión: guardar el archivo pdf y registrar el log: emitido
                         //sino: registrar el log impreso
-                        if (DocumentoEmitido.AlmacenaEnRepositorio(trxVenta, eBase, maquina.eBinarioNuevo, maquina.EnLetras(maquina.eBinarioNuevo)))
+                        if (DocumentoEmitido.AlmacenaEnRepositorio(trxVenta, eBase, maquina.eBinarioNuevo, maquina.EnLetras(maquina.eBinarioNuevo, _Param.tipoDoc)))
                         {
                             eBinario = maquina.eBinarioNuevo;
                         }
@@ -72,7 +72,7 @@ namespace cfd.FacturaElectronica
 
                         if (_Param.emite && !maquina.impreso(trxVenta.EstadoActual))
                             DocumentoEmitido.ActualizaFacturaEmitida(trxVenta.Soptype, trxVenta.Sopnumbe, _Conex.Usuario, "emitido", "emitido", 
-                                                                eBinario, maquina.EnLetras(eBinario) + DocumentoEmitido.ultimoMensaje);
+                                                                eBinario, maquina.EnLetras(eBinario, _Param.tipoDoc) + DocumentoEmitido.ultimoMensaje, String.Empty);
 
                     }
                     else

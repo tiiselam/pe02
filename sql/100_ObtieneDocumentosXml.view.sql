@@ -242,9 +242,11 @@ as
 --Requisitos.  
 --27/11/17 jcf Creación cfdi Perú
 --
-	select 
+	select convert(varchar(20), tv.dex_row_id) correlativo, 
 		tv.soptype,
 		tv.sopnumbe,
+		cmpr.serie,
+		cmpr.numero,
 		cmpr.tipo									tipoDocumento,
 		emi.emisorTipoDoc, 
 		emi.TAXREGTN								emisorNroDoc,
@@ -324,7 +326,10 @@ select tv.estadoContabilizado, tv.soptype, tv.docid, tv.sopnumbe, tv.fechahora,
 	
 	fv.ID_Certificado, fv.ruta_certificado, fv.ruta_clave, fv.contrasenia_clave, 
 	isnull(pa.ruta_certificado, '_noexiste') ruta_certificadoPac, isnull(pa.ruta_clave, '_noexiste') ruta_clavePac, isnull(pa.contrasenia_clave, '') contrasenia_clavePac, 
-	emi.TAXREGTN rfc, emi.INET8 regimen, emi.INET7 rutaXml, emi.ZIPCODE codigoPostal,
+	emi.TAXREGTN rfc, 
+	isnull(lf.noAprobacion, '') regimen, 
+	emi.INET7 rutaXml, 
+	emi.ZIPCODE codigoPostal,
 	isnull(lf.estadoActual, '000000') estadoActual, 
 	isnull(lf.mensajeEA, tv.estadoContabilizado) mensajeEA,
 	tv.curncyid isocurrc,
