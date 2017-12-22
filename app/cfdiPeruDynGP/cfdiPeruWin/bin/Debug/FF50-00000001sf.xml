@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CreditNote xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ext:UBLExtensions>
     <ext:UBLExtension>
       <ext:ExtensionContent>
         <sac:AdditionalInformation>
           <sac:AdditionalMonetaryTotal>
             <cbc:ID>1001</cbc:ID>
-            <cbc:PayableAmount currencyID="USD">165.33</cbc:PayableAmount>
+            <cbc:PayableAmount currencyID="USD">950.00</cbc:PayableAmount>
           </sac:AdditionalMonetaryTotal>
           <sac:AdditionalMonetaryTotal>
             <cbc:ID>1002</cbc:ID>
@@ -22,8 +22,11 @@
           </sac:AdditionalMonetaryTotal>
           <sac:AdditionalProperty>
             <cbc:ID>1000</cbc:ID>
-            <cbc:Value>CIENTO NOVENTA Y CINCO 09/100</cbc:Value>
+            <cbc:Value>MIL CIENTO VEINTIUNO CON 00/100</cbc:Value>
           </sac:AdditionalProperty>
+          <sac:SUNATTransaction>
+            <cbc:ID>01</cbc:ID>
+          </sac:SUNATTransaction>
         </sac:AdditionalInformation>
       </ext:ExtensionContent>
     </ext:UBLExtension>
@@ -35,18 +38,8 @@
   <cbc:CustomizationID>1.0</cbc:CustomizationID>
   <cbc:ID>FF50-00000001</cbc:ID>
   <cbc:IssueDate>2017-12-07</cbc:IssueDate>
+  <cbc:InvoiceTypeCode>01</cbc:InvoiceTypeCode>
   <cbc:DocumentCurrencyCode>USD</cbc:DocumentCurrencyCode>
-  <cac:DiscrepancyResponse>
-    <cbc:ReferenceID>FF50-1</cbc:ReferenceID>
-    <cbc:ResponseCode>07</cbc:ResponseCode>
-    <cbc:Description>Devolución por ítem</cbc:Description>
-  </cac:DiscrepancyResponse>
-  <cac:BillingReference>
-    <cac:InvoiceDocumentReference>
-      <cbc:ID>FF50-1</cbc:ID>
-      <cbc:DocumentTypeCode>01</cbc:DocumentTypeCode>
-    </cac:InvoiceDocumentReference>
-  </cac:BillingReference>
   <cac:Signature>
     <cbc:ID>FF50-00000001</cbc:ID>
     <cac:SignatoryParty>
@@ -73,7 +66,6 @@
       <cac:PostalAddress>
         <cbc:ID />
         <cbc:StreetName>CALLE LIMA #321</cbc:StreetName>
-        <cbc:CitySubdivisionName />
         <cbc:CityName>Lima</cbc:CityName>
         <cbc:CountrySubentity>Lima</cbc:CountrySubentity>
         <cbc:District>SAn Borja</cbc:District>
@@ -96,9 +88,9 @@
     </cac:Party>
   </cac:AccountingCustomerParty>
   <cac:TaxTotal>
-    <cbc:TaxAmount currencyID="USD">29.76</cbc:TaxAmount>
+    <cbc:TaxAmount currencyID="USD">171.00</cbc:TaxAmount>
     <cac:TaxSubtotal>
-      <cbc:TaxAmount currencyID="USD">29.76</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="USD">171.00</cbc:TaxAmount>
       <cac:TaxCategory>
         <cac:TaxScheme>
           <cbc:ID>1000</cbc:ID>
@@ -109,17 +101,22 @@
     </cac:TaxSubtotal>
   </cac:TaxTotal>
   <cac:LegalMonetaryTotal>
-    <cbc:PayableAmount currencyID="USD">195.09</cbc:PayableAmount>
+    <cbc:PayableAmount currencyID="USD">1121.00</cbc:PayableAmount>
   </cac:LegalMonetaryTotal>
-  <cac:CreditNoteLine>
-    <cbc:ID>31</cbc:ID>
-    <cbc:CreditedQuantity unitCode="NIU">1.00</cbc:CreditedQuantity>
-    <cbc:LineExtensionAmount currencyID="USD">165.33</cbc:LineExtensionAmount>
-    <cac:PricingReference />
+  <cac:InvoiceLine>
+    <cbc:ID>29</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="NIU">10.00</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="USD">950.00</cbc:LineExtensionAmount>
+    <cac:PricingReference>
+      <cac:AlternativeConditionPrice>
+        <cbc:PriceAmount currencyID="USD">112.10</cbc:PriceAmount>
+        <cbc:PriceTypeCode>01</cbc:PriceTypeCode>
+      </cac:AlternativeConditionPrice>
+    </cac:PricingReference>
     <cac:TaxTotal>
-      <cbc:TaxAmount currencyID="USD">29.76</cbc:TaxAmount>
+      <cbc:TaxAmount currencyID="USD">171.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
-        <cbc:TaxAmount currencyID="USD">29.76</cbc:TaxAmount>
+        <cbc:TaxAmount currencyID="USD">171.00</cbc:TaxAmount>
         <cac:TaxCategory>
           <cbc:TaxExemptionReasonCode>10</cbc:TaxExemptionReasonCode>
           <cac:TaxScheme>
@@ -137,7 +134,7 @@
       </cac:SellersItemIdentification>
     </cac:Item>
     <cac:Price>
-      <cbc:PriceAmount currencyID="USD">165.33</cbc:PriceAmount>
+      <cbc:PriceAmount currencyID="USD">95.00</cbc:PriceAmount>
     </cac:Price>
-  </cac:CreditNoteLine>
-</CreditNote>
+  </cac:InvoiceLine>
+</Invoice>

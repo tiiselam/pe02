@@ -16,7 +16,7 @@ select *
 --update c set estadoActual='000101'	-- noAprobacion = '1513019407979'
 --delete c
 from cfdlogfacturaxml c
-where c.sopnumbe = 'BB11-00000001'
+where c.sopnumbe = 'FF50-00000001'
 and c.soptype = 3
 and estado = 'publicado'
 
@@ -41,6 +41,7 @@ from vwCfdiGeneraResumenDiario
 
 SP_COLUMNS cfdlogfacturaxml
 
-
+select *
+from DYNAMICS..SY01500
 
 

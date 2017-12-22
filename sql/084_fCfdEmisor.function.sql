@@ -1,4 +1,3 @@
---use mtp1
 
 IF OBJECT_ID ('dbo.fCfdiEmisor') IS NOT NULL
    DROP FUNCTION dbo.fCfdiEmisor
@@ -15,6 +14,7 @@ as
 return
 ( 
 select rtrim(replace(ci.TAXREGTN, 'RFC ', '')) TAXREGTN, '6' emisorTipoDoc,
+	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(RTRIM(ci.LOCATNNM)), 10) LOCATNNM, 
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(RTRIM(ci.ADRCNTCT)), 10) ADRCNTCT, 
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(rtrim(ci.ADDRESS1)), 10) ADDRESS1, 
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(rtrim(ci.ADDRESS2)), 10) ADDRESS2, 
@@ -32,7 +32,7 @@ select rtrim(replace(ci.TAXREGTN, 'RFC ', '')) TAXREGTN, '6' emisorTipoDoc,
 	nt.param3 otrosDatos,
 	nt.param4 incluyeAddendaDflt
 from DYNAMICS..SY01500 ci			--sy_company_mstr
-cross apply dbo.fCfdiParametros('VERSION', 'PERTZONE', 'NA', 'NA', 'NA', 'NA', ci.LOCATNID) nt
+cross apply dbo.fCfdiParametros('VERSION', 'UTC', 'NA', 'NA', 'NA', 'NA', ci.LOCATNID) nt
 where ci.INTERID = DB_NAME()
 )
 go

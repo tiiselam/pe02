@@ -55,7 +55,7 @@ begin try
 	DECLARE @horaMex int;
     set @horaMex = 0;
 	select @horaMex = case when isnumeric(PARAM1) = 1 then convert(int, param1) else 0 end
-	from dbo.fCfdiParametros('CFDIDIFHORA', '-', '-', '-', '-', '-', 'PRINCIPAL');
+	from dbo.fCfdiParametros('CFDIDIFHORA', '-', '-', '-', '-', '-', 'PREDETERMINADO');
 
 	UPDATE dbo.SOP10100 set DOCNCORR = 
 				case when datepart(hh, getdate()) <= @horaMex then

@@ -250,7 +250,7 @@ as
 		cmpr.tipo									tipoDocumento,
 		emi.emisorTipoDoc, 
 		emi.TAXREGTN								emisorNroDoc,
-		emi.ADRCNTCT								emisorNombre,
+		emi.LOCATNNM								emisorNombre,
 		emi.ZIPCODE									emisorUbigeo,
 		emi.ADDRESS1								emisorDireccion,
 		emi.ADDRESS2								emisorUrbanizacion,
@@ -359,33 +359,69 @@ go
 
 alter view dbo.vwCfdiDocumentosAImprimir as
 --Propósito. Lista los documentos de venta que están listos para imprimirse: facturas y notas de crédito. 
---			Incluye los datos del cfdi.
---07/05/12 jcf Creación
---29/05/12 jcf Cambia la ruta para que funcione en SSRS
---10/07/12 jcf Agrega metodoDePago, NumCtaPago
---29/08/13 jcf Agrega USERDEF1 (nroOrden)
---11/09/13 jcf Agrega ruta del archivo en formato de red
---09/07/14 jcf Modifica la obtención del nombre del archivo
---13/07/16 jcf Agrega catálogo de método de pago
---19/10/16 jcf Agrega rutaFileDrive. Util para reportes Crystal
---18/09/17 jcf Agrega isocurrc
---25/10/17 jcf Ajuste para cfdi 3.3
+--06/11/17 jcf Creación cfdi Perú ubl 2.0
 --
-select tv.soptype, tv.docid, tv.sopnumbe, tv.fechahora fechaHoraEmision, tv.regimen regimenFiscal, 
-	tv.idImpuestoCliente rfcReceptor, tv.nombreCliente, tv.total, formaDePago, tv.isocurrc,
-	tv.metodoDePago,
-	--tv.NumCtaPago, tv.USERDEF1, 
-	UUID folioFiscal, noCertificado noCertificadoCSD, [version], selloCFD, selloSAT, cadenaOriginalSAT, noCertificadoSAT, FechaTimbrado, 
+select tv.soptype, tv.sopnumbe, tv.fechaEmision fechaHoraEmision, 
+	--tv.regimenFiscal, 'NA' rgfs_descripcion, tv.codigoPostal, 
+	rtrim(td.dscriptn) tipoDocCliente, 
+	tv.receptorNroDoc rfcReceptor, tv.receptorNombre nombreCliente, tv.total, tv.moneda isocurrc, --tv.mensajeEA, 
+	tv.tipoDocumento TipoDeComprobante,
+	case when tv.tipoDocumento = '01' then 'FACTURA ELECTRONICA'
+		WHEN tv.tipoDocumento = '08' then 'NOTA DE DEBITO ELECTRONICA'
+		WHEN tv.tipoDocumento = '03' then 'BOLETA ELECTRONICA'
+		WHEN tv.tipoDocumento = '08' then 'NOTA DE DEBITO ELECTRONICA'
+		WHEN tv.tipoDocumento = '07' then 'NOTA DE CREDITO ELECTRONICA'
+		else 'OTRO' 
+	end tdcmp_descripcion,
+
+		tv.tipoOperacion,
+		tv.descuento,
+		tv.ORTDISAM,
+		tv.ivaImponible,
+		tv.iva,
+		tv.inafecta,
+		tv.exonerado,
+		tv.gratuito,
+
+		--Para NC:
+		tv.discrepanciaDesc,
+	
+	--Datos del xml sellado por el PAC:
+	'' SelloCFD, 
+	'1/1/1900' FechaTimbrado, 
+	'' folioFiscal, 
+	'' NoCertificadoSAT, 
+	'' [Version], 
+	'' selloSAT, 
+	'' formaDePago,			'NA' frpg_descripcion,
+	'' Sello, 
+	'' NoCertificadoCSD, 
+	'' metodoDePago,			'NA' mtdpg_descripcion,
+	'' RfcPAC,
+	'' Leyenda,
+	'' cadenaOriginalSAT
 	--tv.rutaxml								+ 'cbb\' + replace(tv.mensaje, 'Almacenado en '+tv.rutaxml, '')+'.jpg' rutaYNomArchivoNet,
-	'file://'+replace(tv.rutaxml, '\', '/') + 'cbb/' + RIGHT( tv.mensaje, CHARINDEX( '\', REVERSE( tv.mensaje ) + '\' ) - 1 ) +'.jpg' rutaYNomArchivo, 
-	tv.rutaxml								+ 'cbb\' + RIGHT( tv.mensaje, CHARINDEX( '\', REVERSE( tv.mensaje ) + '\' ) - 1 ) +'.jpg' rutaYNomArchivoNet,
-	'file://c:\getty' + substring(tv.rutaxml, charindex('\', tv.rutaxml, 3), 250) 
-											+ 'cbb\' + RIGHT( tv.mensaje, CHARINDEX( '\', REVERSE( tv.mensaje ) + '\' ) - 1 ) +'.jpg' rutaFileDrive
-from dbo.vwCfdiTransaccionesDeVenta tv
-left join dbo.cfdiCatalogo ca
-	on ca.tipo = 'MTDPG'
-	and ca.clave = tv.metodoDePago
-where estado = 'emitido'
+	--'file:'+replace(tv.rutaxml, '\', '/') + 'cbb/' + RIGHT( tv.mensaje, CHARINDEX( '\', REVERSE( tv.mensaje ) + '\' ) - 1 ) +'.jpg' rutaYNomArchivo, 
+	--tv.rutaxml								+ 'cbb\' + RIGHT( tv.mensaje, CHARINDEX( '\', REVERSE( tv.mensaje ) + '\' ) - 1 ) +'.jpg' rutaYNomArchivoNet,
+	--'file://c:\getty' + substring(tv.rutaxml, charindex('\', tv.rutaxml, 3), 250) 
+	--										+ 'cbb\' + RIGHT( tv.mensaje, CHARINDEX( '\', REVERSE( tv.mensaje ) + '\' ) - 1 ) +'.jpg' rutaFileDrive
+from vwCfdiGeneraDocumentoDeVenta tv
+	left join cfdlogfacturaxml lf
+		on lf.soptype = tv.SOPTYPE
+		and lf.sopnumbe = tv.sopnumbe
+		and lf.estado = 'emitido'
+	--inner join dbo.vwCfdiDatosDelXml dx
+	--	on dx.soptype = tv.SOPTYPE
+	--	and dx.sopnumbe = tv.sopnumbe
+	--	and dx.estado = 'emitido'
+	--outer apply dbo.fLcLvComprobanteSunat (tv.soptype, tv.sopnumbe)  cmpr
+	left join nsaif_sy00102 td
+		on td.nsaif_type = tv.receptorTipoDoc
+	--outer apply dbo.fCfdiCatalogoGetDescripcion('MTDPG', dx.MetodoPago) mtdpg
+	--outer apply dbo.fCfdiCatalogoGetDescripcion('FRPG', dx.FormaPago) frpg
+	--outer apply dbo.fCfdiCatalogoGetDescripcion('RGFS', tv.regimen) rgfs
+	--outer apply dbo.fCfdiCatalogoGetDescripcion('USCF', dx.usoCfdi) uscf
+	--outer apply dbo.fCfdiCatalogoGetDescripcion('TPRL', dx.TipoRelacion) tprl
 go
 IF (@@Error = 0) PRINT 'Creación exitosa de la vista: vwCfdiDocumentosAImprimir  '
 ELSE PRINT 'Error en la creación de la vista: vwCfdiDocumentosAImprimir '

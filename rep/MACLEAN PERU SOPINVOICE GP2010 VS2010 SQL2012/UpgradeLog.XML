@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="TII - SOP INVOICE">
+</Property><Property Name="Solution File" Value="\\memcodb02\Dynshare\Installs\TII\México factura electrónica\130118 SSRS TII - SOP INVOICE NLOTE\TII - SOP INVOICE.sln">
+</Property><Property Name="Date" Value="Thursday, September 8, 2016">
+</Property><Property Name="Time" Value="17:16 PM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="TII - SOP INVOICE.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="TII - SOP INVOICE.sln" Description="Converted">
+</Event></UpgradeLog>

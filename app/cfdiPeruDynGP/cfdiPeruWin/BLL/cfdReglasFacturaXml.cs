@@ -265,7 +265,7 @@ namespace cfd.FacturaElectronica
             {   //arma el nombre del archivo xml
                 string nomArchivo = Utiles.FormatoNombreArchivo(trxVenta.Docid + trxVenta.Sopnumbe + "_" + trxVenta.s_CUSTNMBR, trxVenta.s_NombreCliente, 20);
                 string rutaYNomArchivoCfdi = trxVenta.RutaXml.Trim() + nomArchivo + ".xml";
-                string rutaYNomArchivoCdr = trxVenta.RutaXml.Trim() + @"\\CDR\"+ nomArchivoCDR;
+                string rutaYNomArchivoCdr = trxVenta.RutaXml.Trim() + @"CDR\"+ nomArchivoCDR;
 
                 //Guarda el archivo xml
                 if (ticket.Equals("FAC"))

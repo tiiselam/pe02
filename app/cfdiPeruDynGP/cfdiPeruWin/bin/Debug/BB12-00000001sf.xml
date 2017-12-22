@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CreditNote xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ext:UBLExtensions>
     <ext:UBLExtension>
       <ext:ExtensionContent>
@@ -10,7 +10,7 @@
           </sac:AdditionalMonetaryTotal>
           <sac:AdditionalMonetaryTotal>
             <cbc:ID>1002</cbc:ID>
-            <cbc:PayableAmount currencyID="PEN">500.00</cbc:PayableAmount>
+            <cbc:PayableAmount currencyID="PEN">5000.00</cbc:PayableAmount>
           </sac:AdditionalMonetaryTotal>
           <sac:AdditionalMonetaryTotal>
             <cbc:ID>1003</cbc:ID>
@@ -22,8 +22,11 @@
           </sac:AdditionalMonetaryTotal>
           <sac:AdditionalProperty>
             <cbc:ID>1000</cbc:ID>
-            <cbc:Value>QUINIENTOS 00/100</cbc:Value>
+            <cbc:Value>CINCO MIL CON 00/100</cbc:Value>
           </sac:AdditionalProperty>
+          <sac:SUNATTransaction>
+            <cbc:ID>01</cbc:ID>
+          </sac:SUNATTransaction>
         </sac:AdditionalInformation>
       </ext:ExtensionContent>
     </ext:UBLExtension>
@@ -35,18 +38,8 @@
   <cbc:CustomizationID>1.0</cbc:CustomizationID>
   <cbc:ID>BB12-00000001</cbc:ID>
   <cbc:IssueDate>2017-12-07</cbc:IssueDate>
+  <cbc:InvoiceTypeCode>03</cbc:InvoiceTypeCode>
   <cbc:DocumentCurrencyCode>PEN</cbc:DocumentCurrencyCode>
-  <cac:DiscrepancyResponse>
-    <cbc:ReferenceID>BB12-1</cbc:ReferenceID>
-    <cbc:ResponseCode>05</cbc:ResponseCode>
-    <cbc:Description>Descuento por ítem</cbc:Description>
-  </cac:DiscrepancyResponse>
-  <cac:BillingReference>
-    <cac:InvoiceDocumentReference>
-      <cbc:ID>BB12-1</cbc:ID>
-      <cbc:DocumentTypeCode>03</cbc:DocumentTypeCode>
-    </cac:InvoiceDocumentReference>
-  </cac:BillingReference>
   <cac:Signature>
     <cbc:ID>BB12-00000001</cbc:ID>
     <cac:SignatoryParty>
@@ -73,7 +66,6 @@
       <cac:PostalAddress>
         <cbc:ID />
         <cbc:StreetName>CALLE LIMA #321</cbc:StreetName>
-        <cbc:CitySubdivisionName />
         <cbc:CityName>Lima</cbc:CityName>
         <cbc:CountrySubentity>Lima</cbc:CountrySubentity>
         <cbc:District>SAn Borja</cbc:District>
@@ -109,13 +101,18 @@
     </cac:TaxSubtotal>
   </cac:TaxTotal>
   <cac:LegalMonetaryTotal>
-    <cbc:PayableAmount currencyID="PEN">500.00</cbc:PayableAmount>
+    <cbc:PayableAmount currencyID="PEN">5000.00</cbc:PayableAmount>
   </cac:LegalMonetaryTotal>
-  <cac:CreditNoteLine>
-    <cbc:ID>52</cbc:ID>
-    <cbc:CreditedQuantity unitCode="NIU">1.00</cbc:CreditedQuantity>
-    <cbc:LineExtensionAmount currencyID="PEN">500.00</cbc:LineExtensionAmount>
-    <cac:PricingReference />
+  <cac:InvoiceLine>
+    <cbc:ID>50</cbc:ID>
+    <cbc:InvoicedQuantity unitCode="NIU">2.00</cbc:InvoicedQuantity>
+    <cbc:LineExtensionAmount currencyID="PEN">5000.00</cbc:LineExtensionAmount>
+    <cac:PricingReference>
+      <cac:AlternativeConditionPrice>
+        <cbc:PriceAmount currencyID="PEN">2500.00</cbc:PriceAmount>
+        <cbc:PriceTypeCode>01</cbc:PriceTypeCode>
+      </cac:AlternativeConditionPrice>
+    </cac:PricingReference>
     <cac:TaxTotal>
       <cbc:TaxAmount currencyID="PEN">0.00</cbc:TaxAmount>
       <cac:TaxSubtotal>
@@ -137,7 +134,7 @@
       </cac:SellersItemIdentification>
     </cac:Item>
     <cac:Price>
-      <cbc:PriceAmount currencyID="PEN">500.00</cbc:PriceAmount>
+      <cbc:PriceAmount currencyID="PEN">2500.00</cbc:PriceAmount>
     </cac:Price>
-  </cac:CreditNoteLine>
-</CreditNote>
+  </cac:InvoiceLine>
+</Invoice>

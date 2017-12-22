@@ -94,30 +94,17 @@ namespace Comun
         private string _emailAdjImprm = "na";   //default no aplica
         private string _imprimeEnImpresora;
         private string _nombreImpresora;
-
+        private string _archivoConfiguracion= "ParametrosCfd.xml";
+        private XmlDocument listaParametros;
         public Parametros()
         {
             try
             {
-                XmlDocument listaParametros = new XmlDocument();
-                listaParametros.Load(new XmlTextReader("ParametrosCfd.xml"));
-                XmlNodeList listaElementos = listaParametros.DocumentElement.ChildNodes;
-                
-                foreach (XmlNode n in listaElementos)
-                {
-                    if (n.Name.Equals("servidor"))
-                        this._servidor = n.InnerXml;
-                    if (n.Name.Equals("seguridadIntegrada"))
-                        this._seguridadIntegrada = n.InnerXml;
-                    if (n.Name.Equals("usuariosql"))
-                        this._usuarioSql = n.InnerXml;
-                    if (n.Name.Equals("passwordsql"))
-                        this._passwordSql = n.InnerXml;
-                }
+                getCredenciales();
             }
             catch (Exception eprm)
             {
-                ultimoMensaje = "Contacte al administrador. No se pudo obtener la configuración general. [Parametros()]" + eprm.Message;
+                ultimoMensaje = "Contacte al administrador. No se pudo leer la configuración general. [Parametros()] "+ _archivoConfiguracion +" " + eprm.Message;
             }
         }
 
@@ -125,8 +112,8 @@ namespace Comun
         {
             try
             {
-                XmlDocument listaParametros = new XmlDocument();
-                listaParametros.Load(new XmlTextReader("ParametrosCfd.xml"));
+                getCredenciales();
+
                 XmlNode elemento = listaParametros.DocumentElement;
 
                 _URLArchivoXSD = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/URLArchivoXSD/text()").Value;
@@ -208,6 +195,25 @@ namespace Comun
             catch (Exception eprm)
             {
                 ultimoMensaje = "Contacte al administrador. No se pudo obtener la configuración de la compañía " + IdCompannia + ". [Parametros(Compañía)] " + eprm.Message;
+            }
+        }
+
+        private void getCredenciales()
+        {
+            listaParametros = new XmlDocument();
+            listaParametros.Load(new XmlTextReader(_archivoConfiguracion));
+            XmlNodeList listaElementos = listaParametros.DocumentElement.ChildNodes;
+
+            foreach (XmlNode n in listaElementos)
+            {
+                if (n.Name.Equals("servidor"))
+                    this._servidor = n.InnerXml;
+                if (n.Name.Equals("seguridadIntegrada"))
+                    this._seguridadIntegrada = n.InnerXml;
+                if (n.Name.Equals("usuariosql"))
+                    this._usuarioSql = n.InnerXml;
+                if (n.Name.Equals("passwordsql"))
+                    this._passwordSql = n.InnerXml;
             }
         }
 

@@ -12,7 +12,7 @@ as
 return
 (
 	select tv.docid, dx.uuid, tv.voidstts, dx.FormaPago
-	from vwSopTransaccionesVenta tv
+	from vwCfdiSopTransaccionesVenta tv
 		left join cfdlogfacturaxml lf
 			on lf.soptype = tv.SOPTYPE
 			and lf.sopnumbe = tv.sopnumbe

@@ -357,8 +357,8 @@ namespace cfdiPeru
                     await proc.GeneraDocumentoXmlAsync();
 
                 //Actualiza la pantalla
-                Parametros Cia = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
-                HabilitarVentana(Cia.emite, Cia.anula, Cia.imprime, Cia.publica, Cia.envia, true);
+                //Parametros Cia = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
+                HabilitarVentana(Param.emite, Param.anula, Param.imprime, Param.publica, Param.envia, true);
                 AplicaFiltroYActualizaPantalla(this.tabCfdi.SelectedTab.Name);
                 progressBar1.Value = 0;
                 pBarProcesoActivo.Visible = false;

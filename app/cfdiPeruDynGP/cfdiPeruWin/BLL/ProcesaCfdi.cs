@@ -80,8 +80,6 @@ namespace cfd.FacturaElectronica
                 ReglasME maquina = new ReglasME(_Param);
                 ValidadorXML validadorxml = new ValidadorXML(_Param);
                 TransformerXML loader = new TransformerXML();
-                //String Sello = string.Empty;
-
                 OnProgreso(1, "INICIANDO EMISION DE COMPROBANTES DE VENTA...");              //Notifica al suscriptor
                 do
                 {

@@ -72,6 +72,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "OpenInvoicePeru.WebSetup", 
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "cfdiPeruWin.Setup", "cfdiPeruWin.Setup\cfdiPeruWin.Setup.vdproj", "{A0176EDD-CFF2-4C1A-B503-15783F43CC94}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "cfdiPeruSqlSetup", "cfdiPeruDynGP\cfdiSqlSetup\cfdiPeruSqlSetup.wixproj", "{8F3FA49C-223B-47AD-8390-C6AD7B132C68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -338,6 +340,14 @@ Global
 		{A0176EDD-CFF2-4C1A-B503-15783F43CC94}.Release|Any CPU.ActiveCfg = Release
 		{A0176EDD-CFF2-4C1A-B503-15783F43CC94}.Release|x64.ActiveCfg = Release
 		{A0176EDD-CFF2-4C1A-B503-15783F43CC94}.Release|x86.ActiveCfg = Release
+		{8F3FA49C-223B-47AD-8390-C6AD7B132C68}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{8F3FA49C-223B-47AD-8390-C6AD7B132C68}.Debug|x64.ActiveCfg = Debug|x86
+		{8F3FA49C-223B-47AD-8390-C6AD7B132C68}.Debug|x86.ActiveCfg = Debug|x86
+		{8F3FA49C-223B-47AD-8390-C6AD7B132C68}.Debug|x86.Build.0 = Debug|x86
+		{8F3FA49C-223B-47AD-8390-C6AD7B132C68}.Release|Any CPU.ActiveCfg = Release|x86
+		{8F3FA49C-223B-47AD-8390-C6AD7B132C68}.Release|x64.ActiveCfg = Release|x86
+		{8F3FA49C-223B-47AD-8390-C6AD7B132C68}.Release|x86.ActiveCfg = Release|x86
+		{8F3FA49C-223B-47AD-8390-C6AD7B132C68}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -366,5 +376,6 @@ Global
 		{4954C962-F4D6-4C0C-91DD-18A690E326CD} = {B1DD1E97-544F-4528-B38A-C1D3D391835D}
 		{576A248A-CDF1-4BFE-9F9F-9C1018A81DEB} = {7C30E289-3418-4984-8FD9-7D4582DF6297}
 		{A0176EDD-CFF2-4C1A-B503-15783F43CC94} = {B1DD1E97-544F-4528-B38A-C1D3D391835D}
+		{8F3FA49C-223B-47AD-8390-C6AD7B132C68} = {B1DD1E97-544F-4528-B38A-C1D3D391835D}
 	EndGlobalSection
 EndGlobal
