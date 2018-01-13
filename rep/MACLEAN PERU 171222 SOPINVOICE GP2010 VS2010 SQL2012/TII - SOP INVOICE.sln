@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "TII - SOP INVOICE", "TII - SOP INVOICE\TII - SOP INVOICE.rptproj", "{6C1FC95D-EAC5-4507-98E5-C992B19FDFA2}"
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "PERU SOPINVOICE", "TII - SOP INVOICE\PERU SOPINVOICE.rptproj", "{6C1FC95D-EAC5-4507-98E5-C992B19FDFA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

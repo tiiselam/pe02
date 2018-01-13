@@ -2,7 +2,7 @@
 <SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
   <DataSet Name="">
     <Query>
-      <DataSourceReference>GPMPER2</DataSourceReference>
+      <DataSourceReference>GPZPER2</DataSourceReference>
       <DataSetParameters>
         <DataSetParameter Name="@SOPNUMBE">
           <ReadOnly>false</ReadOnly>
@@ -38,6 +38,10 @@ WHERE SOPNUMBE = @SOPNUMBE AND SOPTYPE = @SOPTYPE</CommandText>
       <Field Name="DOCDATE">
         <DataField>DOCDATE</DataField>
         <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="ORIGNUMB">
+        <DataField>ORIGNUMB</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
       </Field>
       <Field Name="GLPOSTDT">
         <DataField>GLPOSTDT</DataField>
@@ -221,10 +225,6 @@ WHERE SOPNUMBE = @SOPNUMBE AND SOPTYPE = @SOPTYPE</CommandText>
       </Field>
       <Field Name="isocurrc">
         <DataField>isocurrc</DataField>
-        <rd:TypeName>System.String</rd:TypeName>
-      </Field>
-      <Field Name="TXRGNNUMCUST">
-        <DataField>TXRGNNUMCUST</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
       <Field Name="metodoDePago">
@@ -537,6 +537,18 @@ WHERE SOPNUMBE = @SOPNUMBE AND SOPTYPE = @SOPTYPE</CommandText>
       </Field>
       <Field Name="addLeyenda">
         <DataField>addLeyenda</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="tipoDocumentoRel">
+        <DataField>tipoDocumentoRel</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="sopNumbeRel">
+        <DataField>sopNumbeRel</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="guiaNumbe">
+        <DataField>guiaNumbe</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
     </Fields>

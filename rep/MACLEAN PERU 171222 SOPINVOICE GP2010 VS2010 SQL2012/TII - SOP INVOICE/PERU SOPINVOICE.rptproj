@@ -6,6 +6,10 @@
       <Name>GPMPER2.rds</Name>
       <FullPath>GPMPER2.rds</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>GPZPER2.rds</Name>
+      <FullPath>GPZPER2.rds</FullPath>
+    </ProjectItem>
   </DataSources>
   <DataSets>
     <ProjectItem>
@@ -27,11 +31,11 @@
         <OutputPath>bin\Debug</OutputPath>
         <TargetServerVersion>SSRS2008R2</TargetServerVersion>
         <TargetServerURL>http://memcodb02/Reportserver</TargetServerURL>
-        <TargetFolder>/ZMMEX</TargetFolder>
+        <TargetFolder>/ZPER2/INVOICE</TargetFolder>
         <TargetDataSourceFolder>Data Sources</TargetDataSourceFolder>
-        <TargetDatasetFolder>/ZMMEX</TargetDatasetFolder>
+        <TargetDatasetFolder>/ZPER2</TargetDatasetFolder>
         <TargetReportPartFolder>Report Parts</TargetReportPartFolder>
-        <StartItem>SOP INVOICEFC.rdl</StartItem>
+        <StartItem>SOPINVOICEFC.rdl</StartItem>
       </Options>
     </Configuration>
     <Configuration>

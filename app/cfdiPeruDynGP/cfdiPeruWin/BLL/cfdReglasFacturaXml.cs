@@ -293,20 +293,20 @@ namespace cfd.FacturaElectronica
                 //                                    , trxVenta.RutaXml.Trim() + "cbb\\" + nomArchivo + ".jpg");
 
                 //Genera pdf
-                //if (codigobb.iErr == 0)
-                //    reporte.generaEnFormatoPDF(rutaYNomArchivo, trxVenta.Soptype, trxVenta.Sopnumbe, trxVenta.EstadoContabilizado);
+                if (codigobb.iErr == 0)
+                    reporte.generaEnFormatoPDF(rutaYNomArchivoCfdi, trxVenta.Soptype, trxVenta.Sopnumbe, trxVenta.EstadoContabilizado);
 
                 //Comprime el archivo xml
                 //if (_Param.zip)
                 //    Utiles.Zip(rutaYNomArchivo, ".xml");
 
                 //numMensajeError = codigobb.iErr + reporte.numErr;
-                //ultimoMensaje = codigobb.strMensajeErr + " " + reporte.mensajeErr + " " + Utiles.msgErr;
+                //ultimoMensaje = codigobb.strMensajeErr + " " + reporte.mensajeErr; // + " " + Utiles.msgErr;
 
                 //Si hay error en cbb o pdf o zip anota en la bitácora
                 //if (numMensajeError != 0)
                 //    ActualizaFacturaEmitida(trxVenta.Soptype, trxVenta.Sopnumbe, _Conexion.Usuario, "emitido", "emitido", mEstados.eBinActualConError,
-                //                            mEstados.EnLetras(mEstados.eBinActualConError) + ultimoMensaje.Trim());
+                //                            mEstados.EnLetras(mEstados.eBinActualConError, tipoDoc) + ultimoMensaje.Trim());
             }
             catch (ArgumentException)
             {
@@ -382,18 +382,18 @@ namespace cfd.FacturaElectronica
                 string rutaYNomArchivo = trxVenta.RutaXml.Trim() + nomArchivo;
 
                 //Genera y guarda código de barras bidimensional
-                if(_Param.emite)
-                    codigobb.GenerarQRBidimensional(_Param.URLConsulta + "?&id=" + x_uuid + "&re=" + trxVenta.Rfc + "&rr=" + trxVenta.IdImpuestoCliente + "&tt=" + trxVenta.Total.ToString() + "&fe=" + Utiles.Derecha(x_sello, 8)
-                                                , trxVenta.RutaXml.Trim() + "cbb\\" + nomArchivo + ".jpg");
+                //if(_Param.emite)
+                //    codigobb.GenerarQRBidimensional(_Param.URLConsulta + "?&id=" + x_uuid + "&re=" + trxVenta.Rfc + "&rr=" + trxVenta.IdImpuestoCliente + "&tt=" + trxVenta.Total.ToString() + "&fe=" + Utiles.Derecha(x_sello, 8)
+                //                                , trxVenta.RutaXml.Trim() + "cbb\\" + nomArchivo + ".jpg");
 
                 //Genera pdf
-                if (codigobb.iErr == 0)
-                    reporte.generaEnFormatoPDF(rutaYNomArchivo, trxVenta.Soptype, trxVenta.Sopnumbe, trxVenta.EstadoContabilizado);
+                //if (codigobb.iErr == 0)
+                reporte.generaEnFormatoPDF(rutaYNomArchivo, trxVenta.Soptype, trxVenta.Sopnumbe, trxVenta.EstadoContabilizado);
 
                 numMensajeError =  reporte.numErr + codigobb.iErr;
                 ultimoMensaje = reporte.mensajeErr + codigobb.strMensajeErr;
 
-                if (reporte.numErr==0 && codigobb.iErr==0)
+                if (reporte.numErr==0)  // && codigobb.iErr==0)
                     RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, "Almacenado en " + rutaYNomArchivo, "0", _Conexion.Usuario, "", eBase, eBinario, enLetras);
 
                 return ultimoMensaje.Equals(string.Empty);

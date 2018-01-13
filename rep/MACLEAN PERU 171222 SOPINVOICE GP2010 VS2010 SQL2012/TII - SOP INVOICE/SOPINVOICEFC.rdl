@@ -33,6 +33,10 @@
           <DataField>DOCDATE</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
+        <Field Name="ORIGNUMB">
+          <DataField>ORIGNUMB</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="GLPOSTDT">
           <DataField>GLPOSTDT</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
@@ -533,12 +537,24 @@
           <DataField>Leyenda</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="tipoDocumentoRel">
+          <DataField>tipoDocumentoRel</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="tdcmp_descripcion">
           <DataField>tdcmp_descripcion</DataField>
           <rd:UserDefined>true</rd:UserDefined>
         </Field>
+        <Field Name="sopNumbeRel">
+          <DataField>sopNumbeRel</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="addLeyenda">
           <DataField>addLeyenda</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="guiaNumbe">
+          <DataField>guiaNumbe</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -552,22 +568,22 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.5848cm</Width>
+                  <Width>1.5523cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.79406cm</Width>
+                  <Width>2.196cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.01793cm</Width>
+                  <Width>1.23057cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>9.60135cm</Width>
+                  <Width>9.40579cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.74808cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.36207cm</Width>
+                  <Width>2.33032cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -995,7 +1011,7 @@
                                   <Value>=Fields!SERLTQTY.Value</Value>
                                   <Style>
                                     <FontFamily>Calibri</FontFamily>
-                                    <FontSize>7pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <Format>0.00;(0.00)</Format>
                                   </Style>
                                 </TextRun>
@@ -1024,7 +1040,7 @@
                                   <Value>=Fields!ITEMNMBR.Value</Value>
                                   <Style>
                                     <FontFamily>Calibri</FontFamily>
-                                    <FontSize>7pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1049,10 +1065,10 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!UOFM.Value + " " + Fields!UOFMsat_descripcion.Value</Value>
+                                  <Value>=Fields!UOFM.Value</Value>
                                   <Style>
                                     <FontFamily>Calibri</FontFamily>
-                                    <FontSize>7pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1080,7 +1096,7 @@
                                   <Value>=Fields!ITEMDESC.Value</Value>
                                   <Style>
                                     <FontFamily>Calibri</FontFamily>
-                                    <FontSize>7pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1106,7 +1122,7 @@
                                   <Value>=Fields!ORUNTPRC.Value</Value>
                                   <Style>
                                     <FontFamily>Calibri</FontFamily>
-                                    <FontSize>7pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
@@ -1134,7 +1150,7 @@
                                   <Value>=Fields!OXTNDPRC.Value</Value>
                                   <Style>
                                     <FontFamily>Calibri</FontFamily>
-                                    <FontSize>7pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                     <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
@@ -1189,7 +1205,7 @@
             <Top>0cm</Top>
             <Left>0.47492cm</Left>
             <Height>1.23047cm</Height>
-            <Width>19.10829cm</Width>
+            <Width>18.46306cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1204,45 +1220,13 @@
           </Border>
         </Style>
       </Body>
-      <Width>19.7703cm</Width>
+      <Width>19.51896cm</Width>
       <Page>
         <PageHeader>
-          <Height>7.9787cm</Height>
+          <Height>7.95619cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Rectangle Name="Rectangle1">
-              <KeepTogether>true</KeepTogether>
-              <Top>1.26682cm</Top>
-              <Left>9.92532cm</Left>
-              <Height>2.91042cm</Height>
-              <Width>9.27689cm</Width>
-              <Style>
-                <Border>
-                  <Style>Solid</Style>
-                </Border>
-                <TopBorder>
-                  <Color>Black</Color>
-                  <Style>Solid</Style>
-                  <Width>1pt</Width>
-                </TopBorder>
-                <BottomBorder>
-                  <Color>Black</Color>
-                  <Style>Solid</Style>
-                  <Width>1pt</Width>
-                </BottomBorder>
-                <LeftBorder>
-                  <Color>Black</Color>
-                  <Style>Solid</Style>
-                  <Width>1pt</Width>
-                </LeftBorder>
-                <RightBorder>
-                  <Color>Black</Color>
-                  <Style>Solid</Style>
-                  <Width>1pt</Width>
-                </RightBorder>
-              </Style>
-            </Rectangle>
             <Textbox Name="Textbox122">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -1264,11 +1248,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox122</rd:DefaultName>
-              <Top>6.46087cm</Top>
+              <Top>6.38787cm</Top>
               <Left>1.70131cm</Left>
               <Height>0.4cm</Height>
               <Width>1.99961cm</Width>
-              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1286,6 +1269,7 @@
                       <Style>
                         <FontFamily>Calibri</FontFamily>
                         <FontSize>9pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1295,11 +1279,11 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox125</rd:DefaultName>
-              <Top>6.00735cm</Top>
+              <Top>6.35559cm</Top>
               <Left>12.59206cm</Left>
               <Height>0.4cm</Height>
               <Width>2.8485cm</Width>
-              <ZIndex>2</ZIndex>
+              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1317,18 +1301,21 @@
                       <Style>
                         <FontFamily>Calibri</FontFamily>
                         <FontSize>9pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox128</rd:DefaultName>
-              <Top>7.29161cm</Top>
-              <Left>12.46823cm</Left>
+              <Top>7.18787cm</Top>
+              <Left>1.19306cm</Left>
               <Height>0.4cm</Height>
               <Width>2.5cm</Width>
-              <ZIndex>3</ZIndex>
+              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1353,11 +1340,11 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox130</rd:DefaultName>
-              <Top>6.46087cm</Top>
+              <Top>6.38787cm</Top>
               <Left>3.81381cm</Left>
               <Height>0.4cm</Height>
               <Width>3.6cm</Width>
-              <ZIndex>4</ZIndex>
+              <ZIndex>3</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1388,7 +1375,7 @@
               <Left>10.35618cm</Left>
               <Height>0.69104cm</Height>
               <Width>8.37542cm</Width>
-              <ZIndex>5</ZIndex>
+              <ZIndex>4</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1412,11 +1399,11 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox132</rd:DefaultName>
-              <Top>6.00735cm</Top>
+              <Top>6.35559cm</Top>
               <Left>15.52029cm</Left>
               <Height>0.4cm</Height>
               <Width>3.41769cm</Width>
-              <ZIndex>6</ZIndex>
+              <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1440,11 +1427,11 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox135</rd:DefaultName>
-              <Top>7.29161cm</Top>
-              <Left>15.84706cm</Left>
+              <Top>7.18787cm</Top>
+              <Left>3.80454cm</Left>
               <Height>0.4cm</Height>
-              <Width>3.62cm</Width>
-              <ZIndex>7</ZIndex>
+              <Width>3.35515cm</Width>
+              <ZIndex>6</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1452,11 +1439,11 @@
               </Style>
             </Textbox>
             <Line Name="Line7">
-              <Top>4.53496cm</Top>
+              <Top>4.66196cm</Top>
               <Left>0.22225cm</Left>
               <Height>0cm</Height>
-              <Width>19.54805cm</Width>
-              <ZIndex>8</ZIndex>
+              <Width>19.24481cm</Width>
+              <ZIndex>7</ZIndex>
               <Style>
                 <Border>
                   <Style>Solid</Style>
@@ -1521,7 +1508,7 @@ Teléfono: (51) 353-2517</Value>
               <Left>0.31534cm</Left>
               <Height>1.71861cm</Height>
               <Width>7.98217cm</Width>
-              <ZIndex>9</ZIndex>
+              <ZIndex>8</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1551,11 +1538,11 @@ Teléfono: (51) 353-2517</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox142</rd:DefaultName>
-              <Top>5.17207cm</Top>
+              <Top>5.15559cm</Top>
               <Left>2.2328cm</Left>
               <Height>0.4cm</Height>
               <Width>1.46812cm</Width>
-              <ZIndex>10</ZIndex>
+              <ZIndex>9</ZIndex>
               <Style>
                 <Border />
               </Style>
@@ -1577,11 +1564,11 @@ Teléfono: (51) 353-2517</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox142</rd:DefaultName>
-              <Top>5.58734cm</Top>
+              <Top>5.15559cm</Top>
               <Left>3.79857cm</Left>
               <Height>0.4cm</Height>
-              <Width>8.14633cm</Width>
-              <ZIndex>11</ZIndex>
+              <Width>15.13941cm</Width>
+              <ZIndex>10</ZIndex>
               <Style>
                 <Border />
               </Style>
@@ -1603,11 +1590,11 @@ Teléfono: (51) 353-2517</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox142</rd:DefaultName>
-              <Top>5.98734cm</Top>
+              <Top>5.55559cm</Top>
               <Left>3.79857cm</Left>
               <Height>0.4cm</Height>
-              <Width>8.14633cm</Width>
-              <ZIndex>12</ZIndex>
+              <Width>15.10799cm</Width>
+              <ZIndex>11</ZIndex>
               <Style>
                 <Border />
               </Style>
@@ -1633,39 +1620,11 @@ Teléfono: (51) 353-2517</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox142</rd:DefaultName>
-              <Top>6.90665cm</Top>
+              <Top>6.78787cm</Top>
               <Left>1.61572cm</Left>
               <Height>0.4cm</Height>
               <Width>2.08519cm</Width>
-              <ZIndex>13</ZIndex>
-              <Style>
-                <Border />
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox156">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=First(Fields!TXRGNNUMCUST.Value, "SOPINVOICE")</Value>
-                      <Style>
-                        <FontFamily>Calibri</FontFamily>
-                        <FontSize>9pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Left</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox142</rd:DefaultName>
-              <Top>5.17207cm</Top>
-              <Left>3.79857cm</Left>
-              <Height>0.4cm</Height>
-              <Width>15.13941cm</Width>
-              <ZIndex>14</ZIndex>
+              <ZIndex>12</ZIndex>
               <Style>
                 <Border />
               </Style>
@@ -1687,11 +1646,11 @@ Teléfono: (51) 353-2517</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>USRTAB01</rd:DefaultName>
-              <Top>6.90665cm</Top>
+              <Top>6.78787cm</Top>
               <Left>3.79857cm</Left>
               <Height>0.4cm</Height>
               <Width>4.47102cm</Width>
-              <ZIndex>15</ZIndex>
+              <ZIndex>13</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1723,7 +1682,7 @@ Teléfono: (51) 353-2517</Value>
               <Left>1.94177cm</Left>
               <Height>0.4cm</Height>
               <Width>1.75915cm</Width>
-              <ZIndex>16</ZIndex>
+              <ZIndex>14</ZIndex>
               <Style>
                 <Border />
               </Style>
@@ -1750,7 +1709,7 @@ Teléfono: (51) 353-2517</Value>
               <Left>3.79857cm</Left>
               <Height>0.4cm</Height>
               <Width>15.13941cm</Width>
-              <ZIndex>17</ZIndex>
+              <ZIndex>15</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1778,11 +1737,11 @@ Teléfono: (51) 353-2517</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox131</rd:DefaultName>
-              <Top>2.24578cm</Top>
+              <Top>2.24579cm</Top>
               <Left>10.35618cm</Left>
               <Height>0.80977cm</Height>
               <Width>8.37542cm</Width>
-              <ZIndex>18</ZIndex>
+              <ZIndex>16</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1797,7 +1756,7 @@ Teléfono: (51) 353-2517</Value>
               <Left>0.37282cm</Left>
               <Height>1.9cm</Height>
               <Width>7.6304cm</Width>
-              <ZIndex>19</ZIndex>
+              <ZIndex>17</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1830,7 +1789,7 @@ Teléfono: (51) 353-2517</Value>
               <Left>10.35618cm</Left>
               <Height>0.71438cm</Height>
               <Width>8.37542cm</Width>
-              <ZIndex>20</ZIndex>
+              <ZIndex>18</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1850,6 +1809,7 @@ Teléfono: (51) 353-2517</Value>
                     <TextRun>
                       <Value>=First(Fields!CUSTNMBR.Value, "SOPINVOICE")</Value>
                       <Style>
+                        <FontFamily>Calibri</FontFamily>
                         <FontSize>9pt</FontSize>
                       </Style>
                     </TextRun>
@@ -1858,11 +1818,11 @@ Teléfono: (51) 353-2517</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>CUSTNMBR</rd:DefaultName>
-              <Top>5.60735cm</Top>
-              <Left>15.5517cm</Left>
+              <Top>5.95559cm</Top>
+              <Left>15.52029cm</Left>
               <Height>0.4cm</Height>
               <Width>3.38627cm</Width>
-              <ZIndex>21</ZIndex>
+              <ZIndex>19</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1878,6 +1838,7 @@ Teléfono: (51) 353-2517</Value>
                     <TextRun>
                       <Value>=First(Fields!tipoDocCliente.Value, "SOPINVOICE")+":"</Value>
                       <Style>
+                        <FontFamily>Calibri</FontFamily>
                         <FontSize>9pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -1889,11 +1850,11 @@ Teléfono: (51) 353-2517</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>tipoDocCliente</rd:DefaultName>
-              <Top>5.98787cm</Top>
+              <Top>5.96141cm</Top>
               <Left>0.381cm</Left>
               <Height>0.4cm</Height>
               <Width>3.31992cm</Width>
-              <ZIndex>22</ZIndex>
+              <ZIndex>20</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1911,6 +1872,7 @@ Teléfono: (51) 353-2517</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
                         <FontSize>9pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1920,10 +1882,70 @@ Teléfono: (51) 353-2517</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox124</rd:DefaultName>
-              <Top>5.60735cm</Top>
-              <Left>12.97306cm</Left>
+              <Top>5.95559cm</Top>
+              <Left>13.39035cm</Left>
               <Height>0.4cm</Height>
-              <Width>2.5cm</Width>
+              <Width>2.05021cm</Width>
+              <ZIndex>21</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="USRTAB2">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!rfcReceptor.Value, "SOPINVOICE")</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>USRTAB01</rd:DefaultName>
+              <Top>5.96141cm</Top>
+              <Left>3.81381cm</Left>
+              <Height>0.4cm</Height>
+              <Width>4.47102cm</Width>
+              <ZIndex>22</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox126">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Pedido:</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox125</rd:DefaultName>
+              <Top>6.75559cm</Top>
+              <Left>12.59206cm</Left>
+              <Height>0.4cm</Height>
+              <Width>2.8485cm</Width>
               <ZIndex>23</ZIndex>
               <Style>
                 <Border>
@@ -1931,6 +1953,142 @@ Teléfono: (51) 353-2517</Value>
                 </Border>
               </Style>
             </Textbox>
+            <Textbox Name="Textbox133">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!ORIGNUMB.Value, "SOPINVOICE")</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox132</rd:DefaultName>
+              <Top>6.75559cm</Top>
+              <Left>15.52029cm</Left>
+              <Height>0.4cm</Height>
+              <Width>3.41769cm</Width>
+              <ZIndex>24</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox129">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Guía:</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox125</rd:DefaultName>
+              <Top>7.15559cm</Top>
+              <Left>12.59206cm</Left>
+              <Height>0.4cm</Height>
+              <Width>2.8485cm</Width>
+              <ZIndex>25</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox134">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!guiaNumbe.Value, "SOPINVOICE")</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox132</rd:DefaultName>
+              <Top>7.15559cm</Top>
+              <Left>15.52029cm</Left>
+              <Height>0.4cm</Height>
+              <Width>3.41769cm</Width>
+              <ZIndex>26</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Line Name="Line2">
+              <Top>1.31974cm</Top>
+              <Left>10.13037cm</Left>
+              <Height>2.77813cm</Height>
+              <Width>0cm</Width>
+              <ZIndex>27</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </Line>
+            <Line Name="Line3">
+              <Top>1.31974cm</Top>
+              <Left>18.93798cm</Left>
+              <Height>2.77813cm</Height>
+              <Width>0cm</Width>
+              <ZIndex>28</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </Line>
+            <Line Name="Line5">
+              <Top>4.09787cm</Top>
+              <Left>10.15683cm</Left>
+              <Height>0cm</Height>
+              <Width>8.78115cm</Width>
+              <ZIndex>29</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </Line>
+            <Line Name="Line6">
+              <Top>1.31974cm</Top>
+              <Left>10.13037cm</Left>
+              <Height>0cm</Height>
+              <Width>8.78115cm</Width>
+              <ZIndex>30</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </Line>
           </ReportItems>
           <Style>
             <Border>
@@ -1939,7 +2097,7 @@ Teléfono: (51) 353-2517</Value>
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>2.78236cm</Height>
+          <Height>5.24787cm</Height>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
             <Textbox Name="Textbox22">
@@ -1956,24 +2114,38 @@ Teléfono: (51) 353-2517</Value>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
-              <Top>0.41314cm</Top>
-              <Left>6.2299cm</Left>
+              <Top>0.51506cm</Top>
+              <Left>0.48282cm</Left>
               <Height>0.42cm</Height>
-              <Width>2.54cm</Width>
+              <Width>2.75036cm</Width>
               <Visibility>
                 <Hidden>=IIF(Globals!TotalPages &gt; 1 and Globals!PageNumber = 1, true, false)</Hidden>
               </Visibility>
               <Style>
                 <Border>
-                  <Style>Solid</Style>
-                </Border>
-                <BottomBorder>
                   <Style>None</Style>
+                </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <BottomBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
                 </BottomBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
               </Style>
@@ -1992,22 +2164,39 @@ Teléfono: (51) 353-2517</Value>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
-              <Top>0.41314cm</Top>
-              <Left>9.4049cm</Left>
+              <Top>0.51506cm</Top>
+              <Left>13.82268cm</Left>
               <Height>0.42cm</Height>
-              <Width>2.54cm</Width>
+              <Width>2.75036cm</Width>
               <ZIndex>1</ZIndex>
               <Visibility>
                 <Hidden>=IIF(Globals!TotalPages &gt; 1 and Globals!PageNumber = 1, true, false)</Hidden>
               </Visibility>
               <Style>
                 <Border>
-                  <Style>Solid</Style>
+                  <Style>None</Style>
                 </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <BottomBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </BottomBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
               </Style>
             </Textbox>
             <Textbox Name="Textbox24">
@@ -2016,7 +2205,7 @@ Teléfono: (51) 353-2517</Value>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!TOTAL.Value, "SOPINVOICE")</Value>
+                      <Value>=First(Fields!total.Value, "SOPINVOICE")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
                         <FontSize>9pt</FontSize>
@@ -2025,35 +2214,42 @@ Teléfono: (51) 353-2517</Value>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
-              <Top>0.41314cm</Top>
-              <Left>13.76744cm</Left>
+              <Top>0.51506cm</Top>
+              <Left>16.57304cm</Left>
               <Height>0.42cm</Height>
-              <Width>2.54cm</Width>
+              <Width>2.75036cm</Width>
               <ZIndex>2</ZIndex>
               <Visibility>
                 <Hidden>=IIF(Globals!TotalPages &gt; 1 and Globals!PageNumber = 1, true, false)</Hidden>
               </Visibility>
               <Style>
                 <Border>
-                  <Style>Solid</Style>
+                  <Style>None</Style>
                 </Border>
                 <TopBorder>
-                  <Style>None</Style>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
                 </TopBorder>
                 <BottomBorder>
                   <Color>Black</Color>
+                  <Style>Solid</Style>
                   <Width>1pt</Width>
                 </BottomBorder>
                 <LeftBorder>
                   <Color>Black</Color>
+                  <Style>Solid</Style>
                   <Width>1pt</Width>
                 </LeftBorder>
                 <RightBorder>
                   <Color>Black</Color>
+                  <Style>Solid</Style>
                   <Width>1pt</Width>
                 </RightBorder>
                 <PaddingLeft>2pt</PaddingLeft>
@@ -2070,7 +2266,7 @@ Teléfono: (51) 353-2517</Value>
                       <Value>=First(Fields!AMOUNT_LETTERS.Value, "SOPINVOICE")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>8pt</FontSize>
+                        <FontSize>9pt</FontSize>
                         <Color>=IIF(Globals!TotalPages &gt; 1 and Globals!PageNumber = 1, "WHITE", "BLACK")</Color>
                       </Style>
                     </TextRun>
@@ -2100,7 +2296,7 @@ Teléfono: (51) 353-2517</Value>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value EvaluationMode="Constant">SUB-TOTAL</Value>
+                      <Value>DESCUENTO</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
                         <FontSize>9pt</FontSize>
@@ -2108,20 +2304,30 @@ Teléfono: (51) 353-2517</Value>
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Left</TextAlign>
+                    <TextAlign>Right</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
-              <Top>0cm</Top>
-              <Left>6.2699cm</Left>
+              <Top>0.07742cm</Top>
+              <Left>11.07232cm</Left>
               <Height>0.42cm</Height>
-              <Width>2.5cm</Width>
+              <Width>2.75036cm</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
-                  <Style>Solid</Style>
+                  <Style>None</Style>
                 </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
               </Style>
@@ -2140,20 +2346,30 @@ Teléfono: (51) 353-2517</Value>
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Left</TextAlign>
+                    <TextAlign>Right</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
-              <Top>0cm</Top>
-              <Left>9.4049cm</Left>
+              <Top>0.07742cm</Top>
+              <Left>13.82268cm</Left>
               <Height>0.42cm</Height>
-              <Width>2.5cm</Width>
+              <Width>2.75036cm</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <Border>
-                  <Style>Solid</Style>
+                  <Style>None</Style>
                 </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
               </Style>
@@ -2173,23 +2389,35 @@ Teléfono: (51) 353-2517</Value>
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Left</TextAlign>
+                    <TextAlign>Right</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
-              <Top>0cm</Top>
-              <Left>13.76744cm</Left>
+              <Top>0.07742cm</Top>
+              <Left>16.57304cm</Left>
               <Height>0.42cm</Height>
-              <Width>2.5cm</Width>
+              <Width>2.75036cm</Width>
               <ZIndex>6</ZIndex>
               <Style>
                 <Border>
-                  <Style>Solid</Style>
+                  <Style>None</Style>
                 </Border>
                 <TopBorder>
-                  <Style>None</Style>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
                 </TopBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+                <RightBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </RightBorder>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
               </Style>
@@ -2203,7 +2431,7 @@ Teléfono: (51) 353-2517</Value>
                       <Value>SON:</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>8pt</FontSize>
+                        <FontSize>9pt</FontSize>
                         <Color>=IIF(Globals!TotalPages &gt; 1 and Globals!PageNumber = 1, "WHITE", "BLACK")</Color>
                       </Style>
                     </TextRun>
@@ -2236,7 +2464,7 @@ Teléfono: (51) 353-2517</Value>
                       <Value>=First(Fields!XCHGRATE.Value, "SOPINVOICE")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>8pt</FontSize>
+                        <FontSize>9pt</FontSize>
                         <Format>#,0.0000;(#,0.0000)</Format>
                         <Color>=IIF(First(Fields!XCHGRATE.Value, "SOPINVOICE") = "0.0000","White","Black")</Color>
                       </Style>
@@ -2247,8 +2475,8 @@ Teléfono: (51) 353-2517</Value>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
               <Top>1.46212cm</Top>
-              <Left>3.00695cm</Left>
-              <Height>0.33542cm</Height>
+              <Left>2.97672cm</Left>
+              <Height>0.4cm</Height>
               <Width>1.60042cm</Width>
               <ZIndex>8</ZIndex>
               <Style>
@@ -2268,7 +2496,7 @@ Teléfono: (51) 353-2517</Value>
                       <Value EvaluationMode="Constant">Tipo de Cambio:</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>8pt</FontSize>
+                        <FontSize>9pt</FontSize>
                         <Color>=IIF(First(Fields!XCHGRATE.Value, "SOPINVOICE") = "0.0000","White","Black")</Color>
                       </Style>
                     </TextRun>
@@ -2281,8 +2509,8 @@ Teléfono: (51) 353-2517</Value>
               <rd:DefaultName>Textbox22</rd:DefaultName>
               <Top>1.46212cm</Top>
               <Left>0.48282cm</Left>
-              <Height>0.33542cm</Height>
-              <Width>2.36161cm</Width>
+              <Height>0.4cm</Height>
+              <Width>2.4939cm</Width>
               <ZIndex>9</ZIndex>
               <Visibility>
                 <Hidden>=IIF(Globals!TotalPages &gt; 1 and Globals!PageNumber = 1, true, false)</Hidden>
@@ -2304,7 +2532,7 @@ Teléfono: (51) 353-2517</Value>
                       <Value>="PEN/" &amp; First(Fields!CURNCYID.Value, "SOPINVOICE")</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
-                        <FontSize>8pt</FontSize>
+                        <FontSize>9pt</FontSize>
                         <Color>=IIF(First(Fields!XCHGRATE.Value, "SOPINVOICE") = "0.0000","White","Black")</Color>
                       </Style>
                     </TextRun>
@@ -2316,8 +2544,8 @@ Teléfono: (51) 353-2517</Value>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
               <Top>1.46212cm</Top>
-              <Left>4.68262cm</Left>
-              <Height>0.33542cm</Height>
+              <Left>4.57714cm</Left>
+              <Height>0.4cm</Height>
               <Width>2.13316cm</Width>
               <ZIndex>10</ZIndex>
               <Visibility>
@@ -2331,62 +2559,197 @@ Teléfono: (51) 353-2517</Value>
                 <PaddingRight>2pt</PaddingRight>
               </Style>
             </Textbox>
-            <Textbox Name="descuento">
-              <CanGrow>true</CanGrow>
+            <Textbox Name="Textbox33">
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Sum(Fields!descuento.Value, "SOPINVOICE")</Value>
+                      <Value>=First(Fields!inafecta.Value, "SOPINVOICE")</Value>
                       <Style>
+                        <FontFamily>Calibri</FontFamily>
                         <FontSize>9pt</FontSize>
                         <Format>#,0.00;(#,0.00)</Format>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
-              <rd:DefaultName>descuento</rd:DefaultName>
-              <Top>0.43314cm</Top>
-              <Left>3.6737cm</Left>
-              <Height>0.4cm</Height>
-              <Width>2.43975cm</Width>
+              <rd:DefaultName>Textbox22</rd:DefaultName>
+              <Top>0.51506cm</Top>
+              <Left>3.23318cm</Left>
+              <Height>0.42cm</Height>
+              <Width>2.75036cm</Width>
               <ZIndex>11</ZIndex>
+              <Visibility>
+                <Hidden>=IIF(Globals!TotalPages &gt; 1 and Globals!PageNumber = 1, true, false)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <BottomBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </BottomBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
               </Style>
             </Textbox>
-            <Textbox Name="inafecta">
-              <CanGrow>true</CanGrow>
+            <Textbox Name="Textbox34">
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Sum(Fields!inafecta.Value, "SOPINVOICE")+Sum(Fields!exonerado.Value, "SOPINVOICE")</Value>
+                      <Value>=First(Fields!exonerado.Value, "SOPINVOICE")</Value>
                       <Style>
+                        <FontFamily>Calibri</FontFamily>
                         <FontSize>9pt</FontSize>
                         <Format>#,0.00;(#,0.00)</Format>
                       </Style>
                     </TextRun>
                   </TextRuns>
-                  <Style />
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
                 </Paragraph>
               </Paragraphs>
-              <rd:DefaultName>inafecta</rd:DefaultName>
-              <Top>0.43314cm</Top>
-              <Left>0.47492cm</Left>
-              <Height>0.4cm</Height>
-              <Width>3.06725cm</Width>
+              <rd:DefaultName>Textbox22</rd:DefaultName>
+              <Top>0.51506cm</Top>
+              <Left>5.98354cm</Left>
+              <Height>0.42cm</Height>
+              <Width>2.75036cm</Width>
               <ZIndex>12</ZIndex>
+              <Visibility>
+                <Hidden>=IIF(Globals!TotalPages &gt; 1 and Globals!PageNumber = 1, true, false)</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <BottomBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </BottomBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox35">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!gratuito.Value, "SOPINVOICE")</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <Format>#,0.00;(#,0.00)</Format>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox22</rd:DefaultName>
+              <Top>0.51506cm</Top>
+              <Left>8.7339cm</Left>
+              <Height>0.42cm</Height>
+              <Width>2.33842cm</Width>
+              <ZIndex>13</ZIndex>
+              <Visibility>
+                <Hidden>=IIF(Globals!TotalPages &gt; 1 and Globals!PageNumber = 1, true, false)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <BottomBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </BottomBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox36">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>OP. INAFECTA</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox22</rd:DefaultName>
+              <Top>0.07742cm</Top>
+              <Left>3.23318cm</Left>
+              <Height>0.42cm</Height>
+              <Width>2.75036cm</Width>
+              <ZIndex>14</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
               </Style>
             </Textbox>
             <Textbox Name="Textbox37">
@@ -2395,7 +2758,7 @@ Teléfono: (51) 353-2517</Value>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>INAFECT0/EXONERADO</Value>
+                      <Value>OP. EXONERADA</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
                         <FontSize>9pt</FontSize>
@@ -2403,20 +2766,30 @@ Teléfono: (51) 353-2517</Value>
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Left</TextAlign>
+                    <TextAlign>Right</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
-              <Top>0cm</Top>
-              <Left>0.46048cm</Left>
+              <Top>0.07742cm</Top>
+              <Left>5.98354cm</Left>
               <Height>0.42cm</Height>
-              <Width>3.08169cm</Width>
-              <ZIndex>13</ZIndex>
+              <Width>2.75036cm</Width>
+              <ZIndex>15</ZIndex>
               <Style>
                 <Border>
-                  <Style>Solid</Style>
+                  <Style>None</Style>
                 </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
               </Style>
@@ -2427,7 +2800,154 @@ Teléfono: (51) 353-2517</Value>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>DESCUENTO</Value>
+                      <Value>OP. GRATUITA</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox22</rd:DefaultName>
+              <Top>0.07742cm</Top>
+              <Left>8.7339cm</Left>
+              <Height>0.42cm</Height>
+              <Width>2.33842cm</Width>
+              <ZIndex>16</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox39">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!descuento.Value, "SOPINVOICE")</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <Format>#,0.00;(#,0.00)</Format>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox22</rd:DefaultName>
+              <Top>0.51506cm</Top>
+              <Left>11.07232cm</Left>
+              <Height>0.42cm</Height>
+              <Width>2.75036cm</Width>
+              <ZIndex>17</ZIndex>
+              <Visibility>
+                <Hidden>=IIF(Globals!TotalPages &gt; 1 and Globals!PageNumber = 1, true, false)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <BottomBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </BottomBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox40">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>OP. GRAVADA</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox22</rd:DefaultName>
+              <Top>0.07742cm</Top>
+              <Left>0.48282cm</Left>
+              <Height>0.42cm</Height>
+              <Width>2.75036cm</Width>
+              <ZIndex>18</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+              </Style>
+            </Textbox>
+            <Line Name="Line8">
+              <Top>1.90183cm</Top>
+              <Left>0.11112cm</Left>
+              <Height>0cm</Height>
+              <Width>19.35594cm</Width>
+              <ZIndex>19</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </Line>
+            <Textbox Name="Textbox41">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>OBSERVACIONES:</Value>
                       <Style>
                         <FontFamily>Calibri</FontFamily>
                         <FontSize>9pt</FontSize>
@@ -2440,17 +2960,167 @@ Teléfono: (51) 353-2517</Value>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox22</rd:DefaultName>
-              <Top>0cm</Top>
-              <Left>3.6737cm</Left>
+              <Top>2.04646cm</Top>
+              <Left>0.47492cm</Left>
               <Height>0.42cm</Height>
-              <Width>2.50325cm</Width>
-              <ZIndex>14</ZIndex>
+              <Width>2.75036cm</Width>
+              <ZIndex>20</ZIndex>
               <Style>
                 <Border>
-                  <Style>Solid</Style>
+                  <Style>None</Style>
                 </Border>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
+              </Style>
+            </Textbox>
+            <Textbox Name="CUSTNAME2">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!addLeyenda.Value, "SOPINVOICE")</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>CUSTNAME1</rd:DefaultName>
+              <Top>2.06646cm</Top>
+              <Left>3.23318cm</Left>
+              <Height>0.4cm</Height>
+              <Width>16.09022cm</Width>
+              <ZIndex>21</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox138">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="REPRESENTACION IMPRESA DE LA " + First(Fields!tdcmp_descripcion.Value, "SOPINVOICE")</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox131</rd:DefaultName>
+              <Top>3.38322cm</Top>
+              <Left>1.14661cm</Left>
+              <Height>0.43935cm</Height>
+              <Width>17.15959cm</Width>
+              <ZIndex>22</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox139">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="Autorizado mediante Resolución xxxxxxx Nº xxxxx"</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox131</rd:DefaultName>
+              <Top>3.85418cm</Top>
+              <Left>1.14131cm</Left>
+              <Height>0.43935cm</Height>
+              <Width>17.15959cm</Width>
+              <ZIndex>23</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox42">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>REFERENCIA:</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox22</rd:DefaultName>
+              <Top>2.49066cm</Top>
+              <Left>0.47492cm</Left>
+              <Height>0.42cm</Height>
+              <Width>2.75036cm</Width>
+              <ZIndex>24</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+              </Style>
+            </Textbox>
+            <Textbox Name="CUSTNAME3">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!tipoDocumentoRel.Value, "SOPINVOICE") +" "+ First(Fields!sopNumbeRel.Value, "SOPINVOICE")</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>CUSTNAME1</rd:DefaultName>
+              <Top>2.51066cm</Top>
+              <Left>3.23318cm</Left>
+              <Height>0.4cm</Height>
+              <Width>15.49842cm</Width>
+              <ZIndex>25</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
               </Style>
             </Textbox>
           </ReportItems>
