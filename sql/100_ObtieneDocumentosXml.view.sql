@@ -177,6 +177,7 @@ as
 --			Elimina carriage returns, line feeds, tabs, secuencias de espacios y caracteres especiales.
 --Requisito. Se asume que una línea de factura tiene una línea de impuesto
 --27/11/17 jcf Creación cfdi 3.3
+--03/04/18 jcf Filtra cantidad!=0
 --
 		select ROW_NUMBER() OVER(ORDER BY Concepto.LNITMSEQ asc) id, 
 			Concepto.soptype, Concepto.sopnumbe, Concepto.LNITMSEQ, rtrim(Concepto.ITEMNMBR) ITEMNMBR, '' SERLTNUM, 
@@ -225,6 +226,7 @@ as
 			outer apply dbo.fCfdiImpuestosSop(Concepto.SOPNUMBE, Concepto.soptype, Concepto.LNITMSEQ, pr.param3, '%') iva --iva
 			outer apply dbo.fCfdiImpuestosSop(Concepto.SOPNUMBE, Concepto.soptype, Concepto.LNITMSEQ, pr.param4, '%') gra --gratuito
 		where Concepto.CMPNTSEQ = 0					--a nivel kit
+		and Concepto.QUANTITY != 0
 
 go
 
