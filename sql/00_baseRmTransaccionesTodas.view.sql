@@ -1,0 +1,1 @@
+--ejecutar rmTransaccionesTodas.view.sql
