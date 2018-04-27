@@ -243,6 +243,7 @@ as
 --Propósito. Elabora un comprobante xml para factura electrónica cfdi Perú
 --Requisitos.  
 --27/11/17 jcf Creación cfdi Perú
+--27/04/18 jcf Ajusta montos exonerado, inafecto, gratuito
 --
 	select convert(varchar(20), tv.dex_row_id) correlativo, 
 		tv.soptype,
@@ -274,9 +275,9 @@ as
 		isnull(iva.ortxsls, 0.00)					ivaImponible,
 		isnull(iva.orslstax, 0.00)					iva,
 
-		isnull(exe.tdttxsls, 0.00)					inafecta,
-		isnull(xnr.tdttxsls, 0.00)					exonerado,
-		isnull(gra.tdttxsls, 0.00)					gratuito,
+		isnull(exe.ortxsls, 0.00)					inafecta,
+		isnull(xnr.ortxsls, 0.00)					exonerado,
+		isnull(gra.ortxsls, 0.00)					gratuito,
 
 		tv.xchgrate,
 		tv.total,
