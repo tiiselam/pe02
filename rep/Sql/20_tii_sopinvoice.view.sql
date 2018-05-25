@@ -6,6 +6,7 @@ go
 ALTER VIEW [dbo].[TII_SOPINVOICE] AS 
 --Propósito. Representación impresa de factura electrónica Perú. Habilitar codigoBarras si usa Crystal!
 --20/11/17 jcf Modifica estructura detalle sop para cfdi Perú ubl 2
+--23/05/18 jcf Sólo muestra datos contabilizados de vwCfdiDocumentosAImprimir 
 --
 SELECT 
 		SOPHEADER.DOCSTATUS,
@@ -329,6 +330,7 @@ INNER JOIN RM00102 as SOPSHIPMENTINFO WITH (NOLOCK)
 LEFT OUTER JOIN dbo.vwCfdiDocumentosAImprimir SOPELECTINV WITH (NOLOCK)
 	ON SOPHEADER.SOPTYPE = SOPELECTINV.soptype 
 	AND SOPHEADER.SOPNUMBE = SOPELECTINV.sopnumbe
+	and SOPELECTINV.estadoContabilizado = 'contabilizado'
 
 outer apply dbo.fCfdiRelacionados(SOPHEADER.soptype, SOPHEADER.sopnumbe) rel
 

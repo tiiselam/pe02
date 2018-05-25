@@ -13,6 +13,7 @@ using Reporteador;
 using cfd.FacturaElectronica;
 using MyGeneration.dOOdads;
 using MaquinaDeEstados;
+using System.Linq;
 
 namespace cfdiPeru
 {
@@ -314,6 +315,28 @@ namespace cfdiPeru
             AplicaFiltroYActualizaPantalla(this.tabCfdi.SelectedTab.Name);
         }
 
+        private bool ExistenTransaccionesAMedioContabilizar(vwCfdTransaccionesDeVenta tdv)
+        {
+            tdv.Rewind();
+            List<string> t = new List<string>();
+            if (tdv.RowCount > 0)
+                do
+                {
+                    t.Add(tdv.s_Soptype + "-" + tdv.s_Sopnumbe);
+                } while (tdv.MoveNext());
+
+            var ragrupado = t.GroupBy(f => f)
+                            .Where(repetido => repetido.Count() > 1)
+                            .ToList();
+            if (ragrupado.Count() > 0)
+            {
+                txtbxMensajes.AppendText("Las siguientes facturas todavía no terminaron de contabilizar:");
+                ragrupado.ForEach(i => txtbxMensajes.AppendText(i.First()));
+                txtbxMensajes.AppendText("Espere a que finalice su contabilización y vuelva a intentar.");
+            }
+            return (ragrupado.Count() > 0);
+        }
+
         /// <summary>
         /// Genera XMLs masivamente
         /// </summary>
@@ -341,14 +364,12 @@ namespace cfdiPeru
                 txtbxMensajes.Text = ultimoMensaje;
                 errores++;
             }
-            if (errores == 0)
+            if (errores == 0 && !ExistenTransaccionesAMedioContabilizar(regla.CfdiTransacciones))
             {
                 HabilitarVentana(false, false, false, false, false, false);
                 ProcesaCfdi proc = new ProcesaCfdi(DatosConexionDB.Elemento, Param);
                 proc.TrxVenta = regla.CfdiTransacciones;
-
                 proc.Progreso += new ProcesaCfdi.LogHandler(reportaProgreso);
-
                 pBarProcesoActivo.Visible = true;
 
                 if (this.tabCfdi.SelectedTab.Name.Equals("tabResumen"))
@@ -912,7 +933,7 @@ namespace cfdiPeru
                 pBarProcesoActivo.Visible = true;
 
                 if (this.tabCfdi.SelectedTab.Name.Equals("tabFacturas"))
-                    await proc.ProcesaBajaComprobante(tsTextBoxMotivoRechazo.Text);
+                    await proc.ProcesaBajaComprobante(tsTextBoxMotivoRechazo.Text, false);
                 else
                     txtbxMensajes.Text = "Presione el tab FACTURAS y vuelva a intentar." + Environment.NewLine;
 

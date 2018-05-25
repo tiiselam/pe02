@@ -362,9 +362,9 @@ go
 alter view dbo.vwCfdiDocumentosAImprimir as
 --Propósito. Lista los documentos de venta que están listos para imprimirse: facturas y notas de crédito. 
 --06/11/17 jcf Creación cfdi Perú ubl 2.0
+--23/05/18 jcf Agrega estadoContabilizado
 --
-select tv.soptype, tv.sopnumbe, tv.fechaEmision fechaHoraEmision, 
-	--tv.regimenFiscal, 'NA' rgfs_descripcion, tv.codigoPostal, 
+select tv.estadoContabilizado, tv.soptype, tv.sopnumbe, tv.fechaEmision fechaHoraEmision, 
 	rtrim(td.dscriptn) tipoDocCliente, 
 	tv.receptorNroDoc rfcReceptor, tv.receptorNombre nombreCliente, tv.total, tv.moneda isocurrc, --tv.mensajeEA, 
 	tv.tipoDocumento TipoDeComprobante,
@@ -402,28 +402,13 @@ select tv.soptype, tv.sopnumbe, tv.fechaEmision fechaHoraEmision,
 	'' RfcPAC,
 	'' Leyenda,
 	'' cadenaOriginalSAT
-	--tv.rutaxml								+ 'cbb\' + replace(tv.mensaje, 'Almacenado en '+tv.rutaxml, '')+'.jpg' rutaYNomArchivoNet,
-	--'file:'+replace(tv.rutaxml, '\', '/') + 'cbb/' + RIGHT( tv.mensaje, CHARINDEX( '\', REVERSE( tv.mensaje ) + '\' ) - 1 ) +'.jpg' rutaYNomArchivo, 
-	--tv.rutaxml								+ 'cbb\' + RIGHT( tv.mensaje, CHARINDEX( '\', REVERSE( tv.mensaje ) + '\' ) - 1 ) +'.jpg' rutaYNomArchivoNet,
-	--'file://c:\getty' + substring(tv.rutaxml, charindex('\', tv.rutaxml, 3), 250) 
-	--										+ 'cbb\' + RIGHT( tv.mensaje, CHARINDEX( '\', REVERSE( tv.mensaje ) + '\' ) - 1 ) +'.jpg' rutaFileDrive
 from vwCfdiGeneraDocumentoDeVenta tv
 	left join cfdlogfacturaxml lf
 		on lf.soptype = tv.SOPTYPE
 		and lf.sopnumbe = tv.sopnumbe
 		and lf.estado = 'emitido'
-	--inner join dbo.vwCfdiDatosDelXml dx
-	--	on dx.soptype = tv.SOPTYPE
-	--	and dx.sopnumbe = tv.sopnumbe
-	--	and dx.estado = 'emitido'
-	--outer apply dbo.fLcLvComprobanteSunat (tv.soptype, tv.sopnumbe)  cmpr
 	left join nsaif_sy00102 td
 		on td.nsaif_type = tv.receptorTipoDoc
-	--outer apply dbo.fCfdiCatalogoGetDescripcion('MTDPG', dx.MetodoPago) mtdpg
-	--outer apply dbo.fCfdiCatalogoGetDescripcion('FRPG', dx.FormaPago) frpg
-	--outer apply dbo.fCfdiCatalogoGetDescripcion('RGFS', tv.regimen) rgfs
-	--outer apply dbo.fCfdiCatalogoGetDescripcion('USCF', dx.usoCfdi) uscf
-	--outer apply dbo.fCfdiCatalogoGetDescripcion('TPRL', dx.TipoRelacion) tprl
 go
 IF (@@Error = 0) PRINT 'Creación exitosa de la vista: vwCfdiDocumentosAImprimir  '
 ELSE PRINT 'Error en la creación de la vista: vwCfdiDocumentosAImprimir '
