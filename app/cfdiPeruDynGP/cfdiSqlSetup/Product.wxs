@@ -59,6 +59,7 @@
           <sql:SqlScript Id="CreateObj92" BinaryKey="CreateObj92" ExecuteOnInstall="yes" Sequence="92" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="CreateObj94" BinaryKey="CreateObj94" ExecuteOnInstall="yes" Sequence="92" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="Createview100" BinaryKey="Createview100" ExecuteOnInstall="yes" Sequence="100" ExecuteOnReinstall="yes"/>
+          <sql:SqlScript Id="CreateObj104" BinaryKey="CreateObj104" ExecuteOnInstall="yes" Sequence="104" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="CreateObj105" BinaryKey="CreateObj105" ExecuteOnInstall="yes" Sequence="105" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="Grants110" BinaryKey="Grants110" ExecuteOnInstall="yes" Sequence="110" ExecuteOnReinstall="yes"/>
 
@@ -112,6 +113,7 @@
     <Binary Id="CreateObj92" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\092_FCFDIoBTIENEuuid.function.sql"/>
     <Binary Id="CreateObj94" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\094_fCfdiRelacionados.functions.sql"/>
     <Binary Id="Createview100" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\100_ObtieneDocumentosXml.view.sql"/>
+    <Binary Id="CreateObj104" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\104_fCfdiObtieneNumResumenDiario.function.sql"/>
     <Binary Id="CreateObj105" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\105_ObtieneResumenDiario.view.sql"/>
 
     <Binary Id="Grants110" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\110_cfdiDaPermisos.grant.sql"/>

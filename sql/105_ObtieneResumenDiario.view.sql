@@ -16,9 +16,11 @@ as
 --Propósito. Agrupa los documentos de venta
 --Requisitos.  
 --07/12/17 jcf Creación cfdi Perú
+--28/05/18 jcf Agrega consecutivo correcto para resumen en caso de rechazo
 --
 		select tx.serie, tx.docdate, tx.estadoContabilizado, 55 tipoResumenDiario, 
-			'RESUMEN' idResumenDiario, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001' numResumenDiario, tx.tipoDocumento, tx.moneda,
+			'RESUMEN' idResumenDiario, isnull(onr.numResumen, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001') numResumenDiario, 
+			tx.tipoDocumento, tx.moneda,
 			tx.emisorTipoDoc,
 			tx.emisorNroDoc,
 			tx.emisorNombre,
@@ -43,7 +45,8 @@ as
 
 			COUNT(tx.sopnumbe)	cantidad
 		from vwCfdiGeneraDocumentoDeVenta tx
-		group by tx.serie, tx.docdate, tx.estadoContabilizado, tx.tipoDocumento, tx.moneda,
+			outer apply dbo.fCfdiObtieneNumResumenDiario(55, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001') onr
+		group by tx.serie, onr.numResumen, tx.docdate, tx.estadoContabilizado, tx.tipoDocumento, tx.moneda,
 			tx.emisorTipoDoc,
 			tx.emisorNroDoc,
 			tx.emisorNombre,

@@ -24,6 +24,7 @@ namespace cfd.FacturaElectronica
         private String nroTicket=String.Empty;
         private String _mensajeSunat = String.Empty;
         private bool _consultaCDRExito = false;
+        private String _codigoRespuesta;
         private readonly HttpClient _client;
 
         public string ultimoMensaje = "";
@@ -83,8 +84,9 @@ namespace cfd.FacturaElectronica
                     msj = String.Empty;
                     try
                     {
+                        String accion = "EMITE XML Y PDF";
                         if (trxVenta.Estado.Equals("no emitido") &&
-                            maquina.ValidaTransicion(_Param.tipoDoc, "EMITE XML Y PDF", trxVenta.EstadoActual, "emitido/impreso") &&
+                            maquina.ValidaTransicion(_Param.tipoDoc, accion, trxVenta.EstadoActual, "emitido/impreso") &&
                             trxVenta.EstadoContabilizado.Equals("contabilizado"))
                             if (trxVenta.Voidstts == 0)  //documento no anulado
                             {
@@ -113,7 +115,7 @@ namespace cfd.FacturaElectronica
                                         }
                                         if (trxVenta.DocElectronico.Discrepancias.Count() == 0)
                                         {
-                                            msj = "No ha informado la descripción de la discrepancia en la nota de crédito.";
+                                            msj = "No ha informado la causa de la discrepancia en la nota de crédito.";
                                             continue;
                                         }
 
@@ -147,7 +149,7 @@ namespace cfd.FacturaElectronica
                                     File.WriteAllBytes(RutaArchivo, bTramaXmlSinFirma);
                                 }
 
-                                await EnviaSunat(respuesta.TramaXmlSinFirma, trxVenta.DocElectronico.TipoDocumento, trxVenta.DocElectronico.IdDocumento, trxVenta.DocElectronico.Emisor.NroDocumento, false, false);
+                                await FirmaYEnviaASunat(respuesta.TramaXmlSinFirma, trxVenta.DocElectronico.TipoDocumento, trxVenta.DocElectronico.IdDocumento, trxVenta.DocElectronico.Emisor.NroDocumento, false, false, false);
 
                                 //if (!_Param.seguridadIntegrada)
                                 //{
@@ -156,9 +158,13 @@ namespace cfd.FacturaElectronica
                                 //    File.WriteAllBytes(RutaArchivox, bTramaXmlFirmado);
                                 //}
 
-                                //Guarda el archivo xml, genera el cbb y el pdf. 
+                                //Guardar el comprobante como emitido rechazado
+                                bool ebinarioErr = int.Parse(_codigoRespuesta) >= 2000 && int.Parse(_codigoRespuesta) < 4000;
+
+                                //Guarda el archivo xml, genera el pdf. 
                                 //Luego anota en la bitácora la factura emitida o el error al generar cbb o pdf.
-                                DocVenta.AlmacenaEnRepositorio(trxVenta, Encoding.UTF8.GetString(Convert.FromBase64String(tramaXmlFirmado)), maquina, tramaXmlFirmado, tramaZipCdr, "FAC", nombreArchivoCdr, _Param.tipoDoc);
+                                DocVenta.AlmacenaEnRepositorio(trxVenta, Encoding.UTF8.GetString(Convert.FromBase64String(tramaXmlFirmado)), maquina, tramaXmlFirmado, tramaZipCdr, "FAC", nombreArchivoCdr, 
+                                                            _Param.tipoDoc, accion, !ebinarioErr);
 
                             }
                             else //si el documento está anulado en gp, agregar al log como emitido
@@ -228,7 +234,8 @@ namespace cfd.FacturaElectronica
                     msj = String.Empty;
                     try
                     {
-                        if (maquina.ValidaTransicion("RESUMEN", "ENVIA RESUMEN", trxVenta.EstadoActual, "emitido/enviado a la sunat"))
+                        String accion = "ENVIA RESUMEN";
+                        if (maquina.ValidaTransicion("RESUMEN", accion, trxVenta.EstadoActual, "emitido/enviado a la sunat"))
                             if (trxVenta.Voidstts == 0)  //documento no anulado
                             {
                                 trxVenta.ArmarResumenElectronico();
@@ -249,7 +256,7 @@ namespace cfd.FacturaElectronica
                                     File.WriteAllBytes(RutaArchivo, bTramaXmlSinFirma);
                                 }
 
-                                await EnviaSunat(respuesta.TramaXmlSinFirma, String.Empty, trxVenta.ResumenElectronico.IdDocumento, trxVenta.ResumenElectronico.Emisor.NroDocumento, true, false);
+                                await FirmaYEnviaASunat(respuesta.TramaXmlSinFirma, String.Empty, trxVenta.ResumenElectronico.IdDocumento, trxVenta.ResumenElectronico.Emisor.NroDocumento, true, false, false);
 
                                 //if (!_Param.seguridadIntegrada)
                                 //{
@@ -260,7 +267,8 @@ namespace cfd.FacturaElectronica
 
                                 //Guarda el archivo xml, genera el cbb y el pdf. 
                                 //Luego anota en la bitácora la factura emitida o el error al generar cbb o pdf.
-                                DocVenta.AlmacenaEnRepositorio(trxVenta, Encoding.UTF8.GetString(Convert.FromBase64String(respuesta.TramaXmlSinFirma)), maquina, String.Empty, String.Empty, nroTicket, String.Empty, "RESUMEN");
+                                DocVenta.AlmacenaEnRepositorio(trxVenta, Encoding.UTF8.GetString(Convert.FromBase64String(respuesta.TramaXmlSinFirma)), maquina, tramaXmlFirmado, String.Empty, nroTicket, String.Empty, 
+                                                               "RESUMEN", accion, true);
 
                             }
                     }
@@ -322,27 +330,27 @@ namespace cfd.FacturaElectronica
                     msj = String.Empty;
                     try
                     {
-                        String ticket = trxVenta.Regimen;  //temp
-                        String td = trxVenta.Docid;
-                        if (!trxVenta.Docid.Equals("RESUMEN"))
-                            td = _Param.tipoDoc;
+                        String ticket = trxVenta.Regimen;
+                        String td = !trxVenta.Docid.Equals("RESUMEN") ? _Param.tipoDoc : trxVenta.Docid;
+                        String accion = "CONSULTA CDR";
 
-                        if (maquina.ValidaTransicion(td, "CONSULTA CDR", trxVenta.EstadoActual, "aceptado por la sunat"))
+                        if (maquina.ValidaTransicion(td, accion, trxVenta.EstadoActual, "consulta a la sunat"))
                             if (trxVenta.Voidstts == 0)  //documento no anulado
                             {
                                 await ConsultaCDR(ticket, trxVenta.Sopnumbe, trxVenta.Rfc);
-
-                                if (!_consultaCDRExito)
+                                if (_codigoRespuesta.Equals("0"))   //aceptada
+                                {
+                                    eBinario = maquina.eBinarioNuevo;
+                                    _mensajeSunat = string.IsNullOrEmpty(_mensajeSunat) ? "Consulta CDR OK" : _mensajeSunat;
+                                }
+                                else //if (!_consultaCDRExito)
                                 {
                                     eBinario = maquina.eBinActualConError;
                                     errores++;
                                 }
-                                else
-                                {
-                                    eBinario = maquina.eBinarioNuevo;
-                                    _mensajeSunat = string.IsNullOrEmpty(_mensajeSunat)?"Consulta CDR OK":_mensajeSunat; 
-                                }
-                                DocVenta.RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, _mensajeSunat, ticket, _Conex.Usuario, String.Empty, "sunat", eBinario, "Recibido el " + DateTime.Today.ToString());
+
+                                DocVenta.AlmacenaEnRepositorio(trxVenta, _mensajeSunat, maquina, string.Empty, tramaZipCdr, ticket, string.Concat(trxVenta.Sopnumbe, nombreArchivoCdr), 
+                                                            td, accion, _codigoRespuesta.Equals("0"));
 
                                 DocVenta.ActualizaFacturaEmitida(trxVenta.Soptype, trxVenta.Sopnumbe, _Conex.Usuario, "emitido", "emitido", eBinario, maquina.EnLetras(eBinario, td)+ _mensajeSunat, ticket);
                             }
@@ -382,7 +390,7 @@ namespace cfd.FacturaElectronica
             OnProgreso(100, "PROCESO FINALIZADO!");
         }
 
-        public async Task ProcesaBajaComprobante(String motivoBaja, bool resumen)
+        public async Task ProcesaBajaComprobante(String motivoBaja)
         {
             try
             {
@@ -400,7 +408,8 @@ namespace cfd.FacturaElectronica
                     msj = String.Empty;
                     try
                     {
-                        if (maquina.ValidaTransicion(_Param.tipoDoc, "DAR DE BAJA", trxVenta.EstadoActual, "baja solicitada"))
+                        String accion = "DAR DE BAJA";
+                        if (maquina.ValidaTransicion(_Param.tipoDoc, accion, trxVenta.EstadoActual, "baja solicitada"))
                         {
                             eBinario = maquina.eBinarioNuevo;
 
@@ -422,10 +431,10 @@ namespace cfd.FacturaElectronica
                                 File.WriteAllBytes(RutaArchivo, bTramaXmlSinFirma);
                             }
 
-                            await EnviaSunat(respuesta.TramaXmlSinFirma, trxVenta.DocumentoBaja.Bajas.First().TipoDocumento, trxVenta.DocumentoBaja.IdDocumento, trxVenta.DocumentoBaja.Emisor.NroDocumento, resumen, false);
+                            await FirmaYEnviaASunat(respuesta.TramaXmlSinFirma, string.Empty, trxVenta.DocumentoBaja.IdDocumento, trxVenta.DocumentoBaja.Emisor.NroDocumento, false, false, true);
 
-                            DocVenta.RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, "baja solicitada", nroTicket, _Conex.Usuario, String.Empty, "publicado", eBinario, "Enviado el " + DateTime.Today.ToString());
-
+                            DocVenta.AlmacenaEnRepositorio(trxVenta, Encoding.UTF8.GetString(Convert.FromBase64String(respuesta.TramaXmlSinFirma)), maquina, tramaXmlFirmado, String.Empty, nroTicket, String.Empty,
+                                                        _Param.tipoDoc, accion, true);
                             DocVenta.ActualizaFacturaEmitida(trxVenta.Soptype, trxVenta.Sopnumbe, _Conex.Usuario, "emitido", "emitido", eBinario, maquina.EnLetras(eBinario, _Param.tipoDoc), nroTicket);
 
                         }
@@ -478,16 +487,12 @@ namespace cfd.FacturaElectronica
         /// <param name="IdDocumento"></param>
         /// <param name="emisorNroDocumento"></param>
         /// <param name="rbResumen">Indicar si el documento a enviar es un resumen de boletas</param>
-        /// <param name="rbRetenciones">Indicar si el documento a enviar es de retenciones</param>
+        /// <param name="RetencPercepGRem">Indicar si el documento a enviar es de retenciones</param>
         /// <returns></returns>
-        async Task EnviaSunat(String xmlSinFirma, String tipoDoc, String IdDocumento, String emisorNroDocumento, bool rbResumen, bool rbRetenciones)
+        async Task FirmaYEnviaASunat(String tramaXmlSinFirma, String codigoTipoDoc, String IdDocumento, String emisorNroDocumento, bool rbResumen, bool RetencPercepGRem, bool baja)
         {
-            string codigoTipoDoc = tipoDoc;
-
             if (string.IsNullOrEmpty(IdDocumento))
                 throw new InvalidOperationException("La Serie y el Correlativo no pueden estar vacíos");
-
-            var tramaXmlSinFirma = xmlSinFirma;
 
             var firmadoRequest = new FirmadoRequest
             {
@@ -495,7 +500,7 @@ namespace cfd.FacturaElectronica
                 //CertificadoDigital = Convert.ToBase64String(File.ReadAllBytes(_txtRutaCertificado)),
                 CertificadoDigital = Convert.ToBase64String(File.ReadAllBytes(trxVenta.Ruta_clave)),
                 PasswordCertificado = trxVenta.Contrasenia_clave,   // txtPassCertificado.Text,
-                UnSoloNodoExtension = rbRetenciones || rbResumen
+                UnSoloNodoExtension = RetencPercepGRem || rbResumen || baja
             };
 
             var jsonFirmado = await _client.PostAsJsonAsync("api/Firmar", firmadoRequest);
@@ -516,13 +521,23 @@ namespace cfd.FacturaElectronica
                 TramaXmlFirmado = respuestaFirmado.TramaXmlFirmado
             };
 
-            var apiMetodo = rbResumen && codigoTipoDoc != "09" ? "api/EnviarResumen" : "api/EnviarDocumento";
+            var apiMetodo = (rbResumen || baja) && codigoTipoDoc != "09" ? "api/EnviarResumen" : "api/EnviarDocumento";
 
             var jsonEnvioDocumento = await _client.PostAsJsonAsync(apiMetodo, enviarDocumentoRequest);
             jsonEnvioDocumento.EnsureSuccessStatusCode();
 
             RespuestaComunConArchivo respuestaEnvio;
-            if (!rbResumen)
+            if (rbResumen||baja)
+            {
+                tramaXmlFirmado = respuestaFirmado.TramaXmlFirmado;
+                respuestaEnvio = await jsonEnvioDocumento.Content.ReadAsAsync<EnviarResumenResponse>();
+                var rpta = (EnviarResumenResponse)respuestaEnvio;
+                nroTicket = string.IsNullOrEmpty(rpta.NroTicket) ? String.Empty : rpta.NroTicket;
+                //txtResult.Text = $@"{Resources.procesoCorrecto}{Environment.NewLine}{rpta.NroTicket}";
+                if (!respuestaEnvio.Exito)
+                    throw new ApplicationException(string.Concat("La respuesta de la Sunat es negativa para el resumen o baja. ", respuestaEnvio.MensajeError));
+            }
+            else
             {
                 respuestaEnvio = await jsonEnvioDocumento.Content.ReadAsAsync<EnviarDocumentoResponse>();
                 var rpta = (EnviarDocumentoResponse)respuestaEnvio;
@@ -535,29 +550,30 @@ namespace cfd.FacturaElectronica
                         tramaXmlFirmado = respuestaFirmado.TramaXmlFirmado;
                         tramaZipCdr = rpta.TramaZipCdr;
                         nombreArchivoCdr = $"R-{respuestaEnvio.NombreArchivo}.zip";
-                        //File.WriteAllBytes($"{_carpetaXml}\\{respuestaEnvio.NombreArchivo}", Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado));
-                        //File.WriteAllBytes($"{_carpetaCdr}\\R-{respuestaEnvio.NombreArchivo}", Convert.FromBase64String(rpta.TramaZipCdr));
+
+                        _codigoRespuesta = rpta.CodigoRespuesta;
+
+                        int iCodRespuesta = 0;
+                        if (Int32.TryParse(rpta.CodigoRespuesta, out iCodRespuesta))
+                        {
+                            if (iCodRespuesta >= 100 && iCodRespuesta < 2000)
+                                throw new ApplicationException(string.Concat("La SUNAT no procesó el comprobante. Codigo: ", rpta.CodigoRespuesta, " ", rpta.MensajeError, Environment.NewLine, rpta.MensajeRespuesta, " Corrija el problema e intente nuevamente."));
+                        }
+                        else
+                            throw new ApplicationException(string.Concat("Código de respuesta desconocido. ", rpta.CodigoRespuesta, " ", rpta.MensajeError, Environment.NewLine, rpta.MensajeRespuesta));
+
                     }
                     else
                     {
-                        throw new ApplicationException("La respuesta de la Sunat es positiva, pero la trama zipCdr está vacía.");
+                        throw new ApplicationException("La SUNAT no devolvió correctamente el comprobante de recepción. Verifique en el sitio web de la SUNAT.");
                     }
                 }
                 else
                 {
-                    throw new ApplicationException(string.Concat("La respuesta de la Sunat es negativa. Codigo: ", rpta.CodigoRespuesta, " ", rpta.MensajeError, Environment.NewLine, rpta.MensajeRespuesta));
+                    throw new ApplicationException(string.Concat("La SUNAT no pudo procesar el comprobante. Intente más tarde. ", rpta.CodigoRespuesta, " ", rpta.MensajeError, Environment.NewLine, rpta.MensajeRespuesta));
                 }
             }
-            else
-            {
-                respuestaEnvio = await jsonEnvioDocumento.Content.ReadAsAsync<EnviarResumenResponse>();
-                var rpta = (EnviarResumenResponse)respuestaEnvio;
-                nroTicket = string.IsNullOrEmpty(rpta.NroTicket)? String.Empty:rpta.NroTicket;
-                //txtResult.Text = $@"{Resources.procesoCorrecto}{Environment.NewLine}{rpta.NroTicket}";
 
-                if (!respuestaEnvio.Exito)
-                    throw new ApplicationException(string.Concat("La respuesta de la Sunat es negativa para el Resumen. ", respuestaEnvio.MensajeError));
-            }
         }
         /// <summary>
         /// Consulta comprobante de recepción en la SUNAT
@@ -583,12 +599,26 @@ namespace cfd.FacturaElectronica
             jsonConsultaTicket.EnsureSuccessStatusCode();
 
             var respuestaEnvio = await jsonConsultaTicket.Content.ReadAsAsync<EnviarDocumentoResponse>();
-
+            
             if (!respuestaEnvio.Exito || !string.IsNullOrEmpty(respuestaEnvio.MensajeError))
-                        throw new InvalidOperationException(respuestaEnvio.MensajeError);
+                throw new InvalidOperationException(string.Concat(respuestaEnvio.MensajeError, " [ConsultaCDR]"));
+
+            if (string.IsNullOrEmpty(respuestaEnvio.TramaZipCdr) || respuestaEnvio.TramaZipCdr.Equals("Aun en proceso"))
+                throw new InvalidOperationException("El CDR todavía está en proceso en la SUNAT. Intente consultar más tarde. ");
+
+            _codigoRespuesta = respuestaEnvio.CodigoRespuesta;
+
+            int iCodRespuesta = 0;
+            if (Int32.TryParse(respuestaEnvio.CodigoRespuesta, out iCodRespuesta))
+            {
+                if (iCodRespuesta >= 100 && iCodRespuesta < 2000)
+                    throw new ApplicationException(string.Concat("La SUNAT no procesó el CDR. Codigo: ", respuestaEnvio.CodigoRespuesta, " ", respuestaEnvio.MensajeError, Environment.NewLine, respuestaEnvio.MensajeRespuesta, " Corrija el problema e intente nuevamente."));
+            }
+            else
+                throw new ApplicationException(string.Concat("Código de respuesta desconocido. ", respuestaEnvio.CodigoRespuesta, " ", respuestaEnvio.MensajeError, Environment.NewLine, respuestaEnvio.MensajeRespuesta));
 
             tramaZipCdr = respuestaEnvio.TramaZipCdr;
-            nombreArchivoCdr = $"R-{respuestaEnvio.NombreArchivo}.zip";
+            nombreArchivoCdr = $"R{respuestaEnvio.NombreArchivo}.zip";
             //File.WriteAllBytes($"{Program.CarpetaCdr}\\R-{respuestaEnvio.NombreArchivo}.zip", Convert.FromBase64String(respuestaEnvio.TramaZipCdr));
 
             //txtResult.Text = $@"{respuestaEnvio.MensajeRespuesta}";

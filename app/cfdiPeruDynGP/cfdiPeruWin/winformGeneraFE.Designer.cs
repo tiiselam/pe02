@@ -31,12 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(winformGeneraFE));
             this.dgridTrxFacturas = new System.Windows.Forms.DataGridView();
-            this.Mark = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Docid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EstadoContabilizado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Voidstts = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MensajeEA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.eBinAct = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmbBIdDoc = new System.Windows.Forms.ComboBox();
             this.cmbBEstado = new System.Windows.Forms.ComboBox();
             this.checkBoxEstado = new System.Windows.Forms.CheckBox();
@@ -124,14 +118,6 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vwCfdTransaccionesDeVentaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -141,6 +127,20 @@
             this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Mark = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Docid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EstadoContabilizado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Voidstts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MensajeEA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eBinAct = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgridTrxFacturas)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStripAccionesXML.SuspendLayout();
@@ -197,62 +197,9 @@
             this.dgridTrxFacturas.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgridTrxFacturas.RowHeadersWidth = 10;
             this.dgridTrxFacturas.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgridTrxFacturas.Size = new System.Drawing.Size(1034, 287);
+            this.dgridTrxFacturas.Size = new System.Drawing.Size(1133, 287);
             this.dgridTrxFacturas.TabIndex = 50;
             this.dgridTrxFacturas.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgridTrxFacturas_RowPostPaint_1);
-            // 
-            // Mark
-            // 
-            this.Mark.FalseValue = "0";
-            this.Mark.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Mark.Frozen = true;
-            this.Mark.HeaderText = "M";
-            this.Mark.IndeterminateValue = "-1";
-            this.Mark.Name = "Mark";
-            this.Mark.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Mark.TrueValue = "1";
-            this.Mark.Width = 20;
-            // 
-            // Docid
-            // 
-            this.Docid.DataPropertyName = "Docid";
-            this.Docid.Frozen = true;
-            this.Docid.HeaderText = "Id Doc.";
-            this.Docid.Name = "Docid";
-            this.Docid.ReadOnly = true;
-            this.Docid.Width = 50;
-            // 
-            // EstadoContabilizado
-            // 
-            this.EstadoContabilizado.DataPropertyName = "EstadoContabilizado";
-            this.EstadoContabilizado.HeaderText = "Estado Contab.";
-            this.EstadoContabilizado.Name = "EstadoContabilizado";
-            this.EstadoContabilizado.Visible = false;
-            // 
-            // Voidstts
-            // 
-            this.Voidstts.DataPropertyName = "Voidstts";
-            this.Voidstts.HeaderText = "Anulado";
-            this.Voidstts.Name = "Voidstts";
-            this.Voidstts.Visible = false;
-            // 
-            // MensajeEA
-            // 
-            this.MensajeEA.DataPropertyName = "MensajeEA";
-            this.MensajeEA.HeaderText = "Observaciones";
-            this.MensajeEA.Name = "MensajeEA";
-            this.MensajeEA.Width = 250;
-            // 
-            // eBinAct
-            // 
-            this.eBinAct.DataPropertyName = "EstadoActual";
-            this.eBinAct.HeaderText = "E";
-            this.eBinAct.Name = "eBinAct";
-            this.eBinAct.ReadOnly = true;
-            this.eBinAct.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.eBinAct.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.eBinAct.Visible = false;
-            this.eBinAct.Width = 20;
             // 
             // cmbBIdDoc
             // 
@@ -401,7 +348,7 @@
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.progressBar1.Location = new System.Drawing.Point(0, 531);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(1048, 10);
+            this.progressBar1.Size = new System.Drawing.Size(1147, 10);
             this.progressBar1.Step = 4;
             this.progressBar1.TabIndex = 6;
             // 
@@ -415,7 +362,7 @@
             this.txtbxMensajes.Multiline = true;
             this.txtbxMensajes.Name = "txtbxMensajes";
             this.txtbxMensajes.ReadOnly = true;
-            this.txtbxMensajes.Size = new System.Drawing.Size(1048, 38);
+            this.txtbxMensajes.Size = new System.Drawing.Size(1147, 38);
             this.txtbxMensajes.TabIndex = 60;
             // 
             // toolStripProgressBar2
@@ -441,7 +388,7 @@
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(244, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(152, 24);
             this.menuStrip1.TabIndex = 14;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -473,7 +420,7 @@
             // 
             this.genFacturaElectrónicaV10ToolStripMenuItem.Name = "genFacturaElectrónicaV10ToolStripMenuItem";
             this.genFacturaElectrónicaV10ToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
-            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Factura Electrónica PERU v.7.1.2+ubl2";
+            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Factura Electrónica PERU v.7.1.3+ubl2";
             // 
             // toolStripMenuItem2
             // 
@@ -781,7 +728,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1048, 26);
+            this.panel4.Size = new System.Drawing.Size(1147, 26);
             this.panel4.TabIndex = 74;
             // 
             // panel2
@@ -791,7 +738,7 @@
             this.panel2.Controls.Add(this.lblUsuario);
             this.panel2.Controls.Add(this.lblFecha);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(618, 0);
+            this.panel2.Location = new System.Drawing.Point(717, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(430, 26);
             this.panel2.TabIndex = 17;
@@ -841,7 +788,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 26);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1048, 88);
+            this.panel5.Size = new System.Drawing.Size(1147, 88);
             this.panel5.TabIndex = 75;
             // 
             // toolStripAuxRechazar
@@ -854,7 +801,7 @@
             this.tsTextBoxMotivoRechazo,
             this.tsBtnMotivoRechazo});
             this.toolStripAuxRechazar.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.VerticalStackWithOverflow;
-            this.toolStripAuxRechazar.Location = new System.Drawing.Point(195, 26);
+            this.toolStripAuxRechazar.Location = new System.Drawing.Point(150, 40);
             this.toolStripAuxRechazar.Name = "toolStripAuxRechazar";
             this.toolStripAuxRechazar.Size = new System.Drawing.Size(146, 62);
             this.toolStripAuxRechazar.TabIndex = 80;
@@ -939,7 +886,7 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsPbProcesoActivo});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStrip1.Location = new System.Drawing.Point(701, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(800, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(347, 88);
             this.toolStrip1.TabIndex = 72;
@@ -1000,7 +947,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 114);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1048, 60);
+            this.panel1.Size = new System.Drawing.Size(1147, 60);
             this.panel1.TabIndex = 76;
             // 
             // textBCliente
@@ -1046,7 +993,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1034, 287);
+            this.panel3.Size = new System.Drawing.Size(1133, 287);
             this.panel3.TabIndex = 77;
             // 
             // checkBoxMark
@@ -1081,7 +1028,7 @@
             this.tabCfdi.Location = new System.Drawing.Point(0, 174);
             this.tabCfdi.Name = "tabCfdi";
             this.tabCfdi.SelectedIndex = 0;
-            this.tabCfdi.Size = new System.Drawing.Size(1048, 319);
+            this.tabCfdi.Size = new System.Drawing.Size(1147, 319);
             this.tabCfdi.TabIndex = 78;
             this.tabCfdi.SelectedIndexChanged += new System.EventHandler(this.tabCfdi_SelectedIndexChanged);
             // 
@@ -1092,7 +1039,7 @@
             this.tabFacturas.Location = new System.Drawing.Point(4, 22);
             this.tabFacturas.Name = "tabFacturas";
             this.tabFacturas.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFacturas.Size = new System.Drawing.Size(1040, 293);
+            this.tabFacturas.Size = new System.Drawing.Size(1139, 293);
             this.tabFacturas.TabIndex = 0;
             this.tabFacturas.Text = "FACTURAS";
             this.tabFacturas.UseVisualStyleBackColor = true;
@@ -1104,7 +1051,7 @@
             this.tabResumen.Location = new System.Drawing.Point(4, 22);
             this.tabResumen.Name = "tabResumen";
             this.tabResumen.Padding = new System.Windows.Forms.Padding(3);
-            this.tabResumen.Size = new System.Drawing.Size(1040, 293);
+            this.tabResumen.Size = new System.Drawing.Size(1139, 293);
             this.tabResumen.TabIndex = 1;
             this.tabResumen.Text = "RESUMEN";
             this.tabResumen.UseVisualStyleBackColor = true;
@@ -1151,7 +1098,7 @@
             this.dgridTrxResumen.Location = new System.Drawing.Point(3, 3);
             this.dgridTrxResumen.Name = "dgridTrxResumen";
             this.dgridTrxResumen.RowHeadersWidth = 10;
-            this.dgridTrxResumen.Size = new System.Drawing.Size(1034, 287);
+            this.dgridTrxResumen.Size = new System.Drawing.Size(1133, 287);
             this.dgridTrxResumen.TabIndex = 0;
             this.dgridTrxResumen.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgridTrxResumen_RowPostPaint);
             // 
@@ -1206,57 +1153,6 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton1.Text = "toolStripButton1";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Soptype";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Tipo";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "Sopnumbe";
-            this.dataGridViewTextBoxColumn4.HeaderText = "Número Doc.";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Fechahora";
-            this.dataGridViewTextBoxColumn5.HeaderText = "Fecha";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "NombreCliente";
-            this.dataGridViewTextBoxColumn6.HeaderText = "Nombre Cliente";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.DataPropertyName = "IdImpuestoCliente";
-            this.dataGridViewTextBoxColumn7.HeaderText = "Id. de Impuesto";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.DataPropertyName = "Total";
-            this.dataGridViewTextBoxColumn8.HeaderText = "Total";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.DataPropertyName = "Estado";
-            this.dataGridViewTextBoxColumn9.HeaderText = "Estado";
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.Visible = false;
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            this.dataGridViewTextBoxColumn10.DataPropertyName = "Mensaje";
-            this.dataGridViewTextBoxColumn10.HeaderText = "Mensaje";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             // 
             // vwCfdTransaccionesDeVentaBindingSource
             // 
@@ -1317,11 +1213,115 @@
             this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
             this.dataGridViewTextBoxColumn21.Visible = false;
             // 
+            // Mark
+            // 
+            this.Mark.FalseValue = "0";
+            this.Mark.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Mark.Frozen = true;
+            this.Mark.HeaderText = "M";
+            this.Mark.IndeterminateValue = "-1";
+            this.Mark.Name = "Mark";
+            this.Mark.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Mark.TrueValue = "1";
+            this.Mark.Width = 20;
+            // 
+            // Docid
+            // 
+            this.Docid.DataPropertyName = "Docid";
+            this.Docid.Frozen = true;
+            this.Docid.HeaderText = "Id Doc.";
+            this.Docid.Name = "Docid";
+            this.Docid.ReadOnly = true;
+            this.Docid.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "Soptype";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Tipo";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Width = 45;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "Sopnumbe";
+            this.dataGridViewTextBoxColumn4.HeaderText = "Número Doc.";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Fechahora";
+            this.dataGridViewTextBoxColumn5.HeaderText = "Fecha";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "NombreCliente";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Nombre Cliente";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.DataPropertyName = "IdImpuestoCliente";
+            this.dataGridViewTextBoxColumn7.HeaderText = "Id. de Impuesto";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.DataPropertyName = "Total";
+            this.dataGridViewTextBoxColumn8.HeaderText = "Total";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.DataPropertyName = "Estado";
+            this.dataGridViewTextBoxColumn9.HeaderText = "Estado";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.DataPropertyName = "Mensaje";
+            this.dataGridViewTextBoxColumn10.HeaderText = "Mensaje";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            // 
+            // EstadoContabilizado
+            // 
+            this.EstadoContabilizado.DataPropertyName = "EstadoContabilizado";
+            this.EstadoContabilizado.HeaderText = "Estado Contab.";
+            this.EstadoContabilizado.Name = "EstadoContabilizado";
+            this.EstadoContabilizado.Visible = false;
+            // 
+            // Voidstts
+            // 
+            this.Voidstts.DataPropertyName = "Voidstts";
+            this.Voidstts.HeaderText = "Anulado";
+            this.Voidstts.Name = "Voidstts";
+            this.Voidstts.Visible = false;
+            // 
+            // MensajeEA
+            // 
+            this.MensajeEA.DataPropertyName = "MensajeEA";
+            this.MensajeEA.HeaderText = "Observaciones";
+            this.MensajeEA.Name = "MensajeEA";
+            this.MensajeEA.Width = 356;
+            // 
+            // eBinAct
+            // 
+            this.eBinAct.DataPropertyName = "EstadoActual";
+            this.eBinAct.HeaderText = "E";
+            this.eBinAct.Name = "eBinAct";
+            this.eBinAct.ReadOnly = true;
+            this.eBinAct.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.eBinAct.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.eBinAct.Visible = false;
+            this.eBinAct.Width = 20;
+            // 
             // winformGeneraFE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1048, 541);
+            this.ClientSize = new System.Drawing.Size(1147, 541);
             this.Controls.Add(this.tabCfdi);
             this.Controls.Add(this.pBarProcesoActivo);
             this.Controls.Add(this.tsConfirmaAnulaXml);
