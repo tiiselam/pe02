@@ -85,23 +85,24 @@ namespace MaquinaDeEstados
                     if (_Compania.emite && _Compania.imprime && eBinarioActual.Equals("000000"))
                     {
                         _eBinarioNuevo = "000101";                               //emitido, impreso
-                        eBinActualConError = "000011";                           //emitido, rechazado/anulado, no impreso
+                        eBinActualConError = "000111";                           //emitido, rechazado/anulado, impreso
                         return true;
                     }
                     else
                         ultimoMensaje = "No está listo para emitir xml o imprimir pdf. [ValidaTransicion]" + eBinarioActual;
             }
-            //if (tipoDoc.Equals("FACTURA") && (accion.Equals("EMITE XML") || accion.Equals("ANULA VENTA")))
-            //{
-            //    if (eBaseNuevo.Equals("emitido"))
-            //        if (_Compania.emite && eBinarioActual.Equals("000000"))
-            //        {
-            //            _eBinarioNuevo = "000001";                                //emitido
-            //            return true;
-            //        }
-            //        else
-            //            ultimoMensaje = "No está listo para emitir xml. [ValidaTransicion]" + eBinarioActual;
-            //}
+
+            if (tipoDoc.Equals("FACTURA") && accion.Equals("ANULA VENTA"))
+            {
+                if (eBaseNuevo.Equals("emitido"))
+                    if (_Compania.emite && eBinarioActual.Equals("000000"))
+                    {
+                        _eBinarioNuevo = "000001";                                //emitido
+                        return true;
+                    }
+                    else
+                        ultimoMensaje = "Probablemente ya fue anulado. [ValidaTransicion]" + eBinarioActual;
+            }
             //if (tipoDoc.Equals("FACTURA") && (accion.Equals("ELIMINA XML")))
             //{
             //    if (eBaseNuevo.Equals("anulado"))
