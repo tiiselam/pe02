@@ -101,12 +101,13 @@ namespace cfdiPeru
                 _docElectronico.MontoEnLetras = docGP.DocVenta.montoEnLetras;
 
                 lDetalleDocumento = new List<DetalleDocumento>();
+                int i = 1;
                 foreach (vwCfdiConceptos d in docGP.LDocVentaConceptos)
                 {
                     lDetalleDocumento.Add(new DetalleDocumento()
                     {
                         CodigoItem = d.ITEMNMBR,
-                        Id = Convert.ToInt16(d.id),
+                        Id = i, // Convert.ToInt16(d.id),
                         Descripcion = d.Descripcion,
                         Cantidad = d.cantidad,
                         UnidadMedida = d.udemSunat,
@@ -118,6 +119,7 @@ namespace cfdiPeru
                         TipoImpuesto = d.tipoImpuesto,
                         
                     });
+                    i++;
                 }
                 _docElectronico.Items = new List<DetalleDocumento>();
                 _docElectronico.Items = lDetalleDocumento;
