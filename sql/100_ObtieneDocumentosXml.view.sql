@@ -244,6 +244,7 @@ as
 --Requisitos.  
 --27/11/17 jcf Creación cfdi Perú
 --27/04/18 jcf Ajusta montos exonerado, inafecto, gratuito
+--06/06/18 jcf Agrega montos funcionales (pen)
 --
 	select convert(varchar(20), tv.dex_row_id) correlativo, 
 		tv.soptype,
@@ -270,17 +271,25 @@ as
 		tv.curncyid									moneda,
 		cmpr.tipoOperacion,
 		tv.descuento,
+
 		tv.ORTDISAM,
 		isnull(iva.TXDTLPCT, 0.00)/100				ivaTasa,
 		isnull(iva.ortxsls, 0.00)					ivaImponible,
 		isnull(iva.orslstax, 0.00)					iva,
-
 		isnull(exe.ortxsls, 0.00)					inafecta,
 		isnull(xnr.ortxsls, 0.00)					exonerado,
 		isnull(gra.ortxsls, 0.00)					gratuito,
-
 		tv.xchgrate,
 		tv.total,
+
+		tv.trdisamt, 
+		isnull(iva.tdttxsls, 0.00)					IvaImponiblePen,
+		isnull(iva.staxamnt, 0.00)					ivaPen,
+		isnull(exe.tdttxsls, 0.00)					inafectaPen,
+		isnull(xnr.tdttxsls, 0.00)					exoneradoPen,
+		isnull(gra.tdttxsls, 0.00)					gratuitoPen,
+		tv.docamnt, 
+
 		--Para NC:
 		left(tv.commntid, 2)						discrepanciaTipo,
 		dbo.fCfdReemplazaSecuenciaDeEspacios(rtrim(dbo.fCfdReemplazaCaracteresNI(tv.comment_1)), 10) discrepanciaDesc,

@@ -7,6 +7,7 @@ ALTER VIEW [dbo].[TII_SOPINVOICE] AS
 --Propósito. Representación impresa de factura electrónica Perú. Habilitar codigoBarras si usa Crystal!
 --20/11/17 jcf Modifica estructura detalle sop para cfdi Perú ubl 2
 --23/05/18 jcf Sólo muestra datos contabilizados de vwCfdiDocumentosAImprimir 
+--04/06/18 jcf Reemplaza tabla de guía de remisión por función fnCfdiGuiaRemision
 --
 SELECT 
 		SOPHEADER.DOCSTATUS,
@@ -333,15 +334,10 @@ LEFT OUTER JOIN dbo.vwCfdiDocumentosAImprimir SOPELECTINV WITH (NOLOCK)
 	and SOPELECTINV.estadoContabilizado = 'contabilizado'
 
 outer apply dbo.fCfdiRelacionados(SOPHEADER.soptype, SOPHEADER.sopnumbe) rel
-
+OUTER APPLY dbo.fnCfdiGuiaRemision(SOPHEADER.soptype, SOPHEADER.sopnumbe, 1) gr
 left join sop10106 cm
 	on cm.sopnumbe = SOPHEADER.sopnumbe
 	and cm.soptype = SOPHEADER.soptype
-
-left join tblGREM001 gr
-	on gr.GREMReferenciaNumb = SOPHEADER.sopnumbe
-	and gr.GREMReferenciaTipo = SOPHEADER.soptype
-	and gr.GREMGuiaIndicador = 1 --GUIA DE REMISION DE FACTURA
 
 
 GO

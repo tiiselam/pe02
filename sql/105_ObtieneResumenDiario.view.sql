@@ -7,6 +7,66 @@
 -------------------------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
+--IF (OBJECT_ID ('dbo.vwCfdiGeneraDocumentoDeVentaAgrupado', 'V') IS NULL)
+--   exec('create view dbo.vwCfdiGeneraDocumentoDeVentaAgrupado as SELECT 1 as t');
+--go
+
+--alter view dbo.vwCfdiGeneraDocumentoDeVentaAgrupado
+--as
+----Propósito. Agrupa los documentos de venta
+----Requisitos.  
+----07/12/17 jcf Creación cfdi Perú
+----28/05/18 jcf Agrega consecutivo correcto para resumen en caso de rechazo
+----
+--		select tx.serie, tx.docdate, tx.estadoContabilizado, 55 tipoResumenDiario, 
+--			'RESUMEN' idResumenDiario, isnull(onr.numResumen, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001') numResumenDiario, 
+--			tx.tipoDocumento, tx.moneda,
+--			tx.emisorTipoDoc,
+--			tx.emisorNroDoc,
+--			tx.emisorNombre,
+--			tx.emisorUbigeo,
+--			tx.emisorDireccion,
+--			tx.emisorUrbanizacion,
+--			tx.emisorDepartamento,
+--			tx.emisorProvincia,
+--			tx.emisorDistrito,
+--			tx.receptorTipoDoc,
+--			tx.receptorNroDoc, 
+--			tx.receptorNombre, 
+--			min(tx.sopnumbe) iniRango, 
+--			max(tx.sopnumbe) finRango, 
+--			sum(tx.gratuito) totalGratuito,
+--			sum(tx.ORTDISAM) totalDescuento,
+--			sum(tx.ivaImponible) totalIvaImponible,
+--			sum(tx.exonerado) totalExonerado,
+--			sum(tx.inafecta) totalInafecta,
+--			sum(tx.iva) totalIva,
+--			sum(tx.total)	total,
+
+--			COUNT(tx.sopnumbe)	cantidad
+--		from vwCfdiGeneraDocumentoDeVenta tx
+--			outer apply dbo.fCfdiObtieneNumResumenDiario(55, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001') onr
+--		group by tx.serie, onr.numResumen, tx.docdate, tx.estadoContabilizado, tx.tipoDocumento, tx.moneda,
+--			tx.emisorTipoDoc,
+--			tx.emisorNroDoc,
+--			tx.emisorNombre,
+--			tx.emisorUbigeo,
+--			tx.emisorDireccion,
+--			tx.emisorUrbanizacion,
+--			tx.emisorDepartamento,
+--			tx.emisorProvincia,
+--			tx.emisorDistrito,
+--			tx.receptorTipoDoc,
+--			tx.receptorNroDoc, 
+--			tx.receptorNombre
+
+--go
+
+--IF (@@Error = 0) PRINT 'Creación exitosa de la función: vwCfdiGeneraDocumentoDeVentaAgrupado ()'
+--ELSE PRINT 'Error en la creación de la función: vwCfdiGeneraDocumentoDeVentaAgrupado ()'
+--GO
+
+-----------------------------------------------------------------------------------------
 IF (OBJECT_ID ('dbo.vwCfdiGeneraDocumentoDeVentaAgrupado', 'V') IS NULL)
    exec('create view dbo.vwCfdiGeneraDocumentoDeVentaAgrupado as SELECT 1 as t');
 go
@@ -17,10 +77,11 @@ as
 --Requisitos.  
 --07/12/17 jcf Creación cfdi Perú
 --28/05/18 jcf Agrega consecutivo correcto para resumen en caso de rechazo
+--04/06/18 jcf Cambios para versión 2 de resumen. Los docs ya no se agrupan y deben ser en moneda PEN
 --
 		select tx.serie, tx.docdate, tx.estadoContabilizado, 55 tipoResumenDiario, 
 			'RESUMEN' idResumenDiario, isnull(onr.numResumen, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001') numResumenDiario, 
-			tx.tipoDocumento, tx.moneda,
+			tx.tipoDocumento, 'PEN' moneda,
 			tx.emisorTipoDoc,
 			tx.emisorNroDoc,
 			tx.emisorNombre,
@@ -33,32 +94,21 @@ as
 			tx.receptorTipoDoc,
 			tx.receptorNroDoc, 
 			tx.receptorNombre, 
-			min(tx.sopnumbe) iniRango, 
-			max(tx.sopnumbe) finRango, 
-			sum(tx.gratuito) totalGratuito,
-			sum(tx.ORTDISAM) totalDescuento,
-			sum(tx.ivaImponible) totalIvaImponible,
-			sum(tx.exonerado) totalExonerado,
-			sum(tx.inafecta) totalInafecta,
-			sum(tx.iva) totalIva,
-			sum(tx.total)	total,
+			tx.sopnumbe iniRango, 
+			tx.sopnumbe finRango, 
+			tx.sopnumbe,
+			tx.soptype,
 
-			COUNT(tx.sopnumbe)	cantidad
-		from vwCfdiGeneraDocumentoDeVenta tx
+			tx.gratuitoPen totalGratuito,
+			tx.trdisamt totalDescuento,
+			tx.ivaImponiblePen totalIvaImponible,
+			tx.exoneradoPen totalExonerado,
+			tx.inafectaPen totalInafecta,
+			tx.ivaPen totalIva,
+			tx.docamnt total,
+			1	cantidad
+		from dbo.vwCfdiGeneraDocumentoDeVenta tx
 			outer apply dbo.fCfdiObtieneNumResumenDiario(55, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001') onr
-		group by tx.serie, onr.numResumen, tx.docdate, tx.estadoContabilizado, tx.tipoDocumento, tx.moneda,
-			tx.emisorTipoDoc,
-			tx.emisorNroDoc,
-			tx.emisorNombre,
-			tx.emisorUbigeo,
-			tx.emisorDireccion,
-			tx.emisorUrbanizacion,
-			tx.emisorDepartamento,
-			tx.emisorProvincia,
-			tx.emisorDistrito,
-			tx.receptorTipoDoc,
-			tx.receptorNroDoc, 
-			tx.receptorNombre
 
 go
 
@@ -67,6 +117,7 @@ ELSE PRINT 'Error en la creación de la función: vwCfdiGeneraDocumentoDeVentaAgru
 GO
 
 -----------------------------------------------------------------------------------------
+
 IF (OBJECT_ID ('dbo.vwCfdiGeneraResumenDiario', 'V') IS NULL)
    exec('create view dbo.vwCfdiGeneraResumenDiario as SELECT 1 as t');
 go
@@ -76,6 +127,7 @@ as
 --Propósito. Datos del resumen diario de boletas
 --Requisitos.  
 --07/12/17 jcf Creación cfdi Perú
+--04/06/18 jcf Cambios para versión 2 de resumen
 --
 	select 
 		tv.tipoResumenDiario,
@@ -94,10 +146,12 @@ as
 
 		tv.receptorTipoDoc,
 		tv.receptorNroDoc,
-		--tv.nombreCliente							receptorNombre,
 		tv.serie,
-		ir.segmento2 iniRango,
-		fr.segmento2 finRango,
+		tv.sopnumbe,
+		0 iniRango,
+		0 finRango,
+		--ir.segmento2 iniRango,
+		--fr.segmento2 finRango,
 		tv.moneda,
 		tv.totalIvaImponible,
 		tv.totalIva,
@@ -106,14 +160,15 @@ as
 		tv.totalGratuito,
 		tv.totalDescuento,
 		tv.total,
-		tv.cantidad
+		tv.cantidad,
+
+		rel.tipoDocumento tipoDocumentoTo, rel.sopnumbeTo
 	from dbo.vwCfdiGeneraDocumentoDeVentaAgrupado tv
-		outer apply dbo.fCfdiObtieneSegmento2(tv.iniRango, '-') ir
-		outer apply dbo.fCfdiObtieneSegmento2(tv.finRango, '-') fr
+		outer apply dbo.fCfdiRelacionados(tv.soptype, tv.sopnumbe) rel
+		--outer apply dbo.fCfdiObtieneSegmento2(tv.iniRango, '-') ir
+		--outer apply dbo.fCfdiObtieneSegmento2(tv.finRango, '-') fr
 	where tv.serie like 'B%'	--BOLETAS, NC Y ND APLICADAS A BOLETAS
 	and tv.estadoContabilizado = 'contabilizado' 
-	--and tv.serie = 'BB11'
-	--and tv.tipoDocumento = '03'
 
 go
 

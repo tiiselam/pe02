@@ -41,7 +41,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>gAAAAAAAEACCAAAAIAEQQDABAAAAAAAImAAAoAAAgAA=</HashCode>
+      <HashCode>gAAAAAAAEACCAAAAIAEQQDAAAAAAAAAImAAAoAAAgAA=</HashCode>
       <FileName>BLL\cfdReglasFacturaXml.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -59,7 +59,7 @@
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>EAAgAAAAACAQWEMAAAAQQAAEAAAAQACgICAAABAAIAA=</HashCode>
+      <HashCode>EAAgAAAAACAQWEOAAAAQQAAEABAAQACgICAAAAAAIAA=</HashCode>
       <FileName>BLL\ProcesaCfdi.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -171,7 +171,7 @@
   <Class Name="cfdiPeru.winformGeneraFE" Collapsed="true">
     <Position X="7.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>Qeea+BU4JTdenB//VNGMQMKSvQNbIN2gAPmF6wzWyY8=</HashCode>
+      <HashCode>Qeea+BU4JTdenD//VNGMQMKSvQNbIN2gAPmF6wzWyY8=</HashCode>
       <FileName>winformGeneraFE.cs</FileName>
     </TypeIdentifier>
   </Class>

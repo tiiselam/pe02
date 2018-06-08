@@ -240,9 +240,14 @@ namespace cfd.FacturaElectronica
                             {
                                 trxVenta.ArmarResumenElectronico();
 
+                                var cAgrupados = trxVenta.ResumenElectronico.Resumenes.GroupBy(y => y.IdDocumento, (key, num) => new { id = key, cantidad = num.Count()});
+                                var c = cAgrupados.Where(q => q.cantidad > 1);
+                                if (c.Count() > 0)
+                                    throw new ApplicationException("La siguiente nota de crédito o débito aplica a más de un comprobante: " + c.First().id + " Ingrese a GP y aplique un solo comprobante.");
+
                                 var proxy = new HttpClient { BaseAddress = new Uri(ConfigurationManager.AppSettings["UrlOpenInvoicePeruApi"]) };
 
-                                var response = await proxy.PostAsJsonAsync("api/GenerarResumenDiario/v1", trxVenta.ResumenElectronico);
+                                var response = await proxy.PostAsJsonAsync("api/GenerarResumenDiario/v2", trxVenta.ResumenElectronico);
                                 response.EnsureSuccessStatusCode();
 
                                 var respuesta = await response.Content.ReadAsAsync<DocumentoResponse>();
@@ -257,13 +262,6 @@ namespace cfd.FacturaElectronica
                                 }
 
                                 await FirmaYEnviaASunat(respuesta.TramaXmlSinFirma, String.Empty, trxVenta.ResumenElectronico.IdDocumento, trxVenta.ResumenElectronico.Emisor.NroDocumento, true, false, false);
-
-                                //if (!_Param.seguridadIntegrada)
-                                //{
-                                //    String RutaArchivox = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{trxVenta.DocElectronico.IdDocumento}.xml");
-                                //    byte[] bTramaXmlFirmado = Convert.FromBase64String(tramaXmlFirmado);
-                                //    File.WriteAllBytes(RutaArchivox, bTramaXmlFirmado);
-                                //}
 
                                 //Guarda el archivo xml, genera el cbb y el pdf. 
                                 //Luego anota en la bitácora la factura emitida o el error al generar cbb o pdf.

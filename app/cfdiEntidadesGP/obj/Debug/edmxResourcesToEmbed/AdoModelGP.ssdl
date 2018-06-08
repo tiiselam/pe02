@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="PERUModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="PERUEntities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <!--Errors Found During Generation:
 warning 6002: The table/view 'PER10.dbo.vwCfdiConceptos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="vwCfdiConceptos">
@@ -69,6 +69,13 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraDocumentoDeVenta' does not h
     <Property Name="gratuito" Type="numeric" Precision="19" Scale="5" Nullable="false" />
     <Property Name="xchgrate" Type="numeric" Precision="19" Scale="7" Nullable="false" />
     <Property Name="total" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="trdisamt" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="IvaImponiblePen" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="ivaPen" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="inafectaPen" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="exoneradoPen" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="gratuitoPen" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="docamnt" Type="numeric" Precision="19" Scale="5" Nullable="false" />
     <Property Name="discrepanciaTipo" Type="varchar" MaxLength="2" />
     <Property Name="discrepanciaDesc" Type="nvarchar(max)" />
     <Property Name="montoEnLetras" Type="varchar" MaxLength="2000" />
@@ -82,12 +89,10 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraResumenDiario' does not have
       <PropertyRef Name="tipoResumenDiario" />
       <PropertyRef Name="numResumenDiario" />
       <PropertyRef Name="tipoDocumento" />
-      <PropertyRef Name="iniRango" />
-      <PropertyRef Name="finRango" />
-      <PropertyRef Name="serie" />
+      <PropertyRef Name="sopnumbe" />
     </Key>
     <Property Name="tipoResumenDiario" Type="int" Nullable="false" />
-    <Property Name="numResumenDiario" Type="varchar" MaxLength="17" Nullable="false" />
+    <Property Name="numResumenDiario" Type="varchar" MaxLength="21" Nullable="false" />
     <Property Name="docdate" Type="datetime" Nullable="false" />
     <Property Name="tipoDocumento" Type="varchar" MaxLength="8000" Nullable="false" />
     <Property Name="emisorTipoDoc" Type="varchar" MaxLength="1" Nullable="false" />
@@ -101,18 +106,21 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraResumenDiario' does not have
     <Property Name="emisorDistrito" Type="nvarchar(max)" />
     <Property Name="receptorTipoDoc" Type="varchar" MaxLength="3" />
     <Property Name="receptorNroDoc" Type="nvarchar(max)" />
-    <Property Name="serie" Type="varchar" MaxLength="21" Nullable="false" />
+    <Property Name="serie" Type="varchar" MaxLength="21" />
+    <Property Name="sopnumbe" Type="varchar" MaxLength="21" Nullable="false" />
     <Property Name="iniRango" Type="int" Nullable="false" />
     <Property Name="finRango" Type="int" Nullable="false" />
-    <Property Name="moneda" Type="varchar" MaxLength="15" />
-    <Property Name="totalIvaImponible" Type="numeric" Precision="38" Scale="5" />
-    <Property Name="totalIva" Type="numeric" Precision="38" Scale="5" />
-    <Property Name="totalInafecta" Type="numeric" Precision="38" Scale="5" />
-    <Property Name="totalExonerado" Type="numeric" Precision="38" Scale="5" />
-    <Property Name="totalGratuito" Type="numeric" Precision="38" Scale="5" />
-    <Property Name="totalDescuento" Type="numeric" Precision="38" Scale="5" />
-    <Property Name="total" Type="numeric" Precision="38" Scale="5" />
-    <Property Name="cantidad" Type="int" />
+    <Property Name="moneda" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="totalIvaImponible" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="totalIva" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="totalInafecta" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="totalExonerado" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="totalGratuito" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="totalDescuento" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="total" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+    <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="tipoDocumentoTo" Type="varchar" MaxLength="8000" />
+    <Property Name="sopnumbeTo" Type="char" MaxLength="41" Nullable="false" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -131,7 +139,7 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
     <Property Name="soptypeTo" Type="int" Nullable="false" />
     <Property Name="sopnumbeTo" Type="varchar" MaxLength="15" Nullable="false" />
   </EntityType>
-  <EntityContainer Name="PERUModelStoreContainer">
+  <EntityContainer Name="PERUEntitiesStoreContainer">
     <EntitySet Name="vwCfdiConceptos" EntityType="Self.vwCfdiConceptos" store:Type="Views" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [vwCfdiConceptos].[id] AS [id], 
@@ -189,6 +197,13 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
     [vwCfdiGeneraDocumentoDeVenta].[gratuito] AS [gratuito], 
     [vwCfdiGeneraDocumentoDeVenta].[xchgrate] AS [xchgrate], 
     [vwCfdiGeneraDocumentoDeVenta].[total] AS [total], 
+    [vwCfdiGeneraDocumentoDeVenta].[trdisamt] AS [trdisamt], 
+    [vwCfdiGeneraDocumentoDeVenta].[IvaImponiblePen] AS [IvaImponiblePen], 
+    [vwCfdiGeneraDocumentoDeVenta].[ivaPen] AS [ivaPen], 
+    [vwCfdiGeneraDocumentoDeVenta].[inafectaPen] AS [inafectaPen], 
+    [vwCfdiGeneraDocumentoDeVenta].[exoneradoPen] AS [exoneradoPen], 
+    [vwCfdiGeneraDocumentoDeVenta].[gratuitoPen] AS [gratuitoPen], 
+    [vwCfdiGeneraDocumentoDeVenta].[docamnt] AS [docamnt], 
     [vwCfdiGeneraDocumentoDeVenta].[discrepanciaTipo] AS [discrepanciaTipo], 
     [vwCfdiGeneraDocumentoDeVenta].[discrepanciaDesc] AS [discrepanciaDesc], 
     [vwCfdiGeneraDocumentoDeVenta].[montoEnLetras] AS [montoEnLetras], 
@@ -214,6 +229,7 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
     [vwCfdiGeneraResumenDiario].[receptorTipoDoc] AS [receptorTipoDoc], 
     [vwCfdiGeneraResumenDiario].[receptorNroDoc] AS [receptorNroDoc], 
     [vwCfdiGeneraResumenDiario].[serie] AS [serie], 
+    [vwCfdiGeneraResumenDiario].[sopnumbe] AS [sopnumbe], 
     [vwCfdiGeneraResumenDiario].[iniRango] AS [iniRango], 
     [vwCfdiGeneraResumenDiario].[finRango] AS [finRango], 
     [vwCfdiGeneraResumenDiario].[moneda] AS [moneda], 
@@ -224,7 +240,9 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
     [vwCfdiGeneraResumenDiario].[totalGratuito] AS [totalGratuito], 
     [vwCfdiGeneraResumenDiario].[totalDescuento] AS [totalDescuento], 
     [vwCfdiGeneraResumenDiario].[total] AS [total], 
-    [vwCfdiGeneraResumenDiario].[cantidad] AS [cantidad]
+    [vwCfdiGeneraResumenDiario].[cantidad] AS [cantidad], 
+    [vwCfdiGeneraResumenDiario].[tipoDocumentoTo] AS [tipoDocumentoTo], 
+    [vwCfdiGeneraResumenDiario].[sopnumbeTo] AS [sopnumbeTo]
     FROM [dbo].[vwCfdiGeneraResumenDiario] AS [vwCfdiGeneraResumenDiario]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="vwCfdiRelacionados" EntityType="Self.vwCfdiRelacionados" store:Type="Views" store:Schema="dbo">

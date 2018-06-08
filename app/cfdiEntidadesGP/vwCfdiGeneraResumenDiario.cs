@@ -16,7 +16,9 @@ namespace cfdiEntidadesGP
     {
         public int tipoResumenDiario { get; set; }
         public string numResumenDiario { get; set; }
+        public System.DateTime docdate { get; set; }
         public string tipoDocumento { get; set; }
+        public string emisorTipoDoc { get; set; }
         public string emisorNroDoc { get; set; }
         public string emisorNombre { get; set; }
         public string emisorUbigeo { get; set; }
@@ -27,19 +29,20 @@ namespace cfdiEntidadesGP
         public string emisorDistrito { get; set; }
         public string receptorTipoDoc { get; set; }
         public string receptorNroDoc { get; set; }
-        public string moneda { get; set; }
-        public Nullable<decimal> totalIvaImponible { get; set; }
-        public Nullable<decimal> totalIva { get; set; }
-        public Nullable<decimal> totalInafecta { get; set; }
-        public Nullable<decimal> totalExonerado { get; set; }
-        public Nullable<decimal> totalGratuito { get; set; }
-        public Nullable<decimal> total { get; set; }
-        public Nullable<int> cantidad { get; set; }
-        public System.DateTime docdate { get; set; }
-        public string emisorTipoDoc { get; set; }
+        public string serie { get; set; }
+        public string sopnumbe { get; set; }
         public int iniRango { get; set; }
         public int finRango { get; set; }
-        public string serie { get; set; }
-        public Nullable<decimal> totalDescuento { get; set; }
+        public string moneda { get; set; }
+        public decimal totalIvaImponible { get; set; }
+        public decimal totalIva { get; set; }
+        public decimal totalInafecta { get; set; }
+        public decimal totalExonerado { get; set; }
+        public decimal totalGratuito { get; set; }
+        public decimal totalDescuento { get; set; }
+        public decimal total { get; set; }
+        public int cantidad { get; set; }
+        public string tipoDocumentoTo { get; set; }
+        public string sopnumbeTo { get; set; }
     }
 }

@@ -188,21 +188,25 @@ namespace cfdiPeru
                     {
                         Id = i,
                         TipoDocumento = re.tipoDocumento,
-                        IdDocumento = re.serie,
-                        Serie = re.serie,
+                        IdDocumento = re.sopnumbe,
                         NroDocumentoReceptor = re.receptorNroDoc,
                         TipoDocumentoReceptor = re.receptorTipoDoc,
+                        CodigoEstadoItem = 1,
                         Moneda = re.moneda,
                         TotalVenta = Convert.ToDecimal(re.total),
-                        CodigoEstadoItem = 1,
-                        CorrelativoInicio = Convert.ToInt32(re.iniRango),
-                        CorrelativoFin = Convert.ToInt32(re.finRango),
                         TotalDescuentos = Convert.ToDecimal(re.totalDescuento),
                         Gratuitas = Convert.ToDecimal(re.totalGratuito),
                         Gravadas = Convert.ToDecimal(re.totalIvaImponible),
                         Exoneradas = Convert.ToDecimal(re.totalExonerado),
                         Inafectas = Convert.ToDecimal(re.totalInafecta),
-                        TotalIgv = Convert.ToDecimal(re.totalIva)
+                        TotalIgv = Convert.ToDecimal(re.totalIva),
+
+                        DocumentoRelacionado = (re.tipoDocumento=="07" || re.tipoDocumento == "08") ? re.sopnumbeTo : null,
+                        TipoDocumentoRelacionado = (re.tipoDocumento == "07" || re.tipoDocumento == "08") ? re.tipoDocumentoTo : null
+                        //IdDocumento = re.serie,
+                        //Serie = re.serie,
+                        //CorrelativoInicio = Convert.ToInt32(re.iniRango),
+                        //CorrelativoFin = Convert.ToInt32(re.finRango),
                     };
 
                     _resumenElectronico.Resumenes.Add(grn);
