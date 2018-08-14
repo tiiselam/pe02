@@ -78,10 +78,11 @@ as
 --07/12/17 jcf Creación cfdi Perú
 --28/05/18 jcf Agrega consecutivo correcto para resumen en caso de rechazo
 --04/06/18 jcf Cambios para versión 2 de resumen. Los docs ya no se agrupan y deben ser en moneda PEN
+--13/08/18 jcf Cambio montos en moneda original, formapago, xchgrate, ORTDISAM
 --
 		select tx.serie, tx.docdate, tx.estadoContabilizado, 55 tipoResumenDiario, 
 			'RESUMEN' idResumenDiario, isnull(onr.numResumen, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001') numResumenDiario, 
-			tx.tipoDocumento, 'PEN' moneda,
+			tx.tipoDocumento, tx.moneda, tx.xchgrate,
 			tx.emisorTipoDoc,
 			tx.emisorNroDoc,
 			tx.emisorNombre,
@@ -99,14 +100,16 @@ as
 			tx.sopnumbe,
 			tx.soptype,
 
-			tx.gratuitoPen totalGratuito,
-			tx.trdisamt totalDescuento,
-			tx.ivaImponiblePen totalIvaImponible,
-			tx.exoneradoPen totalExonerado,
-			tx.inafectaPen totalInafecta,
-			tx.ivaPen totalIva,
-			tx.docamnt total,
-			1	cantidad
+			tx.gratuito totalGratuito,
+			tx.descuento totalDescuento,
+			tx.ORTDISAM,
+			tx.ivaImponible totalIvaImponible,
+			tx.exonerado totalExonerado,
+			tx.inafecta totalInafecta,
+			tx.iva totalIva,
+			tx.total total,
+			1	cantidad,
+			tx.formaPago
 		from dbo.vwCfdiGeneraDocumentoDeVenta tx
 			outer apply dbo.fCfdiObtieneNumResumenDiario(55, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001') onr
 
@@ -128,6 +131,7 @@ as
 --Requisitos.  
 --07/12/17 jcf Creación cfdi Perú
 --04/06/18 jcf Cambios para versión 2 de resumen
+--13/08/18 jcf Agrega xchgrate, ORTDISAM
 --
 	select 
 		tv.tipoResumenDiario,
@@ -150,18 +154,18 @@ as
 		tv.sopnumbe,
 		0 iniRango,
 		0 finRango,
-		--ir.segmento2 iniRango,
-		--fr.segmento2 finRango,
 		tv.moneda,
+		tv.xchgrate,
 		tv.totalIvaImponible,
 		tv.totalIva,
 		tv.totalInafecta,
 		tv.totalExonerado,
 		tv.totalGratuito,
 		tv.totalDescuento,
+		tv.ORTDISAM,
 		tv.total,
 		tv.cantidad,
-
+		tv.formaPago,
 		rel.tipoDocumento tipoDocumentoTo, rel.sopnumbeTo
 	from dbo.vwCfdiGeneraDocumentoDeVentaAgrupado tv
 		outer apply dbo.fCfdiRelacionados(tv.soptype, tv.sopnumbe) rel

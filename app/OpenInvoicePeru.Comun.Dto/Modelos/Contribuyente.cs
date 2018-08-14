@@ -33,5 +33,8 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
 
         [JsonProperty(Order = 10)]
         public string Distrito { get; set; }
+
+        public string EMailTo { get; set; }
+
     }
 }

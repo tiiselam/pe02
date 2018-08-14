@@ -86,6 +86,10 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
 
         public decimal CalculoDetraccion { get; set; }
 
+        public decimal DescuentoNoGlobal { get; set; }
+
+        public string MetodoPago { get; set; }
+
         public DocumentoElectronico()
         {
             Emisor = new Contribuyente

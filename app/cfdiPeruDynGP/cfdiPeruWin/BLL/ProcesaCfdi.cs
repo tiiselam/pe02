@@ -508,6 +508,13 @@ namespace cfd.FacturaElectronica
             if (!respuestaFirmado.Exito)
                 throw new ApplicationException(string.Concat("Excepción al firmar antes de enviar a la Sunat. ", respuestaFirmado.MensajeError));
 
+            if (!_Param.seguridadIntegrada)
+            {
+                String RutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{trxVenta.DocElectronico.IdDocumento}frmdo.xml");
+                byte[] bTramaXmlSinFirma = Convert.FromBase64String(respuestaFirmado.TramaXmlFirmado);
+                File.WriteAllBytes(RutaArchivo, bTramaXmlSinFirma);
+            }
+
             var enviarDocumentoRequest = new EnviarDocumentoRequest
             {
                 Ruc = emisorNroDocumento,  // txtNroRuc.Text,

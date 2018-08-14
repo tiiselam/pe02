@@ -120,11 +120,12 @@ as
 --Propósito. Detalle de impuestos en trabajo e históricos de SOP. Filtra los impuestos requeridos por @prefijo
 --Requisitos. Los impuestos iva deben ser configurados con un prefijo constante
 --27/11/17 jcf Creación 
+--13/08/18 jcf Agrega txdtlbse
 --
 return
 (
 	select imp.soptype, imp.sopnumbe, imp.taxdtlid, imp.staxamnt, imp.orslstax, imp.tdttxsls, imp.ortxsls,
-			tx.NAME, tx.cntcprsn, tx.TXDTLPCT
+			tx.NAME, tx.cntcprsn, tx.TXDTLPCT, tx.txdtlbse
 	from sop10105 imp
 		inner join tx00201 tx
 		on tx.taxdtlid = imp.taxdtlid
@@ -178,6 +179,7 @@ as
 --Requisito. Se asume que una línea de factura tiene una línea de impuesto
 --27/11/17 jcf Creación cfdi 3.3
 --03/04/18 jcf Filtra cantidad!=0
+--13/08/18 jcf Agrega caso de igv incluido en el precio
 --
 		select ROW_NUMBER() OVER(ORDER BY Concepto.LNITMSEQ asc) id, 
 			Concepto.soptype, Concepto.sopnumbe, Concepto.LNITMSEQ, rtrim(Concepto.ITEMNMBR) ITEMNMBR, '' SERLTNUM, 
@@ -185,12 +187,27 @@ as
 			rtrim(Concepto.UOFMsat) udemSunat,
 			'' NoIdentificacion,
 			dbo.fCfdReemplazaSecuenciaDeEspacios(ltrim(rtrim(dbo.fCfdReemplazaCaracteresNI(Concepto.ITEMDESC))), 10) Descripcion, 
-			(Concepto.OXTNDPRC + isnull(iva.orslstax, 0.00))/Concepto.QUANTITY precioUniConIva,	--precioReferencial
-			case when isnull(gra.ortxsls, 0) != 0 then 0.00 else Concepto.ORUNTPRC end valorUni,--valor unitario (precioUnitario)
+
+			case when isnull(iva.txdtlbse, 3) = 1 then			--igv incluído
+					(Concepto.OXTNDPRC)/Concepto.QUANTITY
+				else
+					(Concepto.OXTNDPRC + isnull(iva.orslstax, 0.00))/Concepto.QUANTITY 
+			end precioUniConIva,								--precioReferencial con igv
+
+			case when isnull(iva.txdtlbse, 3) = 1 then			--igv incluído
+					case when isnull(gra.ortxsls, 0) != 0 then 0.00 else (Concepto.OXTNDPRC - isnull(iva.orslstax, 0.00))/Concepto.QUANTITY end 
+				else
+					case when isnull(gra.ortxsls, 0) != 0 then 0.00 else Concepto.OXTNDPRC/Concepto.QUANTITY end 
+			end valorUni,										--valor unitario sin igv
+
 			Concepto.QUANTITY cantidad, 
 			--Concepto.ORUNTPRC * Concepto.cantidad valorVenta,	--valor venta bruto
 			Concepto.descuento,
-			Concepto.OXTNDPRC importe,							--valor de venta (totalVenta)
+
+			case when isnull(iva.txdtlbse, 3) = 1 then			--igv incluído
+					Concepto.OXTNDPRC - isnull(iva.orslstax, 0.00)
+				else Concepto.OXTNDPRC
+			end importe,										--valor de venta (totalVenta)
 			isnull(iva.orslstax, 0.00) orslstax,				--igv
 
 			case when isnull(iva.orslstax, 0) != 0 
@@ -218,7 +235,7 @@ as
 							end
 						end
 					end
-				end tipoImpuesto
+				end tipoImpuesto								--tipo de afectación
 		from vwCfdiSopLineasTrxVentas Concepto
 			outer apply dbo.fLcLvParametros('V_PREFEXONERADO', 'V_PREFEXENTO', 'V_PREFIVA', 'V_GRATIS', 'na', 'na') pr	--Parámetros. prefijo inafectos, prefijo exento, prefijo iva
 			outer apply dbo.fCfdiImpuestosSop(Concepto.SOPNUMBE, Concepto.soptype, Concepto.LNITMSEQ, pr.param1, '%') xnr --exonerado
@@ -245,6 +262,7 @@ as
 --27/11/17 jcf Creación cfdi Perú
 --27/04/18 jcf Ajusta montos exonerado, inafecto, gratuito
 --06/06/18 jcf Agrega montos funcionales (pen)
+--13/08/18 jcf Agrega emailTo y formaPago
 --
 	select convert(varchar(20), tv.dex_row_id) correlativo, 
 		tv.soptype,
@@ -265,6 +283,7 @@ as
 		cmpr.nsaif_type_nit							receptorTipoDoc,
 		tv.idImpuestoCliente						receptorNroDoc,
 		tv.nombreCliente							receptorNombre,
+		mail.emailTo,
 
 		rtrim(tv.sopnumbe)							idDocumento,
 		convert(datetime, tv.fechahora, 126)		fechaEmision,
@@ -290,6 +309,11 @@ as
 		isnull(gra.tdttxsls, 0.00)					gratuitoPen,
 		tv.docamnt, 
 
+		case when tv.soptype = 3 and tv.orpmtrvd = tv.total 
+			then isnull(pg.FormaPago, '1')
+			else '1'	--efectivo
+		end											formaPago,
+
 		--Para NC:
 		left(tv.commntid, 2)						discrepanciaTipo,
 		dbo.fCfdReemplazaSecuenciaDeEspacios(rtrim(dbo.fCfdReemplazaCaracteresNI(tv.comment_1)), 10) discrepanciaDesc,
@@ -303,6 +327,9 @@ as
 		outer apply dbo.fCfdiImpuestosSop(tv.sopnumbe, tv.soptype, 0, pr.param2, '01') exe	--exento/inafecto
 		outer apply dbo.fCfdiImpuestosSop(tv.sopnumbe, tv.soptype, 0, pr.param3, '01') iva	--iva
 		outer apply dbo.fCfdiImpuestosSop(tv.sopnumbe, tv.soptype, 0, pr.param4, '02') gra	--gratuito
+		outer apply dbo.fnCfdGetDireccionesCorreo(tv.custnmbr) mail
+		outer apply dbo.fCfdiPagoSimultaneoMayor(tv.soptype, tv.sopnumbe, 1) pg
+
 go
 
 IF (@@Error = 0) PRINT 'Creación exitosa de la función: vwCfdiGeneraDocumentoDeVenta ()'

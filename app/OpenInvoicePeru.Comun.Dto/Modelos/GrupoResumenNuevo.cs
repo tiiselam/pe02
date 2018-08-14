@@ -19,5 +19,10 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
         public string DocumentoRelacionado { get; set; }
 
         public string TipoDocumentoRelacionado { get; set; }
+
+        public decimal TasaDeCambio { get; set; }
+
+        public string MetodoPago { get; set; }
+
     }
 }

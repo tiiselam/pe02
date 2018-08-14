@@ -9,7 +9,7 @@ FROM vwCfdiRelacionados
 
 select *
 from vwCfdiSopTransaccionesVenta
-where sopnumbe = 'FF11-00000002'
+where sopnumbe = 'F001-00000065'
 
 
 select *
@@ -24,16 +24,16 @@ select *
 from dbo.fLcLvParametros('V_PREFEXONERADO', 'V_PREFEXENTO', 'V_PREFIVA', 'V_GRATIS', 'na', 'na') pr	--Parámetros. prefijo inafectos, prefijo exento, prefijo iva
 
 select *
-from dbo.fCfdiImpuestosSop( 'FF11-00000002', 3, 0, 'V-GRATIS', '02') gra	--gratuito
+from dbo.fCfdiImpuestosSop( 'F001-00000065', 3, 0, 'V-GRATIS', '02') gra	--gratuito
 
 select *
 from vwCfdiConceptos
-where sopnumbe = 'FF11-00000002'
+where sopnumbe = 'F001-00000065'
 
 
 select *
 from vwCfdiGeneraDocumentoDeVenta
-where sopnumbe like 'FF11-00000002'
+where sopnumbe like 'F001-00000065'
 
 
 select *
@@ -44,4 +44,17 @@ SP_COLUMNS cfdlogfacturaxml
 select *
 from DYNAMICS..SY01500
 
+
+
+select *
+from dbo.fCfdiPagoSimultaneoMayor(3, 'FV 00000247', 1) pg
+
+
+select *
+from dbo.sop10103
+where sopnumbe = 'FV 00000247'
+
+tx00201
+
+sp_columns tx00201
 
