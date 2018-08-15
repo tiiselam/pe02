@@ -43,6 +43,8 @@
           <sql:SqlScript Id="CreateObj10" BinaryKey="CreateObj10" ExecuteOnInstall="yes" Sequence="10" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="Createfun010" BinaryKey="Createfun010" ExecuteOnInstall="yes" Sequence="11" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="Createfun12" BinaryKey="Createfun12" ExecuteOnInstall="yes" Sequence="12" ExecuteOnReinstall="yes"/>
+          <sql:SqlScript Id="Createfun14" BinaryKey="Createfun14" ExecuteOnInstall="yes" Sequence="14" ExecuteOnReinstall="yes"/>
+          <sql:SqlScript Id="Createfun15" BinaryKey="Createfun15" ExecuteOnInstall="yes" Sequence="15" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="Createtrig35" BinaryKey="Createtrig35" ExecuteOnInstall="yes" Sequence="35" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="Createview40" BinaryKey="Createview40" ExecuteOnInstall="yes" Sequence="40" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="Createfun50" BinaryKey="Createfun50" ExecuteOnInstall="yes" Sequence="50" ExecuteOnReinstall="yes"/>
@@ -95,6 +97,8 @@
     <Binary Id="CreateObj10" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\010_cfdiCatalogo.table.sql"/>
     <Binary Id="Createfun010" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\010_tii_invoice_amount_letters.function.igarcia120622.sql"/>
     <Binary Id="Createfun12" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\012_fCfdObtieneImagenC.function.sql"/>
+    <Binary Id="Createfun14" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\014_fCfdiFormaPago.function.sql"/>
+    <Binary Id="Createfun15" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\015_fCfdiPagoSimultaneoMayor.function.sql"/>
     <Binary Id="Createtrig35" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\035_RegistraHoradeFacturaElectronica.trigger.sql"/>
     
     <!--Atención: Varía de acuerdo a la VERSION GP-->
