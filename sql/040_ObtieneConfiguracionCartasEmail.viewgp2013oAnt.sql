@@ -67,10 +67,12 @@ begin
 	CN_Email_Subject,
 	CN_Word_Letter,
 	CN_Word_Document_File,
-	CN_Letter_Text
+	CN_Letter_Text,
+	CN_LetterPerAddress
 	)
 	values(3, 'FACTURA_ELECTRONICA', 'Carta para enviar factura electrónica', 0, '', '', 'XYZ - ', 0, '', 
-	'Estimado cliente,  Adjunto le enviamos la factura de su última compra.   Atentamente, XYZ.  (Este es un mensaje automático. Por favor no conteste a esta dirección de email. Para mayor información, comuníquese con: .... )');
+	'Estimado cliente,  Adjunto le enviamos la factura de su última compra.   Atentamente, XYZ.  (Este es un mensaje automático. Por favor no conteste a esta dirección de email. Para mayor información, comuníquese con: .... )',
+	'');
 
 	PRINT 'Creación exitosa del parámetro: FACTURA_ELECTRONICA';
 end

@@ -314,7 +314,7 @@ as
 			else '1'	--efectivo
 		end											formaPago,
 
-		--Para NC:
+		--Para NC indica la discrepancia. Para Factura indica observaciones.
 		left(tv.commntid, 2)						discrepanciaTipo,
 		dbo.fCfdReemplazaSecuenciaDeEspacios(rtrim(dbo.fCfdReemplazaCaracteresNI(tv.comment_1)), 10) discrepanciaDesc,
 		UPPER(DBO.TII_INVOICE_AMOUNT_LETTERS(tv.total, default)) montoEnLetras,

@@ -90,6 +90,8 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
 
         public string MetodoPago { get; set; }
 
+        public string Observaciones { get; set; }
+
         public DocumentoElectronico()
         {
             Emisor = new Contribuyente

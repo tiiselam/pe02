@@ -65,6 +65,7 @@
           <sql:SqlScript Id="CreateObj105" BinaryKey="CreateObj105" ExecuteOnInstall="yes" Sequence="105" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="Grants110" BinaryKey="Grants110" ExecuteOnInstall="yes" Sequence="110" ExecuteOnReinstall="yes"/>
 
+          <sql:SqlScript Id="CreateObj210" BinaryKey="CreateObj210" ExecuteOnInstall="yes" Sequence="210" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="CreateObj218" BinaryKey="CreateObj218" ExecuteOnInstall="yes" Sequence="218" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="Createview220" BinaryKey="Createview220" ExecuteOnInstall="yes" Sequence="220" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="Grants230" BinaryKey="Grants230" ExecuteOnInstall="yes" Sequence="230" ExecuteOnReinstall="yes"/>
@@ -124,6 +125,7 @@
     <Binary Id="Grants110" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\110_cfdiDaPermisos.grant.sql"/>
     
     <!--Reportes y permisos STANDARD-->
+    <Binary Id="CreateObj210" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\rep\Sql\10_tblGREM001.table.sql"/>
     <Binary Id="CreateObj218" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\rep\Sql\18_fnCfdiGuiaRemision.function.sql"/>
     <Binary Id="Createview220" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\rep\Sql\20_tii_sopinvoice.view.sql"/>
     <Binary Id="Grants230" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\rep\Sql\30_tii_sopinvoice.grant.sql"/>

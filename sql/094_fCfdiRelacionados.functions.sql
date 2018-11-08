@@ -52,8 +52,9 @@ go
 
 alter view dbo.vwCfdiRelacionados
 as
+--23/10/18 jcf sopnumbeTo debe tener el mismo número de dígitos de la factura emitida
 
-select rel.orden, rel.tipoDocumento, rel.soptypeFrom, rel.sopnumbeFrom, rel.soptypeTo, upper(rel.sopnumbeTo) sopnumbeTo
+select rel.orden, rel.tipoDocumento, rel.soptypeFrom, rel.sopnumbeFrom, rel.soptypeTo, upper(aptodcnm) sopnumbeTo -- upper(rel.sopnumbeTo) sopnumbeTo
 from sop30200 sop
 	cross apply dbo.fCfdiRelacionados(sop.soptype, sop.sopnumbe) rel
 
