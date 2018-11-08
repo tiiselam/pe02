@@ -43,7 +43,7 @@ ELSE PRINT 'Error en la creación de la función: fCfdiEmisor()'
 GO
 
 ------------------------------------------------------------------------------------
-select *
-from dbo.fCfdiEmisor()
+--select *
+--from dbo.fCfdiEmisor()
 
 
