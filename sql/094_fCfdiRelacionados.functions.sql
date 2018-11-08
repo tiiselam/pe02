@@ -10,13 +10,14 @@ as
 --		Si la factura relaciona a otra factura o nd, consultar el tracking number
 --Requisito. 
 --24/10/17 jcf Creación
+--05/06/18 jcf Agrega aptodcnm
 --
 return(
 			--ND relaciona a factura
 			select 1 orden,	
 				cmpr.tipo tipoDocumento,
 				da.soptype soptypeTo, left(da.tracking_number, 5) + convert(varchar(10), sg.segmento2) sopnumbeTo,
-				da.soptype soptypeFrom, da.sopnumbe sopnumbeFrom
+				da.soptype soptypeFrom, da.sopnumbe sopnumbeFrom, da.tracking_number aptodcnm
 			from sop10107 da	--
 				outer apply dbo.fCfdiObtieneSegmento2(rtrim(da.tracking_number), '-') sg
 				cross apply dbo.fLcLvComprobanteSunat (da.soptype, left(da.tracking_number, 5) + right('0000000'+convert(varchar(10), sg.segmento2), 8))  cmpr
@@ -30,7 +31,7 @@ return(
 			SELECT 2 orden,
 				cmpr.tipo tipoDocumento,
 				3 soptypeTo, left(ap.aptodcnm, 5) + convert(varchar(10), sg.segmento2) sopnumbeTo,
-				@soptype soptypeFrom, ap.apfrdcnm sopnumbeFrom
+				@soptype soptypeFrom, ap.apfrdcnm sopnumbeFrom, ap.aptodcnm
 			from dbo.vwRmTrxAplicadas  ap
 				cross apply dbo.fLcLvComprobanteSunat (3, ap.aptodcnm)  cmpr
 				outer apply dbo.fCfdiObtieneSegmento2(rtrim(ap.aptodcnm), '-') sg
@@ -51,8 +52,9 @@ go
 
 alter view dbo.vwCfdiRelacionados
 as
+--23/10/18 jcf sopnumbeTo debe tener el mismo número de dígitos de la factura emitida
 
-select rel.orden, rel.tipoDocumento, rel.soptypeFrom, rel.sopnumbeFrom, rel.soptypeTo, upper(rel.sopnumbeTo) sopnumbeTo
+select rel.orden, rel.tipoDocumento, rel.soptypeFrom, rel.sopnumbeFrom, rel.soptypeTo, upper(aptodcnm) sopnumbeTo -- upper(rel.sopnumbeTo) sopnumbeTo
 from sop30200 sop
 	cross apply dbo.fCfdiRelacionados(sop.soptype, sop.sopnumbe) rel
 

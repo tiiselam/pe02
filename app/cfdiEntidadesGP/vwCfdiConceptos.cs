@@ -14,6 +14,7 @@ namespace cfdiEntidadesGP
     
     public partial class vwCfdiConceptos
     {
+        public Nullable<long> id { get; set; }
         public short soptype { get; set; }
         public string sopnumbe { get; set; }
         public int LNITMSEQ { get; set; }
@@ -32,6 +33,5 @@ namespace cfdiEntidadesGP
         public decimal orslstax { get; set; }
         public string tipoPrecio { get; set; }
         public string tipoImpuesto { get; set; }
-        public Nullable<long> id { get; set; }
     }
 }

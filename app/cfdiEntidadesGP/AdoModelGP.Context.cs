@@ -13,10 +13,10 @@ namespace cfdiEntidadesGP
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PERUEntities : DbContext
+    public partial class PER10Entities : DbContext
     {
-        public PERUEntities()
-            : base("name=PERUEntities")
+        public PER10Entities()
+            : base("name=PER10Entities")
         {
         }
     
@@ -27,7 +27,7 @@ namespace cfdiEntidadesGP
     
         public virtual DbSet<vwCfdiConceptos> vwCfdiConceptos { get; set; }
         public virtual DbSet<vwCfdiGeneraDocumentoDeVenta> vwCfdiGeneraDocumentoDeVenta { get; set; }
-        public virtual DbSet<vwCfdiRelacionados> vwCfdiRelacionados { get; set; }
         public virtual DbSet<vwCfdiGeneraResumenDiario> vwCfdiGeneraResumenDiario { get; set; }
+        public virtual DbSet<vwCfdiRelacionados> vwCfdiRelacionados { get; set; }
     }
 }

@@ -13,6 +13,7 @@ using Reporteador;
 using cfd.FacturaElectronica;
 using MyGeneration.dOOdads;
 using MaquinaDeEstados;
+using System.Linq;
 
 namespace cfdiPeru
 {
@@ -314,6 +315,28 @@ namespace cfdiPeru
             AplicaFiltroYActualizaPantalla(this.tabCfdi.SelectedTab.Name);
         }
 
+        private bool ExistenTransaccionesAMedioContabilizar(vwCfdTransaccionesDeVenta tdv)
+        {
+            tdv.Rewind();
+            List<string> t = new List<string>();
+            if (tdv.RowCount > 0)
+                do
+                {
+                    t.Add(tdv.s_Soptype + "-" + tdv.s_Sopnumbe);
+                } while (tdv.MoveNext());
+
+            var ragrupado = t.GroupBy(f => f)
+                            .Where(repetido => repetido.Count() > 1)
+                            .ToList();
+            if (ragrupado.Count() > 0)
+            {
+                txtbxMensajes.AppendText("Las siguientes facturas todavía no terminaron de contabilizar:");
+                ragrupado.ForEach(i => txtbxMensajes.AppendText(i.First()));
+                txtbxMensajes.AppendText(Environment.NewLine + "Espere a que finalice la contabilización y vuelva a intentar.");
+            }
+            return (ragrupado.Count() > 0);
+        }
+
         /// <summary>
         /// Genera XMLs masivamente
         /// </summary>
@@ -341,14 +364,12 @@ namespace cfdiPeru
                 txtbxMensajes.Text = ultimoMensaje;
                 errores++;
             }
-            if (errores == 0)
+            if (errores == 0 && !ExistenTransaccionesAMedioContabilizar(regla.CfdiTransacciones))
             {
                 HabilitarVentana(false, false, false, false, false, false);
                 ProcesaCfdi proc = new ProcesaCfdi(DatosConexionDB.Elemento, Param);
                 proc.TrxVenta = regla.CfdiTransacciones;
-
                 proc.Progreso += new ProcesaCfdi.LogHandler(reportaProgreso);
-
                 pBarProcesoActivo.Visible = true;
 
                 if (this.tabCfdi.SelectedTab.Name.Equals("tabResumen"))
@@ -356,13 +377,12 @@ namespace cfdiPeru
                 else
                     await proc.GeneraDocumentoXmlAsync();
 
-                //Actualiza la pantalla
-                //Parametros Cia = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
-                HabilitarVentana(Param.emite, Param.anula, Param.imprime, Param.publica, Param.envia, true);
-                AplicaFiltroYActualizaPantalla(this.tabCfdi.SelectedTab.Name);
-                progressBar1.Value = 0;
-                pBarProcesoActivo.Visible = false;
             }
+            //Actualiza la pantalla
+            HabilitarVentana(Param.emite, Param.anula, Param.imprime, Param.publica, Param.envia, true);
+            AplicaFiltroYActualizaPantalla(this.tabCfdi.SelectedTab.Name);
+            progressBar1.Value = 0;
+            pBarProcesoActivo.Visible = false;
         }
 
         void bw_Progress(object sender, ProgressChangedEventArgs e)
@@ -744,10 +764,10 @@ namespace cfdiPeru
 
                 pBarProcesoActivo.Visible = true;
 
-                //if (this.tabCfdi.SelectedTab.Name.Equals("tabResumen"))
+//                if (this.tabCfdi.SelectedTab.Name.Equals("tabResumen"))
                     await proc.ProcesaConsultaCDR();
                 //else
-                //    txtbxMensajes.Text = "Presione el tab RESUMEN y luego el botón Consulta CDR."+Environment.NewLine;
+                //    txtbxMensajes.Text = "Presione el tab RESUMEN y luego el botón Consulta CDR." + Environment.NewLine;
 
                 //Actualiza la pantalla
                 Parametros Cia = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
@@ -917,8 +937,8 @@ namespace cfdiPeru
                     txtbxMensajes.Text = "Presione el tab FACTURAS y vuelva a intentar." + Environment.NewLine;
 
                 //Actualiza la pantalla
-                Parametros Cia = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
-                HabilitarVentana(Cia.emite, Cia.anula, Cia.imprime, Cia.publica, Cia.envia, true);
+                //Parametros Cia = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
+                HabilitarVentana(_param.emite, _param.anula, _param.imprime, _param.publica, _param.envia, true);
                 AplicaFiltroYActualizaPantalla(this.tabCfdi.SelectedTab.Name);
                 progressBar1.Value = 0;
                 pBarProcesoActivo.Visible = false;

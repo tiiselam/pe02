@@ -15,6 +15,7 @@ namespace OpenInvoicePeru.Comun.Dto.Modelos
         public decimal TotalVenta { get; set; }
 
         public decimal TotalDescuentos { get; set; }
+        public decimal DescuentosGlobales { get; set; }
 
         [JsonProperty(Required = Required.Always)]
         public decimal TotalIgv { get; set; }

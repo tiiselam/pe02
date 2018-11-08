@@ -120,11 +120,12 @@ as
 --Propósito. Detalle de impuestos en trabajo e históricos de SOP. Filtra los impuestos requeridos por @prefijo
 --Requisitos. Los impuestos iva deben ser configurados con un prefijo constante
 --27/11/17 jcf Creación 
+--13/08/18 jcf Agrega txdtlbse
 --
 return
 (
 	select imp.soptype, imp.sopnumbe, imp.taxdtlid, imp.staxamnt, imp.orslstax, imp.tdttxsls, imp.ortxsls,
-			tx.NAME, tx.cntcprsn, tx.TXDTLPCT
+			tx.NAME, tx.cntcprsn, tx.TXDTLPCT, tx.txdtlbse
 	from sop10105 imp
 		inner join tx00201 tx
 		on tx.taxdtlid = imp.taxdtlid
@@ -178,6 +179,7 @@ as
 --Requisito. Se asume que una línea de factura tiene una línea de impuesto
 --27/11/17 jcf Creación cfdi 3.3
 --03/04/18 jcf Filtra cantidad!=0
+--13/08/18 jcf Agrega caso de igv incluido en el precio
 --
 		select ROW_NUMBER() OVER(ORDER BY Concepto.LNITMSEQ asc) id, 
 			Concepto.soptype, Concepto.sopnumbe, Concepto.LNITMSEQ, rtrim(Concepto.ITEMNMBR) ITEMNMBR, '' SERLTNUM, 
@@ -185,12 +187,27 @@ as
 			rtrim(Concepto.UOFMsat) udemSunat,
 			'' NoIdentificacion,
 			dbo.fCfdReemplazaSecuenciaDeEspacios(ltrim(rtrim(dbo.fCfdReemplazaCaracteresNI(Concepto.ITEMDESC))), 10) Descripcion, 
-			(Concepto.OXTNDPRC + isnull(iva.orslstax, 0.00))/Concepto.QUANTITY precioUniConIva,	--precioReferencial
-			case when isnull(gra.ortxsls, 0) != 0 then 0.00 else Concepto.ORUNTPRC end valorUni,--valor unitario (precioUnitario)
+
+			case when isnull(iva.txdtlbse, 3) = 1 then			--igv incluído
+					(Concepto.OXTNDPRC)/Concepto.QUANTITY
+				else
+					(Concepto.OXTNDPRC + isnull(iva.orslstax, 0.00))/Concepto.QUANTITY 
+			end precioUniConIva,								--precioReferencial con igv
+
+			case when isnull(iva.txdtlbse, 3) = 1 then			--igv incluído
+					case when isnull(gra.ortxsls, 0) != 0 then 0.00 else (Concepto.OXTNDPRC - isnull(iva.orslstax, 0.00))/Concepto.QUANTITY end 
+				else
+					case when isnull(gra.ortxsls, 0) != 0 then 0.00 else Concepto.OXTNDPRC/Concepto.QUANTITY end 
+			end valorUni,										--valor unitario sin igv
+
 			Concepto.QUANTITY cantidad, 
 			--Concepto.ORUNTPRC * Concepto.cantidad valorVenta,	--valor venta bruto
 			Concepto.descuento,
-			Concepto.OXTNDPRC importe,							--valor de venta (totalVenta)
+
+			case when isnull(iva.txdtlbse, 3) = 1 then			--igv incluído
+					Concepto.OXTNDPRC - isnull(iva.orslstax, 0.00)
+				else Concepto.OXTNDPRC
+			end importe,										--valor de venta (totalVenta)
 			isnull(iva.orslstax, 0.00) orslstax,				--igv
 
 			case when isnull(iva.orslstax, 0) != 0 
@@ -218,7 +235,7 @@ as
 							end
 						end
 					end
-				end tipoImpuesto
+				end tipoImpuesto								--tipo de afectación
 		from vwCfdiSopLineasTrxVentas Concepto
 			outer apply dbo.fLcLvParametros('V_PREFEXONERADO', 'V_PREFEXENTO', 'V_PREFIVA', 'V_GRATIS', 'na', 'na') pr	--Parámetros. prefijo inafectos, prefijo exento, prefijo iva
 			outer apply dbo.fCfdiImpuestosSop(Concepto.SOPNUMBE, Concepto.soptype, Concepto.LNITMSEQ, pr.param1, '%') xnr --exonerado
@@ -244,6 +261,8 @@ as
 --Requisitos.  
 --27/11/17 jcf Creación cfdi Perú
 --27/04/18 jcf Ajusta montos exonerado, inafecto, gratuito
+--06/06/18 jcf Agrega montos funcionales (pen)
+--13/08/18 jcf Agrega emailTo y formaPago
 --
 	select convert(varchar(20), tv.dex_row_id) correlativo, 
 		tv.soptype,
@@ -264,24 +283,38 @@ as
 		cmpr.nsaif_type_nit							receptorTipoDoc,
 		tv.idImpuestoCliente						receptorNroDoc,
 		tv.nombreCliente							receptorNombre,
+		mail.emailTo,
 
 		rtrim(tv.sopnumbe)							idDocumento,
 		convert(datetime, tv.fechahora, 126)		fechaEmision,
 		tv.curncyid									moneda,
 		cmpr.tipoOperacion,
 		tv.descuento,
+
 		tv.ORTDISAM,
 		isnull(iva.TXDTLPCT, 0.00)/100				ivaTasa,
 		isnull(iva.ortxsls, 0.00)					ivaImponible,
 		isnull(iva.orslstax, 0.00)					iva,
-
 		isnull(exe.ortxsls, 0.00)					inafecta,
 		isnull(xnr.ortxsls, 0.00)					exonerado,
 		isnull(gra.ortxsls, 0.00)					gratuito,
-
 		tv.xchgrate,
 		tv.total,
-		--Para NC:
+
+		tv.trdisamt, 
+		isnull(iva.tdttxsls, 0.00)					IvaImponiblePen,
+		isnull(iva.staxamnt, 0.00)					ivaPen,
+		isnull(exe.tdttxsls, 0.00)					inafectaPen,
+		isnull(xnr.tdttxsls, 0.00)					exoneradoPen,
+		isnull(gra.tdttxsls, 0.00)					gratuitoPen,
+		tv.docamnt, 
+
+		case when tv.soptype = 3 and tv.orpmtrvd = tv.total 
+			then isnull(pg.FormaPago, '1')
+			else '1'	--efectivo
+		end											formaPago,
+
+		--Para NC indica la discrepancia. Para Factura indica observaciones.
 		left(tv.commntid, 2)						discrepanciaTipo,
 		dbo.fCfdReemplazaSecuenciaDeEspacios(rtrim(dbo.fCfdReemplazaCaracteresNI(tv.comment_1)), 10) discrepanciaDesc,
 		UPPER(DBO.TII_INVOICE_AMOUNT_LETTERS(tv.total, default)) montoEnLetras,
@@ -294,6 +327,9 @@ as
 		outer apply dbo.fCfdiImpuestosSop(tv.sopnumbe, tv.soptype, 0, pr.param2, '01') exe	--exento/inafecto
 		outer apply dbo.fCfdiImpuestosSop(tv.sopnumbe, tv.soptype, 0, pr.param3, '01') iva	--iva
 		outer apply dbo.fCfdiImpuestosSop(tv.sopnumbe, tv.soptype, 0, pr.param4, '02') gra	--gratuito
+		outer apply dbo.fnCfdGetDireccionesCorreo(tv.custnmbr) mail
+		outer apply dbo.fCfdiPagoSimultaneoMayor(tv.soptype, tv.sopnumbe, 1) pg
+
 go
 
 IF (@@Error = 0) PRINT 'Creación exitosa de la función: vwCfdiGeneraDocumentoDeVenta ()'
@@ -362,9 +398,9 @@ go
 alter view dbo.vwCfdiDocumentosAImprimir as
 --Propósito. Lista los documentos de venta que están listos para imprimirse: facturas y notas de crédito. 
 --06/11/17 jcf Creación cfdi Perú ubl 2.0
+--23/05/18 jcf Agrega estadoContabilizado
 --
-select tv.soptype, tv.sopnumbe, tv.fechaEmision fechaHoraEmision, 
-	--tv.regimenFiscal, 'NA' rgfs_descripcion, tv.codigoPostal, 
+select tv.estadoContabilizado, tv.soptype, tv.sopnumbe, tv.fechaEmision fechaHoraEmision, 
 	rtrim(td.dscriptn) tipoDocCliente, 
 	tv.receptorNroDoc rfcReceptor, tv.receptorNombre nombreCliente, tv.total, tv.moneda isocurrc, --tv.mensajeEA, 
 	tv.tipoDocumento TipoDeComprobante,
@@ -402,28 +438,13 @@ select tv.soptype, tv.sopnumbe, tv.fechaEmision fechaHoraEmision,
 	'' RfcPAC,
 	'' Leyenda,
 	'' cadenaOriginalSAT
-	--tv.rutaxml								+ 'cbb\' + replace(tv.mensaje, 'Almacenado en '+tv.rutaxml, '')+'.jpg' rutaYNomArchivoNet,
-	--'file:'+replace(tv.rutaxml, '\', '/') + 'cbb/' + RIGHT( tv.mensaje, CHARINDEX( '\', REVERSE( tv.mensaje ) + '\' ) - 1 ) +'.jpg' rutaYNomArchivo, 
-	--tv.rutaxml								+ 'cbb\' + RIGHT( tv.mensaje, CHARINDEX( '\', REVERSE( tv.mensaje ) + '\' ) - 1 ) +'.jpg' rutaYNomArchivoNet,
-	--'file://c:\getty' + substring(tv.rutaxml, charindex('\', tv.rutaxml, 3), 250) 
-	--										+ 'cbb\' + RIGHT( tv.mensaje, CHARINDEX( '\', REVERSE( tv.mensaje ) + '\' ) - 1 ) +'.jpg' rutaFileDrive
 from vwCfdiGeneraDocumentoDeVenta tv
 	left join cfdlogfacturaxml lf
 		on lf.soptype = tv.SOPTYPE
 		and lf.sopnumbe = tv.sopnumbe
 		and lf.estado = 'emitido'
-	--inner join dbo.vwCfdiDatosDelXml dx
-	--	on dx.soptype = tv.SOPTYPE
-	--	and dx.sopnumbe = tv.sopnumbe
-	--	and dx.estado = 'emitido'
-	--outer apply dbo.fLcLvComprobanteSunat (tv.soptype, tv.sopnumbe)  cmpr
 	left join nsaif_sy00102 td
 		on td.nsaif_type = tv.receptorTipoDoc
-	--outer apply dbo.fCfdiCatalogoGetDescripcion('MTDPG', dx.MetodoPago) mtdpg
-	--outer apply dbo.fCfdiCatalogoGetDescripcion('FRPG', dx.FormaPago) frpg
-	--outer apply dbo.fCfdiCatalogoGetDescripcion('RGFS', tv.regimen) rgfs
-	--outer apply dbo.fCfdiCatalogoGetDescripcion('USCF', dx.usoCfdi) uscf
-	--outer apply dbo.fCfdiCatalogoGetDescripcion('TPRL', dx.TipoRelacion) tprl
 go
 IF (@@Error = 0) PRINT 'Creación exitosa de la vista: vwCfdiDocumentosAImprimir  '
 ELSE PRINT 'Error en la creación de la vista: vwCfdiDocumentosAImprimir '

@@ -14,7 +14,13 @@ namespace cfdiEntidadesGP
     
     public partial class vwCfdiGeneraDocumentoDeVenta
     {
+        public string correlativo { get; set; }
+        public short soptype { get; set; }
+        public string sopnumbe { get; set; }
+        public string serie { get; set; }
+        public string numero { get; set; }
         public string tipoDocumento { get; set; }
+        public string emisorTipoDoc { get; set; }
         public string emisorNroDoc { get; set; }
         public string emisorNombre { get; set; }
         public string emisorUbigeo { get; set; }
@@ -31,25 +37,26 @@ namespace cfdiEntidadesGP
         public string moneda { get; set; }
         public string tipoOperacion { get; set; }
         public Nullable<decimal> descuento { get; set; }
+        public decimal ORTDISAM { get; set; }
         public Nullable<decimal> ivaTasa { get; set; }
         public decimal ivaImponible { get; set; }
         public decimal iva { get; set; }
         public decimal inafecta { get; set; }
         public decimal exonerado { get; set; }
+        public decimal gratuito { get; set; }
         public decimal xchgrate { get; set; }
         public decimal total { get; set; }
-        public short soptype { get; set; }
-        public string sopnumbe { get; set; }
-        public decimal ORTDISAM { get; set; }
+        public decimal trdisamt { get; set; }
+        public decimal IvaImponiblePen { get; set; }
+        public decimal ivaPen { get; set; }
+        public decimal inafectaPen { get; set; }
+        public decimal exoneradoPen { get; set; }
+        public decimal gratuitoPen { get; set; }
+        public decimal docamnt { get; set; }
         public string discrepanciaTipo { get; set; }
         public string discrepanciaDesc { get; set; }
-        public decimal gratuito { get; set; }
         public string montoEnLetras { get; set; }
         public string estadoContabilizado { get; set; }
         public System.DateTime docdate { get; set; }
-        public string emisorTipoDoc { get; set; }
-        public string serie { get; set; }
-        public string numero { get; set; }
-        public string correlativo { get; set; }
     }
 }

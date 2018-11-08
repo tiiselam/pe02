@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PERUModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PERUEntities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'PER10.dbo.vwCfdiConceptos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vwCfdiConceptos">
@@ -12,14 +12,7 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiConceptos' does not have a primary
             <PropertyRef Name="soptype" />
             <PropertyRef Name="sopnumbe" />
             <PropertyRef Name="LNITMSEQ" />
-            
-            
             <PropertyRef Name="CMPNTSEQ" />
-            
-            
-            
-            
-            
             <PropertyRef Name="ITEMNMBR" />
           </Key>
           <Property Name="id" Type="bigint" />
@@ -47,17 +40,6 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraDocumentoDeVenta' does not h
         <EntityType Name="vwCfdiGeneraDocumentoDeVenta">
           <Key>
             <PropertyRef Name="soptype" />
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             <PropertyRef Name="sopnumbe" />
           </Key>
           <Property Name="correlativo" Type="varchar" MaxLength="20" />
@@ -92,6 +74,13 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraDocumentoDeVenta' does not h
           <Property Name="gratuito" Type="numeric" Precision="19" Scale="5" Nullable="false" />
           <Property Name="xchgrate" Type="numeric" Precision="19" Scale="7" Nullable="false" />
           <Property Name="total" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="trdisamt" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="IvaImponiblePen" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="ivaPen" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="inafectaPen" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="exoneradoPen" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="gratuitoPen" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="docamnt" Type="numeric" Precision="19" Scale="5" Nullable="false" />
           <Property Name="discrepanciaTipo" Type="varchar" MaxLength="2" />
           <Property Name="discrepanciaDesc" Type="nvarchar(max)" />
           <Property Name="montoEnLetras" Type="varchar" MaxLength="2000" />
@@ -103,16 +92,12 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraResumenDiario' does not have
         <EntityType Name="vwCfdiGeneraResumenDiario">
           <Key>
             <PropertyRef Name="tipoResumenDiario" />
-            
-            
             <PropertyRef Name="numResumenDiario" />
             <PropertyRef Name="tipoDocumento" />
-            <PropertyRef Name="iniRango" />
-            <PropertyRef Name="finRango" />
-            <PropertyRef Name="serie" />
+            <PropertyRef Name="sopnumbe" />
           </Key>
           <Property Name="tipoResumenDiario" Type="int" Nullable="false" />
-          <Property Name="numResumenDiario" Type="varchar" MaxLength="17" Nullable="false" />
+          <Property Name="numResumenDiario" Type="varchar" MaxLength="21" Nullable="false" />
           <Property Name="docdate" Type="datetime" Nullable="false" />
           <Property Name="tipoDocumento" Type="varchar" MaxLength="8000" Nullable="false" />
           <Property Name="emisorTipoDoc" Type="varchar" MaxLength="1" Nullable="false" />
@@ -126,18 +111,21 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiGeneraResumenDiario' does not have
           <Property Name="emisorDistrito" Type="nvarchar(max)" />
           <Property Name="receptorTipoDoc" Type="varchar" MaxLength="3" />
           <Property Name="receptorNroDoc" Type="nvarchar(max)" />
-          <Property Name="serie" Type="varchar" MaxLength="21" Nullable="false" />
+          <Property Name="serie" Type="varchar" MaxLength="21" />
+          <Property Name="sopnumbe" Type="varchar" MaxLength="21" Nullable="false" />
           <Property Name="iniRango" Type="int" Nullable="false" />
           <Property Name="finRango" Type="int" Nullable="false" />
-          <Property Name="moneda" Type="varchar" MaxLength="15" />
-          <Property Name="totalIvaImponible" Type="numeric" Precision="38" Scale="5" />
-          <Property Name="totalIva" Type="numeric" Precision="38" Scale="5" />
-          <Property Name="totalInafecta" Type="numeric" Precision="38" Scale="5" />
-          <Property Name="totalExonerado" Type="numeric" Precision="38" Scale="5" />
-          <Property Name="totalGratuito" Type="numeric" Precision="38" Scale="5" />
-          <Property Name="totalDescuento" Type="numeric" Precision="38" Scale="5" />
-          <Property Name="total" Type="numeric" Precision="38" Scale="5" />
-          <Property Name="cantidad" Type="int" />
+          <Property Name="moneda" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="totalIvaImponible" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="totalIva" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="totalInafecta" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="totalExonerado" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="totalGratuito" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="totalDescuento" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="total" Type="numeric" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="tipoDocumentoTo" Type="varchar" MaxLength="8000" />
+          <Property Name="sopnumbeTo" Type="char" MaxLength="41" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -156,7 +144,7 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
           <Property Name="soptypeTo" Type="int" Nullable="false" />
           <Property Name="sopnumbeTo" Type="varchar" MaxLength="15" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="PERUModelStoreContainer">
+        <EntityContainer Name="PERUEntitiesStoreContainer">
           <EntitySet Name="vwCfdiConceptos" EntityType="Self.vwCfdiConceptos" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwCfdiConceptos].[id] AS [id], 
@@ -214,6 +202,13 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
     [vwCfdiGeneraDocumentoDeVenta].[gratuito] AS [gratuito], 
     [vwCfdiGeneraDocumentoDeVenta].[xchgrate] AS [xchgrate], 
     [vwCfdiGeneraDocumentoDeVenta].[total] AS [total], 
+    [vwCfdiGeneraDocumentoDeVenta].[trdisamt] AS [trdisamt], 
+    [vwCfdiGeneraDocumentoDeVenta].[IvaImponiblePen] AS [IvaImponiblePen], 
+    [vwCfdiGeneraDocumentoDeVenta].[ivaPen] AS [ivaPen], 
+    [vwCfdiGeneraDocumentoDeVenta].[inafectaPen] AS [inafectaPen], 
+    [vwCfdiGeneraDocumentoDeVenta].[exoneradoPen] AS [exoneradoPen], 
+    [vwCfdiGeneraDocumentoDeVenta].[gratuitoPen] AS [gratuitoPen], 
+    [vwCfdiGeneraDocumentoDeVenta].[docamnt] AS [docamnt], 
     [vwCfdiGeneraDocumentoDeVenta].[discrepanciaTipo] AS [discrepanciaTipo], 
     [vwCfdiGeneraDocumentoDeVenta].[discrepanciaDesc] AS [discrepanciaDesc], 
     [vwCfdiGeneraDocumentoDeVenta].[montoEnLetras] AS [montoEnLetras], 
@@ -239,6 +234,7 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
     [vwCfdiGeneraResumenDiario].[receptorTipoDoc] AS [receptorTipoDoc], 
     [vwCfdiGeneraResumenDiario].[receptorNroDoc] AS [receptorNroDoc], 
     [vwCfdiGeneraResumenDiario].[serie] AS [serie], 
+    [vwCfdiGeneraResumenDiario].[sopnumbe] AS [sopnumbe], 
     [vwCfdiGeneraResumenDiario].[iniRango] AS [iniRango], 
     [vwCfdiGeneraResumenDiario].[finRango] AS [finRango], 
     [vwCfdiGeneraResumenDiario].[moneda] AS [moneda], 
@@ -249,7 +245,9 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
     [vwCfdiGeneraResumenDiario].[totalGratuito] AS [totalGratuito], 
     [vwCfdiGeneraResumenDiario].[totalDescuento] AS [totalDescuento], 
     [vwCfdiGeneraResumenDiario].[total] AS [total], 
-    [vwCfdiGeneraResumenDiario].[cantidad] AS [cantidad]
+    [vwCfdiGeneraResumenDiario].[cantidad] AS [cantidad], 
+    [vwCfdiGeneraResumenDiario].[tipoDocumentoTo] AS [tipoDocumentoTo], 
+    [vwCfdiGeneraResumenDiario].[sopnumbeTo] AS [sopnumbeTo]
     FROM [dbo].[vwCfdiGeneraResumenDiario] AS [vwCfdiGeneraResumenDiario]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vwCfdiRelacionados" EntityType="Self.vwCfdiRelacionados" store:Type="Views" store:Schema="dbo">
@@ -263,27 +261,29 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
     FROM [dbo].[vwCfdiRelacionados] AS [vwCfdiRelacionados]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="PERUModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="PERUEntities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="vwCfdiConceptos">
           <Key>
             <PropertyRef Name="soptype" />
             <PropertyRef Name="sopnumbe" />
             <PropertyRef Name="LNITMSEQ" />
-            <PropertyRef Name="ITEMNMBR" />
             <PropertyRef Name="CMPNTSEQ" />
+            <PropertyRef Name="ITEMNMBR" />
           </Key>
+          <Property Name="id" Type="Int64" />
           <Property Name="soptype" Type="Int16" Nullable="false" />
           <Property Name="sopnumbe" Type="String" MaxLength="21" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="LNITMSEQ" Type="Int32" Nullable="false" />
           <Property Name="ITEMNMBR" Type="String" MaxLength="31" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SERLTNUM" Type="String" MaxLength="1" Nullable="false" Unicode="false" FixedLength="false" />
+          <Property Name="SERLTNUM" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ITEMDESC" Type="String" MaxLength="101" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="CMPNTSEQ" Type="Int32" Nullable="false" />
           <Property Name="udemSunat" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="NoIdentificacion" Type="String" MaxLength="1" Nullable="false" Unicode="false" FixedLength="false" />
+          <Property Name="NoIdentificacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="precioUniConIva" Type="Decimal" Precision="38" Scale="18" />
           <Property Name="valorUni" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
@@ -293,14 +293,19 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
           <Property Name="orslstax" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
           <Property Name="tipoPrecio" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
           <Property Name="tipoImpuesto" Type="String" MaxLength="31" FixedLength="false" Unicode="false" />
-          <Property Name="id" Type="Int64" />
         </EntityType>
         <EntityType Name="vwCfdiGeneraDocumentoDeVenta">
           <Key>
             <PropertyRef Name="soptype" />
             <PropertyRef Name="sopnumbe" />
           </Key>
+          <Property Name="correlativo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="soptype" Type="Int16" Nullable="false" />
+          <Property Name="sopnumbe" Type="String" MaxLength="21" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="serie" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="numero" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
           <Property Name="tipoDocumento" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="emisorTipoDoc" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="emisorNroDoc" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
           <Property Name="emisorNombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="emisorUbigeo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -317,60 +322,40 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
           <Property Name="moneda" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="tipoOperacion" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
           <Property Name="descuento" Type="Decimal" Precision="20" Scale="5" />
+          <Property Name="ORTDISAM" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
           <Property Name="ivaTasa" Type="Decimal" Precision="23" Scale="9" />
           <Property Name="ivaImponible" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
           <Property Name="iva" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
           <Property Name="inafecta" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
           <Property Name="exonerado" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="gratuito" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
           <Property Name="xchgrate" Type="Decimal" Precision="19" Scale="7" Nullable="false" />
           <Property Name="total" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
-          <Property Name="soptype" Type="Int16" Nullable="false" />
-          <Property Name="sopnumbe" Type="String" MaxLength="21" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ORTDISAM" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
+          <Property Name="trdisamt" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="IvaImponiblePen" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="ivaPen" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="inafectaPen" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="exoneradoPen" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="gratuitoPen" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="docamnt" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
           <Property Name="discrepanciaTipo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="discrepanciaDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="gratuito" Type="Decimal" Nullable="false" Precision="19" Scale="5" />
           <Property Name="montoEnLetras" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
-          <Property Name="estadoContabilizado" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="estadoContabilizado" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="docdate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="emisorTipoDoc" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="serie" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
-          <Property Name="numero" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
-          <Property Name="correlativo" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-        </EntityType>
-        <EntityContainer Name="PERUEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="vwCfdiConceptos" EntityType="Self.vwCfdiConceptos" />
-          <EntitySet Name="vwCfdiGeneraDocumentoDeVenta" EntityType="Self.vwCfdiGeneraDocumentoDeVenta" />
-          <EntitySet Name="vwCfdiRelacionados" EntityType="PERUModel.vwCfdiRelacionados" />
-          <EntitySet Name="vwCfdiGeneraResumenDiario" EntityType="PERUModel.vwCfdiGeneraResumenDiario" />
-        </EntityContainer>
-        <EntityType Name="vwCfdiRelacionados">
-          <Key>
-            <PropertyRef Name="orden" />
-            <PropertyRef Name="sopnumbeFrom" />
-            <PropertyRef Name="soptypeTo" />
-            <PropertyRef Name="sopnumbeTo" />
-            <PropertyRef Name="soptypeFrom" />
-          </Key>
-          <Property Name="orden" Type="Int32" Nullable="false" />
-          <Property Name="tipoDocumento" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
-          <Property Name="soptypeFrom" Type="Int16" Nullable="false" />
-          <Property Name="sopnumbeFrom" Type="String" Nullable="false" MaxLength="21" FixedLength="true" Unicode="false" />
-          <Property Name="soptypeTo" Type="Int32" Nullable="false" />
-          <Property Name="sopnumbeTo" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vwCfdiGeneraResumenDiario">
           <Key>
             <PropertyRef Name="tipoResumenDiario" />
             <PropertyRef Name="numResumenDiario" />
             <PropertyRef Name="tipoDocumento" />
-            <PropertyRef Name="serie" />
-            <PropertyRef Name="iniRango" />
-            <PropertyRef Name="finRango" />
+            <PropertyRef Name="sopnumbe" />
           </Key>
           <Property Name="tipoResumenDiario" Type="Int32" Nullable="false" />
-          <Property Name="numResumenDiario" Type="String" MaxLength="17" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="numResumenDiario" Type="String" MaxLength="21" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="docdate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="tipoDocumento" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="emisorTipoDoc" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="emisorNroDoc" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
           <Property Name="emisorNombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="emisorUbigeo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -381,29 +366,51 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
           <Property Name="emisorDistrito" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="receptorTipoDoc" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="receptorNroDoc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="moneda" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="totalIvaImponible" Type="Decimal" Precision="38" Scale="5" />
-          <Property Name="totalIva" Type="Decimal" Precision="38" Scale="5" />
-          <Property Name="totalInafecta" Type="Decimal" Precision="38" Scale="5" />
-          <Property Name="totalExonerado" Type="Decimal" Precision="38" Scale="5" />
-          <Property Name="totalGratuito" Type="Decimal" Precision="38" Scale="5" />
-          <Property Name="total" Type="Decimal" Precision="38" Scale="5" />
-          <Property Name="cantidad" Type="Int32" />
-          <Property Name="docdate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="emisorTipoDoc" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="serie" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="sopnumbe" Type="String" MaxLength="21" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="iniRango" Type="Int32" Nullable="false" />
           <Property Name="finRango" Type="Int32" Nullable="false" />
-          <Property Name="serie" Type="String" MaxLength="21" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="totalDescuento" Type="Decimal" Precision="38" Scale="5" />
+          <Property Name="moneda" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="totalIvaImponible" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="totalIva" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="totalInafecta" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="totalExonerado" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="totalGratuito" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="totalDescuento" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="total" Type="Decimal" Precision="19" Scale="5" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="tipoDocumentoTo" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="sopnumbeTo" Type="String" MaxLength="41" FixedLength="true" Unicode="false" Nullable="false" />
         </EntityType>
+        <EntityType Name="vwCfdiRelacionados">
+          <Key>
+            <PropertyRef Name="orden" />
+            <PropertyRef Name="sopnumbeFrom" />
+            <PropertyRef Name="soptypeTo" />
+            <PropertyRef Name="soptypeFrom" />
+            <PropertyRef Name="sopnumbeTo" />
+          </Key>
+          <Property Name="orden" Type="Int32" Nullable="false" />
+          <Property Name="tipoDocumento" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="soptypeFrom" Type="Int16" Nullable="false" />
+          <Property Name="sopnumbeFrom" Type="String" MaxLength="21" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="soptypeTo" Type="Int32" Nullable="false" />
+          <Property Name="sopnumbeTo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="PER10Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="vwCfdiConceptos" EntityType="Self.vwCfdiConceptos" />
+          <EntitySet Name="vwCfdiGeneraDocumentoDeVenta" EntityType="Self.vwCfdiGeneraDocumentoDeVenta" />
+          <EntitySet Name="vwCfdiGeneraResumenDiario" EntityType="Self.vwCfdiGeneraResumenDiario" />
+          <EntitySet Name="vwCfdiRelacionados" EntityType="Self.vwCfdiRelacionados" />
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PERUModelStoreContainer" CdmEntityContainer="PERUEntities">
+        <EntityContainerMapping StorageEntityContainer="PERUEntitiesStoreContainer" CdmEntityContainer="PER10Entities">
           <EntitySetMapping Name="vwCfdiConceptos">
-            <EntityTypeMapping TypeName="PERUModel.vwCfdiConceptos">
+            <EntityTypeMapping TypeName="PERUEntities.vwCfdiConceptos">
               <MappingFragment StoreEntitySet="vwCfdiConceptos">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="soptype" ColumnName="soptype" />
@@ -428,22 +435,15 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vwCfdiGeneraDocumentoDeVenta">
-            <EntityTypeMapping TypeName="PERUModel.vwCfdiGeneraDocumentoDeVenta">
+            <EntityTypeMapping TypeName="PERUEntities.vwCfdiGeneraDocumentoDeVenta">
               <MappingFragment StoreEntitySet="vwCfdiGeneraDocumentoDeVenta">
                 <ScalarProperty Name="correlativo" ColumnName="correlativo" />
-                <ScalarProperty Name="numero" ColumnName="numero" />
-                <ScalarProperty Name="serie" ColumnName="serie" />
-                <ScalarProperty Name="emisorTipoDoc" ColumnName="emisorTipoDoc" />
-                <ScalarProperty Name="docdate" ColumnName="docdate" />
-                <ScalarProperty Name="estadoContabilizado" ColumnName="estadoContabilizado" />
-                <ScalarProperty Name="montoEnLetras" ColumnName="montoEnLetras" />
-                <ScalarProperty Name="gratuito" ColumnName="gratuito" />
-                <ScalarProperty Name="discrepanciaDesc" ColumnName="discrepanciaDesc" />
-                <ScalarProperty Name="discrepanciaTipo" ColumnName="discrepanciaTipo" />
-                <ScalarProperty Name="ORTDISAM" ColumnName="ORTDISAM" />
-                <ScalarProperty Name="sopnumbe" ColumnName="sopnumbe" />
                 <ScalarProperty Name="soptype" ColumnName="soptype" />
+                <ScalarProperty Name="sopnumbe" ColumnName="sopnumbe" />
+                <ScalarProperty Name="serie" ColumnName="serie" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
                 <ScalarProperty Name="tipoDocumento" ColumnName="tipoDocumento" />
+                <ScalarProperty Name="emisorTipoDoc" ColumnName="emisorTipoDoc" />
                 <ScalarProperty Name="emisorNroDoc" ColumnName="emisorNroDoc" />
                 <ScalarProperty Name="emisorNombre" ColumnName="emisorNombre" />
                 <ScalarProperty Name="emisorUbigeo" ColumnName="emisorUbigeo" />
@@ -460,58 +460,75 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
                 <ScalarProperty Name="moneda" ColumnName="moneda" />
                 <ScalarProperty Name="tipoOperacion" ColumnName="tipoOperacion" />
                 <ScalarProperty Name="descuento" ColumnName="descuento" />
+                <ScalarProperty Name="ORTDISAM" ColumnName="ORTDISAM" />
                 <ScalarProperty Name="ivaTasa" ColumnName="ivaTasa" />
                 <ScalarProperty Name="ivaImponible" ColumnName="ivaImponible" />
                 <ScalarProperty Name="iva" ColumnName="iva" />
                 <ScalarProperty Name="inafecta" ColumnName="inafecta" />
                 <ScalarProperty Name="exonerado" ColumnName="exonerado" />
+                <ScalarProperty Name="gratuito" ColumnName="gratuito" />
                 <ScalarProperty Name="xchgrate" ColumnName="xchgrate" />
                 <ScalarProperty Name="total" ColumnName="total" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vwCfdiRelacionados">
-            <EntityTypeMapping TypeName="PERUModel.vwCfdiRelacionados">
-              <MappingFragment StoreEntitySet="vwCfdiRelacionados">
-                <ScalarProperty Name="sopnumbeTo" ColumnName="sopnumbeTo" />
-                <ScalarProperty Name="soptypeTo" ColumnName="soptypeTo" />
-                <ScalarProperty Name="sopnumbeFrom" ColumnName="sopnumbeFrom" />
-                <ScalarProperty Name="soptypeFrom" ColumnName="soptypeFrom" />
-                <ScalarProperty Name="tipoDocumento" ColumnName="tipoDocumento" />
-                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="trdisamt" ColumnName="trdisamt" />
+                <ScalarProperty Name="IvaImponiblePen" ColumnName="IvaImponiblePen" />
+                <ScalarProperty Name="ivaPen" ColumnName="ivaPen" />
+                <ScalarProperty Name="inafectaPen" ColumnName="inafectaPen" />
+                <ScalarProperty Name="exoneradoPen" ColumnName="exoneradoPen" />
+                <ScalarProperty Name="gratuitoPen" ColumnName="gratuitoPen" />
+                <ScalarProperty Name="docamnt" ColumnName="docamnt" />
+                <ScalarProperty Name="discrepanciaTipo" ColumnName="discrepanciaTipo" />
+                <ScalarProperty Name="discrepanciaDesc" ColumnName="discrepanciaDesc" />
+                <ScalarProperty Name="montoEnLetras" ColumnName="montoEnLetras" />
+                <ScalarProperty Name="estadoContabilizado" ColumnName="estadoContabilizado" />
+                <ScalarProperty Name="docdate" ColumnName="docdate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vwCfdiGeneraResumenDiario">
-            <EntityTypeMapping TypeName="PERUModel.vwCfdiGeneraResumenDiario">
+            <EntityTypeMapping TypeName="PERUEntities.vwCfdiGeneraResumenDiario">
               <MappingFragment StoreEntitySet="vwCfdiGeneraResumenDiario">
-                <ScalarProperty Name="totalDescuento" ColumnName="totalDescuento" />
-                <ScalarProperty Name="serie" ColumnName="serie" />
-                <ScalarProperty Name="finRango" ColumnName="finRango" />
-                <ScalarProperty Name="iniRango" ColumnName="iniRango" />
-                <ScalarProperty Name="emisorTipoDoc" ColumnName="emisorTipoDoc" />
-                <ScalarProperty Name="docdate" ColumnName="docdate" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="total" ColumnName="total" />
-                <ScalarProperty Name="totalGratuito" ColumnName="totalGratuito" />
-                <ScalarProperty Name="totalExonerado" ColumnName="totalExonerado" />
-                <ScalarProperty Name="totalInafecta" ColumnName="totalInafecta" />
-                <ScalarProperty Name="totalIva" ColumnName="totalIva" />
-                <ScalarProperty Name="totalIvaImponible" ColumnName="totalIvaImponible" />
-                <ScalarProperty Name="moneda" ColumnName="moneda" />
-                <ScalarProperty Name="receptorNroDoc" ColumnName="receptorNroDoc" />
-                <ScalarProperty Name="receptorTipoDoc" ColumnName="receptorTipoDoc" />
-                <ScalarProperty Name="emisorDistrito" ColumnName="emisorDistrito" />
-                <ScalarProperty Name="emisorProvincia" ColumnName="emisorProvincia" />
-                <ScalarProperty Name="emisorDepartamento" ColumnName="emisorDepartamento" />
-                <ScalarProperty Name="emisorUrbanizacion" ColumnName="emisorUrbanizacion" />
-                <ScalarProperty Name="emisorDireccion" ColumnName="emisorDireccion" />
-                <ScalarProperty Name="emisorUbigeo" ColumnName="emisorUbigeo" />
-                <ScalarProperty Name="emisorNombre" ColumnName="emisorNombre" />
-                <ScalarProperty Name="emisorNroDoc" ColumnName="emisorNroDoc" />
-                <ScalarProperty Name="tipoDocumento" ColumnName="tipoDocumento" />
-                <ScalarProperty Name="numResumenDiario" ColumnName="numResumenDiario" />
                 <ScalarProperty Name="tipoResumenDiario" ColumnName="tipoResumenDiario" />
+                <ScalarProperty Name="numResumenDiario" ColumnName="numResumenDiario" />
+                <ScalarProperty Name="docdate" ColumnName="docdate" />
+                <ScalarProperty Name="tipoDocumento" ColumnName="tipoDocumento" />
+                <ScalarProperty Name="emisorTipoDoc" ColumnName="emisorTipoDoc" />
+                <ScalarProperty Name="emisorNroDoc" ColumnName="emisorNroDoc" />
+                <ScalarProperty Name="emisorNombre" ColumnName="emisorNombre" />
+                <ScalarProperty Name="emisorUbigeo" ColumnName="emisorUbigeo" />
+                <ScalarProperty Name="emisorDireccion" ColumnName="emisorDireccion" />
+                <ScalarProperty Name="emisorUrbanizacion" ColumnName="emisorUrbanizacion" />
+                <ScalarProperty Name="emisorDepartamento" ColumnName="emisorDepartamento" />
+                <ScalarProperty Name="emisorProvincia" ColumnName="emisorProvincia" />
+                <ScalarProperty Name="emisorDistrito" ColumnName="emisorDistrito" />
+                <ScalarProperty Name="receptorTipoDoc" ColumnName="receptorTipoDoc" />
+                <ScalarProperty Name="receptorNroDoc" ColumnName="receptorNroDoc" />
+                <ScalarProperty Name="serie" ColumnName="serie" />
+                <ScalarProperty Name="sopnumbe" ColumnName="sopnumbe" />
+                <ScalarProperty Name="iniRango" ColumnName="iniRango" />
+                <ScalarProperty Name="finRango" ColumnName="finRango" />
+                <ScalarProperty Name="moneda" ColumnName="moneda" />
+                <ScalarProperty Name="totalIvaImponible" ColumnName="totalIvaImponible" />
+                <ScalarProperty Name="totalIva" ColumnName="totalIva" />
+                <ScalarProperty Name="totalInafecta" ColumnName="totalInafecta" />
+                <ScalarProperty Name="totalExonerado" ColumnName="totalExonerado" />
+                <ScalarProperty Name="totalGratuito" ColumnName="totalGratuito" />
+                <ScalarProperty Name="totalDescuento" ColumnName="totalDescuento" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="tipoDocumentoTo" ColumnName="tipoDocumentoTo" />
+                <ScalarProperty Name="sopnumbeTo" ColumnName="sopnumbeTo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwCfdiRelacionados">
+            <EntityTypeMapping TypeName="PERUEntities.vwCfdiRelacionados">
+              <MappingFragment StoreEntitySet="vwCfdiRelacionados">
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="tipoDocumento" ColumnName="tipoDocumento" />
+                <ScalarProperty Name="soptypeFrom" ColumnName="soptypeFrom" />
+                <ScalarProperty Name="sopnumbeFrom" ColumnName="sopnumbeFrom" />
+                <ScalarProperty Name="soptypeTo" ColumnName="soptypeTo" />
+                <ScalarProperty Name="sopnumbeTo" ColumnName="sopnumbeTo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -530,7 +547,7 @@ warning 6002: The table/view 'PER10.dbo.vwCfdiRelacionados' does not have a prim
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

@@ -22,7 +22,7 @@ namespace cfd.FacturaElectronica
         public int numMensajeError = 0;
         private ConexionAFuenteDatos _Conexion = null;
         private Parametros _Param = null;
-        CodigoDeBarras codigobb;
+        //CodigoDeBarras codigobb;
         Documento reporte;
         vwCfdTransaccionesDeVenta cfdiTransacciones;
         vwCfdiDatosDelXml_wrapper cfdiDatosXml;
@@ -47,10 +47,10 @@ namespace cfd.FacturaElectronica
             _Conexion = conex;
             _Param = param;
             reporte = new Documento(_Conexion, _Param);
-            codigobb = new CodigoDeBarras();
+            //codigobb = new CodigoDeBarras();
 
-            numMensajeError = codigobb.iErr + reporte.numErr;
-            ultimoMensaje = codigobb.strMensajeErr + reporte.mensajeErr;
+            numMensajeError = reporte.numErr;
+            ultimoMensaje = reporte.mensajeErr;
         }
 
         public void AplicaFiltroADocumentos(bool filtroFecha, DateTime desdeF, DateTime hastaF, DateTime deFDefault, DateTime aFDefault,
@@ -259,16 +259,20 @@ namespace cfd.FacturaElectronica
         /// <param name="mEstados">Nuevo set de estados</param>
         /// <param name="tramaXmlFirmado">trama del xml firmado por la sunat en base 64</param>
         /// <param name="tramaZipCdr">trama zipeada del cdr enviado por la sunat</param>
-        public void AlmacenaEnRepositorio(vwCfdTransaccionesDeVenta trxVenta, String comprobante, ReglasME mEstados, String tramaXmlFirmado, String tramaZipCdr, String ticket, String nomArchivoCDR, String tipoDoc)
+        public void AlmacenaEnRepositorio(vwCfdTransaccionesDeVenta trxVenta, String comprobante, ReglasME mEstados, String tramaXmlFirmado, String tramaZipCdr, String ticket, String nomArchivoCDR, 
+                                        String tipoDoc, String accion, bool eBinarioOK)
         {
             try
             {   //arma el nombre del archivo xml
                 string nomArchivo = Utiles.FormatoNombreArchivo(trxVenta.Docid + trxVenta.Sopnumbe + "_" + trxVenta.s_CUSTNMBR, trxVenta.s_NombreCliente, 20);
-                string rutaYNomArchivoCfdi = trxVenta.RutaXml.Trim() + nomArchivo + ".xml";
+                string rutaYNomArchivoCfdi = string.Concat(trxVenta.RutaXml.Trim() , nomArchivo ,"_", accion.Substring(0,2), ".xml");
                 string rutaYNomArchivoCdr = trxVenta.RutaXml.Trim() + @"CDR\"+ nomArchivoCDR;
 
                 //Guarda el archivo xml
-                if (ticket.Equals("FAC"))
+                if ((tipoDoc.Equals("FACTURA") && accion.Equals("EMITE XML Y PDF")) ||
+                    (tipoDoc.Equals("RESUMEN") && accion.Equals("ENVIA RESUMEN")) ||
+                    (tipoDoc.Equals("FACTURA") && accion.Equals("DAR DE BAJA"))
+                    )
                 {
                     if (!string.IsNullOrEmpty(tramaXmlFirmado))
                         File.WriteAllBytes($"{rutaYNomArchivoCfdi}", Convert.FromBase64String(tramaXmlFirmado));
@@ -276,7 +280,10 @@ namespace cfd.FacturaElectronica
                         throw new ArgumentException("No se puede guardar el archivo xml " + nomArchivo + " porque está vacío.");
                 }
 
-                if (ticket.Equals("FAC") || ticket.Equals("CDR"))
+                //Guarda el CDR
+                if (tipoDoc.Equals("FACTURA") && accion.Equals("EMITE XML Y PDF") ||
+                    accion.Equals("CONSULTA CDR")
+                    )
                 {
                     if (!string.IsNullOrEmpty(tramaZipCdr))
                         File.WriteAllBytes($"{rutaYNomArchivoCdr}", Convert.FromBase64String(tramaZipCdr));
@@ -284,33 +291,37 @@ namespace cfd.FacturaElectronica
                         throw new ArgumentException("No se puede guardar el archivo cdr de la SUNAT porque está vacío.");
                 }
 
+                String status;
+                String msjBinActual;
+                String eBinario = !eBinarioOK ? mEstados.eBinActualConError : mEstados.eBinarioNuevo;
+                switch (accion){
+                    case "DAR DE BAJA":
+                        status = "publicado";
+                        msjBinActual = "Baja solicitada el " + DateTime.Today.ToString();
+                        break;
+                    case "CONSULTA CDR":
+                        if (tipoDoc.Equals("FACTURA")) 
+                            status = !eBinarioOK ? "rechazo_sunat" : "anulado";
+                        else 
+                            status = !eBinarioOK ? "rechazo_sunat" : "acepta_sunat";
+
+                        msjBinActual = comprobante;
+                        rutaYNomArchivoCfdi = rutaYNomArchivoCdr;
+                        break;
+                    default:
+                        status = "emitido";
+                        msjBinActual = mEstados.EnLetras(eBinario, tipoDoc);
+                        break;
+                }
+                
                 //Registra log de la emisión del xml antes de imprimir el pdf, sino habrá error al imprimir
                 RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, rutaYNomArchivoCfdi, ticket, _Conexion.Usuario, comprobante.Replace("encoding=\"utf-8\"", ""),
-                                        "emitido", mEstados.eBinarioNuevo, mEstados.EnLetras(mEstados.eBinarioNuevo, tipoDoc));
-
-                //Genera y guarda código de barras bidimensional
-                //codigobb.GenerarQRBidimensional(_Param.URLConsulta + "?&id=" + uuid.Trim() + "&re=" + trxVenta.Rfc + "&rr=" + trxVenta.IdImpuestoCliente + "&tt=" + trxVenta.Total.ToString() + "&fe=" + Utiles.Derecha(sello, 8)
-                //                                    , trxVenta.RutaXml.Trim() + "cbb\\" + nomArchivo + ".jpg");
+                                        status, eBinario, msjBinActual);
 
                 //Genera pdf
-                if (codigobb.iErr == 0)
-                    reporte.generaEnFormatoPDF(rutaYNomArchivoCfdi, trxVenta.Soptype, trxVenta.Sopnumbe, trxVenta.EstadoContabilizado);
+                if (tipoDoc.Equals("FACTURA") && accion.Equals("EMITE XML Y PDF"))
+                   reporte.generaEnFormatoPDF(rutaYNomArchivoCfdi, trxVenta.Soptype, trxVenta.Sopnumbe, trxVenta.EstadoContabilizado);
 
-                //Comprime el archivo xml
-                //if (_Param.zip)
-                //    Utiles.Zip(rutaYNomArchivo, ".xml");
-
-                //numMensajeError = codigobb.iErr + reporte.numErr;
-                //ultimoMensaje = codigobb.strMensajeErr + " " + reporte.mensajeErr; // + " " + Utiles.msgErr;
-
-                //Si hay error en cbb o pdf o zip anota en la bitácora
-                //if (numMensajeError != 0)
-                //    ActualizaFacturaEmitida(trxVenta.Soptype, trxVenta.Sopnumbe, _Conexion.Usuario, "emitido", "emitido", mEstados.eBinActualConError,
-                //                            mEstados.EnLetras(mEstados.eBinActualConError, tipoDoc) + ultimoMensaje.Trim());
-            }
-            catch (ArgumentException)
-            {
-                throw;
             }
             catch (DirectoryNotFoundException)
             {
@@ -362,9 +373,8 @@ namespace cfd.FacturaElectronica
         }
 
         /// <summary>
-        /// Genera el código de barras bidimensional y guarda el archivo pdf. 
+        /// Genera y guarda el archivo pdf. 
         /// Luego anota en la bitácora la factura impresa y el nuevo estado binario
-        /// 23/11/16 jcf Genera código qr sólo si parámetro emite=1
         /// </summary>
         /// <param name="trxVenta"></param>
         /// <param name="eBase"></param>
@@ -381,17 +391,10 @@ namespace cfd.FacturaElectronica
                 string nomArchivo = Utiles.FormatoNombreArchivo(trxVenta.Docid + trxVenta.Sopnumbe + "_" + trxVenta.s_CUSTNMBR, trxVenta.s_NombreCliente, 20);
                 string rutaYNomArchivo = trxVenta.RutaXml.Trim() + nomArchivo;
 
-                //Genera y guarda código de barras bidimensional
-                //if(_Param.emite)
-                //    codigobb.GenerarQRBidimensional(_Param.URLConsulta + "?&id=" + x_uuid + "&re=" + trxVenta.Rfc + "&rr=" + trxVenta.IdImpuestoCliente + "&tt=" + trxVenta.Total.ToString() + "&fe=" + Utiles.Derecha(x_sello, 8)
-                //                                , trxVenta.RutaXml.Trim() + "cbb\\" + nomArchivo + ".jpg");
-
-                //Genera pdf
-                //if (codigobb.iErr == 0)
                 reporte.generaEnFormatoPDF(rutaYNomArchivo, trxVenta.Soptype, trxVenta.Sopnumbe, trxVenta.EstadoContabilizado);
 
-                numMensajeError =  reporte.numErr + codigobb.iErr;
-                ultimoMensaje = reporte.mensajeErr + codigobb.strMensajeErr;
+                numMensajeError = reporte.numErr; // + codigobb.iErr;
+                ultimoMensaje = reporte.mensajeErr; // + codigobb.strMensajeErr;
 
                 if (reporte.numErr==0)  // && codigobb.iErr==0)
                     RegistraLogDeArchivoXML(trxVenta.Soptype, trxVenta.Sopnumbe, "Almacenado en " + rutaYNomArchivo, "0", _Conexion.Usuario, "", eBase, eBinario, enLetras);

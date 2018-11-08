@@ -23,7 +23,10 @@ begin
 	  archivoXML xml default ''
 	PRIMARY KEY(soptype, sopnumbe, secuencia));
 
-	alter table dbo.cfdLogFacturaXML add constraint chk_estado check(estado in ('emitido', 'anulado', 'impreso', 'publicado', 'enviado', 'sunat'));
+--	alter table dbo.cfdLogFacturaXML drop constraint chk_estado 
+
+	alter table dbo.cfdLogFacturaXML add constraint chk_estado check(estado in ('emitido', 'anulado', 'impreso', 'publicado', 'enviado', 'rechazo_sunat', 'acepta_sunat', 'sunat'));
+
 	create index idx1_cfdLogFacturaXML on dbo.cfdLogFacturaXML(soptype, sopnumbe, estado) include (estadoActual, archivoXML);
 end;
 go

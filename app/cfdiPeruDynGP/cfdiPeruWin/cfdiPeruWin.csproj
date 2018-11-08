@@ -121,6 +121,7 @@
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\cfdEmailWorker.cs">
@@ -175,6 +176,7 @@
     <None Include="app.config" />
     <Compile Include="BLL\vwCfdiPagosSimultaneos_wrapper.cs" />
     <None Include="cfdiPeruWin_TemporaryKey.pfx" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\vwCfdTransaccionesDeVenta.datasource" />
     <None Include="Properties\Settings.settings">

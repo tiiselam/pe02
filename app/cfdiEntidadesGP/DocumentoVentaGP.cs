@@ -91,7 +91,7 @@ namespace cfdiEntidadesGP
 
         public void GetDatosDocumentoVenta(String Sopnumbe, short Soptype)
         {
-            using (PERUEntities dv = new PERUEntities())
+            using (PER10Entities dv = new PER10Entities())
             {
                 _DocVenta = dv.vwCfdiGeneraDocumentoDeVenta
                                     .Where(v => v.sopnumbe == Sopnumbe && v.soptype == Soptype)
@@ -126,23 +126,15 @@ namespace cfdiEntidadesGP
         }
         public void GetDatosResumenBoletas(String Sopnumbe, short Soptype)
         {
-            using (PERUEntities dv = new PERUEntities())
+            using (PER10Entities dv = new PER10Entities())
             {
+                //System.Diagnostics.Debugger.NotifyOfCrossThreadDependency();
                 _lDocResumenLineas = dv.vwCfdiGeneraResumenDiario
-                                                        .Where(v => v.numResumenDiario == Sopnumbe && v.tipoResumenDiario == Soptype)
-                                                        .ToList();
+                                        .Where(v => v.numResumenDiario == Sopnumbe && v.tipoResumenDiario == Soptype)
+                                        .ToList();
 
                 _resumenCab = _lDocResumenLineas.First();
-
-                //var resDoc = dv.vwCfdiGeneraResumenDiario.Where(v => v.numResumenDiario == Sopnumbe && v.tipoResumenDiario == Soptype);
-                //foreach (vwCfdiGeneraResumenDiario re in resDoc)
-                //{
-                //    _resumenCab = re;
-                //    break;
-                //}
-
             }
-
         }
     }
 }
