@@ -336,7 +336,7 @@ as
 		tv.send_email_statements,
 		rtrim(tv.sopnumbe)							idDocumento,
 		tv.docdate									fechaEmision,
-		''											horaEmision,	--agregar hora!
+		convert(varchar(10), tv.fechaHora, 108)		horaEmision,
 		tv.duedate									fechaVencimiento,
 		tv.curncyid									moneda,
 		rtrim(cmpr.[nsa_Cod_Transac])				tipoOperacion,
@@ -356,7 +356,7 @@ as
 		dtr.PRCNTAGE								porcentajeDetraccion,
 		round(tv.total*dtr.PRCNTAGE/100, 2)			montoDetraccion,
 		case when isnull(cmpr.cod_detraccion, '') != '' then '2006' else '' end codleyendaDetraccion,
-		isnull(pr.param6, '')						numCuentaBancoNacion,
+		emi.ctaBancoNacion							numCuentaBancoNacion,
 		'001'										medioPagoDetraccion,	--depósito
 
 		--totales
@@ -404,7 +404,7 @@ as
 		left join nsaCOA_Reten_iva dtr
 			on dtr.nsa_Cod_IVA1 = cmpr.cod_detraccion
 		outer apply dbo.fLcLvComprobanteSunat (cmpr.comprobanteRelacionadoSoptype, cmpr.comprobanteRelacionado)  crel
-		outer apply dbo.fLcLvParametros('V_PREFEXONERADO', 'V_PREFEXENTO', 'V_PREFIVA', 'V_GRATIS', 'V_PREFEXPORTA', 'V_CTANACION') pr	--Parámetros. prefijo inafectos, prefijo exento, prefijo iva
+		outer apply dbo.fCfdiParametros('V_PREFEXONERADO', 'V_PREFEXENTO', 'V_PREFIVA', 'V_GRATIS', 'V_PREFEXPORTA', 'na', 'LCLV') pr	--Parámetros. prefijo inafectos, prefijo exento, prefijo iva
 		outer apply dbo.fCfdiImpuestosAgrupadosSop(tv.sopnumbe, tv.soptype, 0, pr.param1, '9997', '%') xnr	--exonerado
 		outer apply dbo.fCfdiImpuestosAgrupadosSop(tv.sopnumbe, tv.soptype, 0, pr.param2, '9998', '%') exe	--exento/inafecto
 		outer apply dbo.fCfdiImpuestosAgrupadosSop(tv.sopnumbe, tv.soptype, 0, pr.param3, '1000', '%') iva	--iva

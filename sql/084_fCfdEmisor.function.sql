@@ -10,6 +10,7 @@ as
 --Requisitos. 
 --Utilizado por. fCfdDatosAdicionales()
 --04/12/17 jcf Creación cfdi
+--22/11/18 jcf Agrega CTABNACION
 --
 return
 ( 
@@ -30,10 +31,10 @@ select rtrim(replace(ci.TAXREGTN, 'RFC ', '')) TAXREGTN, '6' emisorTipoDoc,
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(ISNULL(nt.INET7, '')), 10) INET7,
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(ISNULL(nt.INET8, '')), 10) INET8,
 	nt.param2 timeZone,
-	nt.param3 otrosDatos,
+	nt.param3 ctaBancoNacion,
 	nt.param4 incluyeAddendaDflt
 from DYNAMICS..SY01500 ci			--sy_company_mstr
-cross apply dbo.fCfdiParametros('VERSION', 'UTC', 'NA', 'NA', 'NA', 'NA', ci.LOCATNID) nt
+cross apply dbo.fCfdiParametros('VERSION', 'UTC', 'CTABNACION', 'NA', 'NA', 'NA', ci.LOCATNID) nt
 where ci.INTERID = DB_NAME()
 )
 go
