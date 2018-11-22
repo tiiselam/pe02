@@ -12,6 +12,8 @@ alter view dbo.vwCfdiSopTransaccionesVenta
 --Requisitos. No muestra facturas registradas en cuentas por cobrar. 
 --24/10/17 jcf Creación cfdi Perú
 --06/06/18 jcf Agrega docamnt, trdisamt
+--08/11/18 jcf Agrega send_email_statements
+--19/11/18 jcf Agrega ORSUBTOT
 --
 AS
 
@@ -30,8 +32,8 @@ SELECT	'contabilizado' estadoContabilizado,
 				case when substring(cab.DOCNCORR, 3, 1) = ':' then rtrim(LEFT(cab.docncorr, 8)) --+'.'+ right(rtrim(cab.docncorr), 3) 
 				else '00:00:00' end,
 				126) fechaHora,
-		cab.ORDOCAMT total,	cab.ORSUBTOT + cab.ORMRKDAM subtotal, cab.ORTAXAMT impuesto, cab.ORMRKDAM, cab.ORTDISAM, cab.ORMRKDAM + cab.ORTDISAM descuento, 
-		cab.docamnt, cab.trdisamt,
+		cab.ORDOCAMT total,	cab.ORSUBTOT, cab.ORSUBTOT + cab.ORMRKDAM subtotal, cab.ORTAXAMT impuesto, cab.ORMRKDAM, cab.ORTDISAM, cab.ORMRKDAM + cab.ORTDISAM descuento, 
+		cab.docamnt, cab.trdisamt, 
 		cab.orpmtrvd, rtrim(mo.isocurrc) curncyid, 
 		case when cab.xchgrate <= 0 then 1 else cab.xchgrate end xchgrate, 
 		cab.voidStts + isnull(rmx.voidstts, 0) voidstts, rmx.montoActualOriginal,
@@ -42,6 +44,7 @@ SELECT	'contabilizado' estadoContabilizado,
 		dbo.fCfdEsVacio(dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(cab.[STATE]), 10)) [state], 
 		dbo.fCfdEsVacio(dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(cab.country), 10)) country, 
 		right('00000'+dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(cab.zipcode), 10), 5) zipcode, 
+		cn.send_email_statements,
 		cab.duedate, cab.pymtrmid, cab.glpostdt, 
 		dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(cab.cstponbr), 10) cstponbr,
 		da.USRDEF05, isnull(da.usrtab01, '') usrtab01, cab.commntid, isnull(da.comment_1, '') comment_1,
@@ -64,7 +67,7 @@ SELECT	'contabilizado' estadoContabilizado,
  select 'en lote' estadoContabilizado, cab.custnmbr idImpuestoCliente, cab.CUSTNMBR, cab.CUSTNAME nombreCliente,
 		rtrim(cab.docid) docid, cab.SOPTYPE, rtrim(cab.sopnumbe) sopnumbe, 
 		cab.docdate, cab.docdate fechaHora,
-		cab.ORDOCAMT total, cab.ORSUBTOT + cab.ORMRKDAM subtotal, cab.ORTAXAMT impuesto, cab.ORMRKDAM, cab.ORTDISAM, cab.ORMRKDAM + cab.ORTDISAM descuento, 
+		cab.ORDOCAMT total, cab.ORSUBTOT, cab.ORSUBTOT + cab.ORMRKDAM subtotal, cab.ORTAXAMT impuesto, cab.ORMRKDAM, cab.ORTDISAM, cab.ORMRKDAM + cab.ORTDISAM descuento, 
 		cab.docamnt, cab.trdisamt,
 		cab.orpmtrvd, rtrim(cab.curncyid) curncyid, 
 		case when cab.xchgrate <= 0 then 1 else cab.xchgrate end xchgrate, 
@@ -76,6 +79,7 @@ SELECT	'contabilizado' estadoContabilizado,
 		dbo.fCfdEsVacio(dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(cab.[STATE]), 10)) [state], 
 		dbo.fCfdEsVacio(dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(cab.country), 10)) country, 
 		right('00000'+dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(cab.zipcode), 10), 5) zipcode, 
+		0,
 		cab.duedate, cab.pymtrmid, cab.glpostdt, 
 		dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(cab.cstponbr), 10) cstponbr,
 		ctrl.USRDEF05, ctrl.usrtab01, cab.commntid, ctrl.comment_1,
