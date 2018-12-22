@@ -212,6 +212,7 @@ as
 --03/04/18 jcf Filtra cantidad!=0
 --13/08/18 jcf Agrega caso de igv incluido en el precio
 --14/11/18 jcf Cambios para ubl 2.1
+--13/12/18 jcf Agrega imponibles de inafecto, exonerado, exporta, gratuito
 --
 		select ROW_NUMBER() OVER(ORDER BY Concepto.LNITMSEQ asc) id, 
 			Concepto.soptype, Concepto.sopnumbe, Concepto.LNITMSEQ, rtrim(Concepto.ITEMNMBR) ITEMNMBR, '' SERLTNUM, 
@@ -251,6 +252,10 @@ as
 			isnull(iva.orslstax, 0.00)		montoIva,				--igv
 			isnull(iva.ortxsls, 0.00)		montoImponibleIva,		--igv imponible
 			isnull(iva.TXDTLPCT, 0.00)/100	porcentajeIva,
+			isnull(xnr.ortxsls, 0.00)		montoImponibleExonera,		
+			isnull(exe.ortxsls, 0.00)		montoImponibleInafecto,		
+			isnull(gra.ortxsls, 0.00)		montoImponibleGratuito,		
+			isnull(xpr.ortxsls, 0.00)		montoImponibleExporta,		
 
 			case when isnull(iva.orslstax, 0) != 0 
 				then rtrim(iva.cntcprsn)

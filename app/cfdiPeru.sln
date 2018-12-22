@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenInvoicePeru.Firmado", "OpenInvoicePeru.Firmado\OpenInvoicePeru.Firmado.csproj", "{1CFD1D28-D342-413D-A6E1-7616CB9708E2}"
 EndProject
@@ -377,5 +377,8 @@ Global
 		{576A248A-CDF1-4BFE-9F9F-9C1018A81DEB} = {7C30E289-3418-4984-8FD9-7D4582DF6297}
 		{A0176EDD-CFF2-4C1A-B503-15783F43CC94} = {B1DD1E97-544F-4528-B38A-C1D3D391835D}
 		{8F3FA49C-223B-47AD-8390-C6AD7B132C68} = {B1DD1E97-544F-4528-B38A-C1D3D391835D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1E127C40-136F-4F7F-B45C-E885555AA519}
 	EndGlobalSection
 EndGlobal
