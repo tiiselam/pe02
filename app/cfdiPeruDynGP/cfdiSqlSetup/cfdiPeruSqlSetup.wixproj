@@ -6,7 +6,7 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>8f3fa49c-223b-47ad-8390-c6ad7b132c68</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>cfdiPeruSqlSetup</OutputName>
+    <OutputName>cfdiPeruSqlSetupGp2013ubl21</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>

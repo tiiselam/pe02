@@ -2,71 +2,11 @@
 --Proyectos:		GETTY
 --Propósito:		Genera funciones y vistas de FACTURAS para la facturación electrónica en GP - PERU
 --Referencia:		
---		05/12/17 Versión CFDI UBL 2.0
+--05/12/17 Versión CFDI UBL 2.0
+--03/01/19 v ubl 2.1. Los resúmenes no son necesarios. Sólo están para compatilidad de la app.
 --Utilizado por:	Aplicación C# de generación de factura electrónica PERU
 -------------------------------------------------------------------------------------------------------
 
------------------------------------------------------------------------------------------
---IF (OBJECT_ID ('dbo.vwCfdiGeneraDocumentoDeVentaAgrupado', 'V') IS NULL)
---   exec('create view dbo.vwCfdiGeneraDocumentoDeVentaAgrupado as SELECT 1 as t');
---go
-
---alter view dbo.vwCfdiGeneraDocumentoDeVentaAgrupado
---as
-----Propósito. Agrupa los documentos de venta
-----Requisitos.  
-----07/12/17 jcf Creación cfdi Perú
-----28/05/18 jcf Agrega consecutivo correcto para resumen en caso de rechazo
-----
---		select tx.serie, tx.docdate, tx.estadoContabilizado, 55 tipoResumenDiario, 
---			'RESUMEN' idResumenDiario, isnull(onr.numResumen, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001') numResumenDiario, 
---			tx.tipoDocumento, tx.moneda,
---			tx.emisorTipoDoc,
---			tx.emisorNroDoc,
---			tx.emisorNombre,
---			tx.emisorUbigeo,
---			tx.emisorDireccion,
---			tx.emisorUrbanizacion,
---			tx.emisorDepartamento,
---			tx.emisorProvincia,
---			tx.emisorDistrito,
---			tx.receptorTipoDoc,
---			tx.receptorNroDoc, 
---			tx.receptorNombre, 
---			min(tx.sopnumbe) iniRango, 
---			max(tx.sopnumbe) finRango, 
---			sum(tx.gratuito) totalGratuito,
---			sum(tx.ORTDISAM) totalDescuento,
---			sum(tx.ivaImponible) totalIvaImponible,
---			sum(tx.exonerado) totalExonerado,
---			sum(tx.inafecta) totalInafecta,
---			sum(tx.iva) totalIva,
---			sum(tx.total)	total,
-
---			COUNT(tx.sopnumbe)	cantidad
---		from vwCfdiGeneraDocumentoDeVenta tx
---			outer apply dbo.fCfdiObtieneNumResumenDiario(55, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001') onr
---		group by tx.serie, onr.numResumen, tx.docdate, tx.estadoContabilizado, tx.tipoDocumento, tx.moneda,
---			tx.emisorTipoDoc,
---			tx.emisorNroDoc,
---			tx.emisorNombre,
---			tx.emisorUbigeo,
---			tx.emisorDireccion,
---			tx.emisorUrbanizacion,
---			tx.emisorDepartamento,
---			tx.emisorProvincia,
---			tx.emisorDistrito,
---			tx.receptorTipoDoc,
---			tx.receptorNroDoc, 
---			tx.receptorNombre
-
---go
-
---IF (@@Error = 0) PRINT 'Creación exitosa de la función: vwCfdiGeneraDocumentoDeVentaAgrupado ()'
---ELSE PRINT 'Error en la creación de la función: vwCfdiGeneraDocumentoDeVentaAgrupado ()'
---GO
-
------------------------------------------------------------------------------------------
 IF (OBJECT_ID ('dbo.vwCfdiGeneraDocumentoDeVentaAgrupado', 'V') IS NULL)
    exec('create view dbo.vwCfdiGeneraDocumentoDeVentaAgrupado as SELECT 1 as t');
 go
@@ -79,6 +19,7 @@ as
 --28/05/18 jcf Agrega consecutivo correcto para resumen en caso de rechazo
 --04/06/18 jcf Cambios para versión 2 de resumen. Los docs ya no se agrupan y deben ser en moneda PEN
 --13/08/18 jcf Cambio montos en moneda original, formapago, xchgrate, ORTDISAM
+--03/01/19 jcf Ajusta nuevos campos de ubl 21. Actualmente no es necesario para Sunat.
 --
 		select tx.serie, tx.docdate, tx.estadoContabilizado, 55 tipoResumenDiario, 
 			'RESUMEN' idResumenDiario, isnull(onr.numResumen, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001') numResumenDiario, 
@@ -100,16 +41,16 @@ as
 			tx.sopnumbe,
 			tx.soptype,
 
-			tx.gratuito totalGratuito,
-			tx.descuento totalDescuento,
-			tx.ORTDISAM,
-			tx.ivaImponible totalIvaImponible,
-			tx.exonerado totalExonerado,
-			tx.inafecta totalInafecta,
-			tx.iva totalIva,
-			tx.total total,
+			tx.montoSubtotalGratuito totalGratuito,
+			tx.montoTotalDescuentosPorItem totalDescuento,
+			tx.descuentoGlobalMonto ORTDISAM,
+			tx.montoSubtotalIvaImponible totalIvaImponible,
+			tx.montoSubtotalExonerado totalExonerado,
+			tx.montoSubtotalInafecto totalInafecta,
+			tx.montoTotalIgv totalIva,
+			tx.montoTotalVenta total,
 			1	cantidad,
-			tx.formaPago
+			'' formaPago
 		from dbo.vwCfdiGeneraDocumentoDeVenta tx
 			outer apply dbo.fCfdiObtieneNumResumenDiario(55, 'RC-'+convert(varchar(10), tx.docdate, 112)+'-001') onr
 
