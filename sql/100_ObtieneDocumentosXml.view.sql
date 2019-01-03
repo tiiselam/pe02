@@ -365,6 +365,7 @@ as
 		'001'										medioPagoDetraccion,	--depósito
 
 		--totales
+		--tv.docamnt,
 		tv.total									montoTotalVenta,
 		isnull(iva.orslstax, 0.00)					montoTotalImpuestos,
 		isnull(iva.ortxsls, 0.00)					
