@@ -5,6 +5,7 @@
 --Propósito. Log de facturas emitidas en formato xml. Sólo debe haber un estado emitido para cada factura.
 --23/04/12 jcf Creación cfdi
 --09/11/18 jcf Agrega estado: error
+--14/01/19 jcf No recreaba constraint si la tabla existía
 --
 IF not EXISTS (SELECT 1 FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[cfdLogFacturaXML]') AND OBJECTPROPERTY(id,N'IsTable') = 1)
 begin
@@ -24,14 +25,19 @@ begin
 	  archivoXML xml default ''
 	PRIMARY KEY(soptype, sopnumbe, secuencia));
 
---	alter table dbo.cfdLogFacturaXML drop constraint chk_estado 
-
-	alter table dbo.cfdLogFacturaXML add constraint chk_estado check(estado in ('emitido', 'anulado', 'impreso', 'publicado', 'enviado', 'rechazo_sunat', 'acepta_sunat', 'sunat', 'error'));
-
 	create index idx1_cfdLogFacturaXML on dbo.cfdLogFacturaXML(soptype, sopnumbe, estado) include (estadoActual, archivoXML);
-end;
+end
+else
+begin
+	alter table dbo.cfdLogFacturaXML drop constraint chk_estado;
+
+end
 go
 
+alter table dbo.cfdLogFacturaXML add constraint chk_estado check(estado in ('emitido', 'anulado', 'impreso', 'publicado', 'enviado', 'rechazo_sunat', 'acepta_sunat', 'sunat', 'error'));
+
+
+go
 ---------------------------------------------------------------------------------------------------------------------------
 --Para actualizar Getty:
 --drop index idx1_cfdLogFacturaXML on dbo.cfdLogFacturaXML;
