@@ -85,13 +85,14 @@ alter view dbo.vwCfdiSopLineasTrxVentas as
 --			Incluye descuentos
 --Requisito. Atención ! DEBE usar unidades de medida listadas en el SERVICIO DE IMPUESTOS. 
 --30/11/17 JCF Creación cfdi 3.3
+--16/01/19 jcf Reemplaza caracteres no imprimibles en itemdesc
 --
 select dt.soptype, dt.sopnumbe, dt.LNITMSEQ, dt.ITEMNMBR, dt.ShipToName,
 	dt.QUANTITY, dt.UOFM,
 	um.UOFMLONGDESC UOFMsat,
 	udmfa.descripcion UOFMsat_descripcion,
 	um.UOFMLONGDESC, 
-	dt.ITEMDESC,
+	dbo.fCfdReemplazaCaracteresNI(dt.ITEMDESC) ITEMDESC,
 	dt.ORUNTPRC, dt.OXTNDPRC, dt.CMPNTSEQ, 
 	dt.QUANTITY * dt.ORUNTPRC cantidadPorPrecioOri, 
 	isnull(ma.ITMTRKOP, 1) ITMTRKOP,		--3 lote, 2 serie, 1 nada
@@ -316,6 +317,7 @@ as
 --06/06/18 jcf Agrega montos funcionales (pen)
 --13/08/18 jcf Agrega emailTo y formaPago
 --08/11/18 jcf Agrega ajustes para ubl 2.1
+--16/01/19 jcf Agrega dirección
 --
 	select convert(varchar(20), tv.dex_row_id) correlativo, 
 		tv.soptype,
@@ -337,6 +339,11 @@ as
 		cmpr.nsaif_type_nit							receptorTipoDoc,
 		tv.idImpuestoCliente						receptorNroDoc,
 		tv.nombreCliente							receptorNombre,
+		left(tv.address1 +' '+ tv.address2, 100)	receptorDireccion,
+		tv.[state]									receptorProvincia,
+		tv.country									receptorPais,
+		tv.city										receptorCiudad,
+
 		mail.emailTo,
 		tv.send_email_statements,
 		rtrim(tv.sopnumbe)							idDocumento,
