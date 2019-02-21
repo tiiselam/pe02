@@ -318,6 +318,7 @@ as
 --13/08/18 jcf Agrega emailTo y formaPago
 --08/11/18 jcf Agrega ajustes para ubl 2.1
 --16/01/19 jcf Agrega dirección
+--21/02/19 jcf Agrega leyenda por factura
 --
 	select convert(varchar(20), tv.dex_row_id) correlativo, 
 		tv.soptype,
@@ -409,7 +410,8 @@ as
 			else '' 
 		end codleyendaTransfGratuita,
 		UPPER(DBO.TII_INVOICE_AMOUNT_LETTERS(tv.total, default)) montoEnLetras,
-		tv.estadoContabilizado, tv.docdate
+		tv.estadoContabilizado, tv.docdate,
+		case when upper(pr.param6) = 'SI' then rtrim(tv.comment_1) else '' end leyendaPorFactura
 
 	from dbo.vwCfdiSopTransaccionesVenta tv
 		cross join dbo.fCfdiEmisor() emi
@@ -417,7 +419,7 @@ as
 		left join nsaCOA_Reten_iva dtr
 			on dtr.nsa_Cod_IVA1 = cmpr.cod_detraccion
 		outer apply dbo.fLcLvComprobanteSunat (cmpr.comprobanteRelacionadoSoptype, cmpr.comprobanteRelacionado)  crel
-		outer apply dbo.fCfdiParametros('V_PREFEXONERADO', 'V_PREFEXENTO', 'V_PREFIVA', 'V_GRATIS', 'V_PREFEXPORTA', 'na', 'LCLV') pr	--Parámetros. prefijo inafectos, prefijo exento, prefijo iva
+		outer apply dbo.fCfdiParametros('V_PREFEXONERADO', 'V_PREFEXENTO', 'V_PREFIVA', 'V_GRATIS', 'V_PREFEXPORTA', 'V_LEYENDAPORFAC', 'LCLV') pr	--Parámetros. prefijo inafectos, prefijo exento, prefijo iva
 		outer apply dbo.fCfdiImpuestosAgrupadosSop(tv.sopnumbe, tv.soptype, 0, pr.param1, '9997', '%') xnr	--exonerado
 		outer apply dbo.fCfdiImpuestosAgrupadosSop(tv.sopnumbe, tv.soptype, 0, pr.param2, '9998', '%') exe	--exento/inafecto
 		outer apply dbo.fCfdiImpuestosAgrupadosSop(tv.sopnumbe, tv.soptype, 0, pr.param3, '1000', '%') iva	--iva
