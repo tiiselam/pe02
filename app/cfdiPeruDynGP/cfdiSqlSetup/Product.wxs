@@ -36,8 +36,9 @@
 
       <Component Id="SqlComponent" Guid="7c32cf65-e060-4c7f-b5dd-d85c181da89c" KeyPath="yes">
         <sql:SqlDatabase Id="SqlDatabase" User="SQLUser" Server="[SQLSERVER]" Database="[SQLDATABASE]" CreateOnInstall="no" DropOnUninstall="no" ContinueOnError="yes" >
-          <sql:SqlScript Id="CreateBaseView02" BinaryKey="CreateBaseView02" ExecuteOnInstall="yes" Sequence="02" ExecuteOnReinstall="yes"/>
+          <sql:SqlScript Id="CreateBaseView02" BinaryKey="CreateBaseView02" ExecuteOnInstall="yes" Sequence="01" ExecuteOnReinstall="yes"/>
           
+          <sql:SqlScript Id="CreateObj02" BinaryKey="CreateObj02" ExecuteOnInstall="yes" Sequence="02" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="CreateFun03" BinaryKey="CreateFun03" ExecuteOnInstall="yes" Sequence="03" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="CreateObj03" BinaryKey="CreateObj03" ExecuteOnInstall="yes" Sequence="05" ExecuteOnReinstall="yes"/>
           <sql:SqlScript Id="CreateObj10" BinaryKey="CreateObj10" ExecuteOnInstall="yes" Sequence="10" ExecuteOnReinstall="yes"/>
@@ -93,6 +94,7 @@
 
     <Binary Id="CreateBaseView02" SourceFile="C:\JCTii\GPRelational\rmvwRmTransaccionesTodas.view.sql"/>
     
+    <Binary Id="CreateObj02" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\002_synonymsGPDynamics.create.sql"/>
     <Binary Id="CreateFun03" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\003_fcfdiParametros.function.sql"/>
     <Binary Id="CreateObj03" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\003_fcfdiParametrosCliente.function.sql"/>
     <Binary Id="CreateObj10" SourceFile="C:\jcTii\Desarrollo\PERU_FacturaElectronica\pe02\sql\010_cfdiCatalogo.table.sql"/>
