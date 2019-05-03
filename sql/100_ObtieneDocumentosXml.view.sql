@@ -319,6 +319,7 @@ as
 --08/11/18 jcf Agrega ajustes para ubl 2.1
 --16/01/19 jcf Agrega dirección
 --21/02/19 jcf Agrega leyenda por factura
+--03/05/19 jcf Agrega leyenda por factura 2
 --
 	select convert(varchar(20), tv.dex_row_id) correlativo, 
 		tv.soptype,
@@ -411,7 +412,8 @@ as
 		end codleyendaTransfGratuita,
 		UPPER(DBO.TII_INVOICE_AMOUNT_LETTERS(tv.total, default)) montoEnLetras,
 		tv.estadoContabilizado, tv.docdate,
-		case when upper(pr.param6) = 'SI' then rtrim(tv.comment_1) else '' end leyendaPorFactura
+		case when upper(pr.param6) = 'SI' then rtrim(tv.comment_1) else '' end leyendaPorFactura,	--va en la parte inferior Info adicional de la impresión de factura
+		case when upper(pr.param6) = 'SI' then rtrim(lfa.memo) else '' end leyendaPorFactura2		--va en la sección del adquiriente en la impresión de factura
 
 	from dbo.vwCfdiSopTransaccionesVenta tv
 		cross join dbo.fCfdiEmisor() emi
@@ -426,6 +428,7 @@ as
 		outer apply dbo.fCfdiImpuestosAgrupadosSop(tv.sopnumbe, tv.soptype, 0, pr.param4, '9996', '%') gra	--gratuito
 		outer apply dbo.fCfdiImpuestosAgrupadosSop(tv.SOPNUMBE, tv.soptype, 0, pr.param5, '9995', '%') xpr	--exportación
 		outer apply dbo.fnCfdGetDireccionesCorreo(tv.custnmbr) mail
+		outer apply dbo.fCfdiGetLeyendaDeFactura(tv.SOPNUMBE, tv.soptype, '01') lfa
 
 go
 
