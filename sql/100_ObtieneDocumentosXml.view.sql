@@ -320,6 +320,7 @@ as
 --16/01/19 jcf Agrega dirección
 --21/02/19 jcf Agrega leyenda por factura
 --03/05/19 jcf Agrega leyenda por factura 2
+--17/05/19 jcf Corrige codDetraccion y medioPagoDetraccion. Agrega parámetro TIPOOPERACIDFLT
 --
 	select convert(varchar(20), tv.dex_row_id) correlativo, 
 		tv.soptype,
@@ -353,7 +354,12 @@ as
 		convert(varchar(10), tv.fechaHora, 108)		horaEmision,
 		tv.duedate									fechaVencimiento,
 		tv.curncyid									moneda,
-		rtrim(cmpr.[nsa_Cod_Transac])				tipoOperacion,
+		
+		CASE when upper(pr2.param1)='NA' then	--caso en que la factura no debe usar un tipo de operación predeterminado
+			rtrim(cmpr.[nsa_Cod_Transac])
+		else
+			rtrim(ISNULL(cmpr.[nsa_Cod_Transac], pr2.param1))	
+		end											tipoOperacion,
 		tv.xchgrate,
 
 		--descuento global
@@ -366,12 +372,12 @@ as
 		--el código de motivo de descuento global debe basarse en el código de descuento por producto
 		
 		--detracción
-		cmpr.cod_detraccion							codigoDetraccion,
+		rtrim(cmpr.cod_detraccion)					codigoDetraccion,
 		dtr.PRCNTAGE								porcentajeDetraccion,
 		round(tv.total*dtr.PRCNTAGE/100, 2)			montoDetraccion,
 		case when isnull(cmpr.cod_detraccion, '') != '' then '2006' else '' end codleyendaDetraccion,
 		emi.ctaBancoNacion							numCuentaBancoNacion,
-		'001'										medioPagoDetraccion,	--depósito
+		'002'										medioPagoDetraccion,	--depósito
 
 		--totales
 		--tv.docamnt,
@@ -422,6 +428,7 @@ as
 			on dtr.nsa_Cod_IVA1 = cmpr.cod_detraccion
 		outer apply dbo.fLcLvComprobanteSunat (cmpr.comprobanteRelacionadoSoptype, cmpr.comprobanteRelacionado)  crel
 		outer apply dbo.fCfdiParametros('V_PREFEXONERADO', 'V_PREFEXENTO', 'V_PREFIVA', 'V_GRATIS', 'V_PREFEXPORTA', 'V_LEYENDAPORFAC', 'LCLV') pr	--Parámetros. prefijo inafectos, prefijo exento, prefijo iva
+		outer apply dbo.fCfdiParametros('TIPOOPERACIDFLT', 'NA', 'NA', 'NA', 'NA', 'NA', 'LCLV') pr2
 		outer apply dbo.fCfdiImpuestosAgrupadosSop(tv.sopnumbe, tv.soptype, 0, pr.param1, '9997', '%') xnr	--exonerado
 		outer apply dbo.fCfdiImpuestosAgrupadosSop(tv.sopnumbe, tv.soptype, 0, pr.param2, '9998', '%') exe	--exento/inafecto
 		outer apply dbo.fCfdiImpuestosAgrupadosSop(tv.sopnumbe, tv.soptype, 0, pr.param3, '1000', '%') iva	--iva
