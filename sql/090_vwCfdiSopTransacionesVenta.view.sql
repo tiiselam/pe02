@@ -10,6 +10,7 @@ alter view dbo.vwCfdiSopTransaccionesVenta
 --06/06/18 jcf Agrega docamnt, trdisamt
 --08/11/18 jcf Agrega send_email_statements
 --19/11/18 jcf Agrega ORSUBTOT, fechaHora
+--23/05/19 jcf Agrega txrgnnum
 --
 AS
 
@@ -18,6 +19,7 @@ SELECT	'contabilizado' estadoContabilizado,
 			then rtrim(dbo.fCfdReemplazaCaracteresNI(replace(cab.custnmbr, '-', '')))
 			else rtrim(dbo.fCfdReemplazaCaracteresNI(rtrim(left(replace(cn.TXRGNNUM, '-', ''), 23))))	--loc argentina usa los 23 caracteres de la izquierda
 		end idImpuestoCliente,
+		rtrim(dbo.fCfdReemplazaCaracteresNI(rtrim(replace(cn.TXRGNNUM, '-', '')))) TXRGNNUM,
 		cab.CUSTNMBR,
 		dbo.fCfdReemplazaSecuenciaDeEspacios(ltrim(rtrim(dbo.fCfdReemplazaCaracteresNI(cab.CUSTNAME))), 10)	nombreCliente,
 		rtrim(cab.docid) docid, cab.SOPTYPE, 
@@ -59,7 +61,10 @@ SELECT	'contabilizado' estadoContabilizado,
 
  union all
  
- select 'en lote' estadoContabilizado, cab.custnmbr idImpuestoCliente, cab.CUSTNMBR, cab.CUSTNAME nombreCliente,
+ select 'en lote' estadoContabilizado, 
+		cab.custnmbr idImpuestoCliente, 
+		cab.TXRGNNUM,
+		cab.CUSTNMBR, cab.CUSTNAME nombreCliente,
 		rtrim(cab.docid) docid, cab.SOPTYPE, rtrim(cab.sopnumbe) sopnumbe, 
 		cab.docdate, cab.docdate fechaHora,
 		cab.ORDOCAMT total, cab.ORSUBTOT, cab.ORSUBTOT + cab.ORMRKDAM subtotal, cab.ORTAXAMT impuesto, cab.ORMRKDAM, cab.ORTDISAM, cab.ORMRKDAM + cab.ORTDISAM descuento, 

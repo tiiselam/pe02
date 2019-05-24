@@ -321,6 +321,7 @@ as
 --21/02/19 jcf Agrega leyenda por factura
 --03/05/19 jcf Agrega leyenda por factura 2
 --17/05/19 jcf Corrige codDetraccion y medioPagoDetraccion. Agrega parámetro TIPOOPERACIDFLT
+--23/05/19 jcf Agrega param5: código de sucursal. Cambia origen del receptorNroDoc
 --
 	select convert(varchar(20), tv.dex_row_id) correlativo, 
 		tv.soptype,
@@ -331,7 +332,7 @@ as
 		emi.emisorTipoDoc, 
 		emi.TAXREGTN								emisorNroDoc,
 		emi.LOCATNNM								emisorNombre,
-		emi.ZIPCODE									emisorUbigeo,
+		emi.param5									emisorUbigeo,
 		emi.ADDRESS1								emisorDireccion,
 		emi.ADDRESS2								emisorUrbanizacion,
 		emi.[STATE]									emisorDepartamento,
@@ -340,7 +341,10 @@ as
 		emi.CCODE									emisorCodPais,
 
 		cmpr.nsaif_type_nit							receptorTipoDoc,
-		tv.idImpuestoCliente						receptorNroDoc,
+		case when tv.TXRGNNUM = '' then
+			rtrim(cmpr.nsaIFNit)
+		else tv.TXRGNNUM
+		end											receptorNroDoc,
 		tv.nombreCliente							receptorNombre,
 		left(tv.address1 +' '+ tv.address2, 100)	receptorDireccion,
 		tv.[state]									receptorProvincia,
