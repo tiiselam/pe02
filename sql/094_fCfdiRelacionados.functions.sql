@@ -11,30 +11,33 @@ as
 --Requisito. 
 --24/10/17 jcf Creación
 --05/06/18 jcf Agrega aptodcnm
+--14/11/18 jcf Agrega ajustes para ubl 2.1. La relación de ND o factura a factura se traslada a nsaCOA_GL00014
 --
 return(
 			--ND relaciona a factura
-			select 1 orden,	
-				cmpr.tipo tipoDocumento,
-				da.soptype soptypeTo, left(da.tracking_number, 5) + convert(varchar(10), sg.segmento2) sopnumbeTo,
-				da.soptype soptypeFrom, da.sopnumbe sopnumbeFrom, da.tracking_number aptodcnm
-			from sop10107 da	--
-				outer apply dbo.fCfdiObtieneSegmento2(rtrim(da.tracking_number), '-') sg
-				cross apply dbo.fLcLvComprobanteSunat (da.soptype, left(da.tracking_number, 5) + right('0000000'+convert(varchar(10), sg.segmento2), 8))  cmpr
-			where da.sopnumbe = @p_sopnumbe
-			and da.soptype = @soptype
-			and @soptype = 3
+			--select 1 orden,	
+			--	cmpr.tipo tipoDocumento,
+			--	da.soptype soptypeTo, left(da.tracking_number, 5) + convert(varchar(10), sg.segmento2) sopnumbeTo,
+			--	da.soptype soptypeFrom, da.sopnumbe sopnumbeFrom, da.tracking_number aptodcnm
+			--from sop10107 da	--
+			--	outer apply dbo.fCfdiObtieneSegmento2(rtrim(da.tracking_number), '-') sg
+			--	cross apply dbo.fLcLvComprobanteSunat (da.soptype, left(da.tracking_number, 5) + right('0000000'+convert(varchar(10), sg.segmento2), 8))  cmpr
+			--where da.sopnumbe = @p_sopnumbe
+			--and da.soptype = @soptype
+			--and @soptype = 3
 
-			union all
+			--union all
 
 			--NC o devolución que relaciona a factura o nd
 			SELECT 2 orden,
 				cmpr.tipo tipoDocumento,
-				3 soptypeTo, left(ap.aptodcnm, 5) + convert(varchar(10), sg.segmento2) sopnumbeTo,
-				@soptype soptypeFrom, ap.apfrdcnm sopnumbeFrom, ap.aptodcnm
+				3 soptypeTo, 
+				rtrim(ap.aptodcnm) sopnumbeTo,
+				--left(ap.aptodcnm, 5) + convert(varchar(10), sg.segmento2) sopnumbeTo,
+				@soptype soptypeFrom, rtrim(ap.apfrdcnm) sopnumbeFrom, ap.aptodcnm
 			from dbo.vwRmTrxAplicadas  ap
 				cross apply dbo.fLcLvComprobanteSunat (3, ap.aptodcnm)  cmpr
-				outer apply dbo.fCfdiObtieneSegmento2(rtrim(ap.aptodcnm), '-') sg
+				--outer apply dbo.fCfdiObtieneSegmento2(rtrim(ap.aptodcnm), '-') sg
 			where ap.APFRDCTY = @soptype+4										--tipo nc es 8 en AR
 			AND ap.apfrdcnm = @p_sopnumbe
 			and @soptype = 4

@@ -25,6 +25,7 @@ grant select on dbo.vwCfdClienteDireccionesCorreo to rol_cfdigital, dyngrp;
 grant select on dbo.vwCfdCartasReclamacionDeuda to rol_cfdigital, dyngrp;
 grant select on dbo.vwCfdiListaResumenDiario to rol_cfdigital, dyngrp;
 grant select on dbo.fCfdiParametros to rol_cfdigital;
+grant select on dbo.fCfdiParametrosTipoLeyenda to rol_cfdigital;
 
 grant select on dbo.vwCfdiConceptos to rol_cfdigital;
 grant select on dbo.vwCfdiGeneraDocumentoDeVenta to rol_cfdigital;
